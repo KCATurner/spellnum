@@ -1,4 +1,4 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import absolute_import, division, print_function
 
 
 NUMB_LT_TWENTY = ('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
