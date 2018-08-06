@@ -20,7 +20,7 @@ class SpellPeriodTests(unittest.TestCase):
         self.assertRaises(ValueError, spellnum._spell_period, period='500')
         
     def test_TypeFloatInput(self):
-        self.assertRaises(ValueError, spellnum._spell_period, period=500.5)
+        self.assertRaises(ValueError, spellnum._spell_period, period=12.34)
         
     def test_000(self):
         expected = ''
@@ -173,7 +173,7 @@ class SpellPeriodTests(unittest.TestCase):
         self.assertMultiLineEqual(expected, actual)
         
         
-class PeriodNameTests(unittest.TestCase):
+class PeriodSuffixTests(unittest.TestCase):
     
     def setUp(self):
         pass
@@ -181,6 +181,18 @@ class PeriodNameTests(unittest.TestCase):
     def tearDown(self):
         pass
     
+    def test_LTMinimumInput(self):
+        self.assertRaises(ValueError, spellnum._get_period_suffix, baseillion=-2)
+        
+    def test_GTMaximumInput(self):
+        self.assertRaises(ValueError, spellnum._get_period_suffix, baseillion=1000)
+        
+    def test_TypeStringInput(self):
+        self.assertRaises(ValueError, spellnum._get_period_suffix, baseillion='500')
+        
+    def test_TypeFloatInput(self):
+        self.assertRaises(ValueError, spellnum._get_period_suffix, baseillion=12.34)
+        
     def test_LTZeroInput(self):
         expected = ''
         actual = spellnum._get_period_suffix(baseillion=-1)
