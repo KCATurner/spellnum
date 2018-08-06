@@ -14,6 +14,7 @@ __ERROR_INVALID_BASEILLION = 'baseillion must be an integer in the range [-1, 10
 
 
 def _get_period_suffix(baseillion):
+    # type: (int) -> str
     """
     Constructs and the period name/suffix from a three dimensional table of prefixes for each digit in the given
     base-illion value; currently limited to base-illions less than 1000 (millinillion)
@@ -43,6 +44,7 @@ def _get_period_suffix(baseillion):
 
 
 def _spell_period(period):
+    # type: (int) -> str
     """
     Constructs the English spelling of the given integer
     
