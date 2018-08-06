@@ -436,12 +436,7 @@ class PeriodNameTests(unittest.TestCase):
         actual = spellnum._get_period_suffix(baseillion=809)
         self.assertMultiLineEqual(expected, actual)
         
-    def test_487(self):
-        expected = 'septemoctogintaquadringentillion'
-        actual = spellnum._get_period_suffix(baseillion=487)
-        self.assertMultiLineEqual(expected, actual)
         
-    
 class SpellIntegerTests(unittest.TestCase):
     
     def setUp(self):
@@ -464,7 +459,7 @@ class SpellIntegerTests(unittest.TestCase):
         expected = 'one thousand one hundred eleven'
         actual = spellnum.spell_integer(number=1111)
         self.assertMultiLineEqual(expected, actual)
-
+        
     def test_001Million(self):
         expected = 'one million'
         actual = spellnum.spell_integer(number=1000000)
