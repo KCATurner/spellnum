@@ -18,7 +18,7 @@ def _get_period_suffix(baseillion):
     Constructs and the period name/suffix from a three dimensional table of prefixes for each digit in the given
     base-illion value; currently limited to base-illions less than 1000 (millinillion)
     
-    :param baseillion: the base-illion value of the period
+    :param baseillion: the base-illion suffix of the period name
     :return: the name of the period with the given base-illion as a string
     """
     if baseillion not in range(-1, 1000, 1):
@@ -28,11 +28,11 @@ def _get_period_suffix(baseillion):
     elif baseillion < 10:
         return __UNIQUE_PERIODS[baseillion]
     
-    unit_prefix = __PERIOD_PREFIXES_UNIT[(baseillion % 10) // 1]
-    tens_prefix = __PERIOD_PREFIXES_TENS[(baseillion % 100) // 10]
-    hund_prefix = __PERIOD_PREFIXES_HUND[(baseillion % 1000) // 100]
-    
-    result = '{unit}{tens}{hund}llion'.format(unit=unit_prefix, tens=tens_prefix, hund=hund_prefix)
+    result = '{unit}{tens}{hund}llion'.format(
+        unit=__PERIOD_PREFIXES_UNIT[(baseillion % 10) // 1],
+        tens=__PERIOD_PREFIXES_TENS[(baseillion % 100) // 10],
+        hund=__PERIOD_PREFIXES_HUND[(baseillion % 1000) // 100]
+    )
     
     result = sub('(?<=^se)(?=[co])', repl='x', string=result)
     result = sub('(?<=^se)(?=[qtv])|(?<=^tre)(?=[coqtv])', repl='s', string=result)
