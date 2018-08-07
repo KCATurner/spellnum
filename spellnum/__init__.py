@@ -1,3 +1,3 @@
-from spellnum.spellnum import *
+from spellnum import *
 
 __name__ = "spellnum"
