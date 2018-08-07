@@ -11,165 +11,165 @@ class SpellPeriodTests(unittest.TestCase):
         pass
     
     def test_LTMinimumInput(self):
-        self.assertRaises(ValueError, spellnum._spell_period, period=-1)
+        self.assertRaises(ValueError, spellnum._get_period_spelling, period=-1)
         
     def test_GTMaximumInput(self):
-        self.assertRaises(ValueError, spellnum._spell_period, period=1000)
+        self.assertRaises(ValueError, spellnum._get_period_spelling, period=1000)
         
     def test_TypeStringInput(self):
-        self.assertRaises(ValueError, spellnum._spell_period, period='500')
+        self.assertRaises(ValueError, spellnum._get_period_spelling, period='500')
         
     def test_TypeFloatInput(self):
-        self.assertRaises(ValueError, spellnum._spell_period, period=12.34)
+        self.assertRaises(ValueError, spellnum._get_period_spelling, period=12.34)
         
     def test_000(self):
         expected = ''
-        actual = spellnum._spell_period(period=0)
+        actual = spellnum._get_period_spelling(period=0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_001(self):
         expected = 'one'
-        actual = spellnum._spell_period(period=1)
+        actual = spellnum._get_period_spelling(period=1)
         self.assertMultiLineEqual(expected, actual)
         
     def test_002(self):
         expected = 'two'
-        actual = spellnum._spell_period(period=2)
+        actual = spellnum._get_period_spelling(period=2)
         self.assertMultiLineEqual(expected, actual)
         
     def test_003(self):
         expected = 'three'
-        actual = spellnum._spell_period(period=3)
+        actual = spellnum._get_period_spelling(period=3)
         self.assertMultiLineEqual(expected, actual)
         
     def test_004(self):
         expected = 'four'
-        actual = spellnum._spell_period(period=4)
+        actual = spellnum._get_period_spelling(period=4)
         self.assertMultiLineEqual(expected, actual)
         
     def test_005(self):
         expected = 'five'
-        actual = spellnum._spell_period(period=5)
+        actual = spellnum._get_period_spelling(period=5)
         self.assertMultiLineEqual(expected, actual)
 
     def test_006(self):
         expected = 'six'
-        actual = spellnum._spell_period(period=6)
+        actual = spellnum._get_period_spelling(period=6)
         self.assertMultiLineEqual(expected, actual)
 
     def test_007(self):
         expected = 'seven'
-        actual = spellnum._spell_period(period=7)
+        actual = spellnum._get_period_spelling(period=7)
         self.assertMultiLineEqual(expected, actual)
         
     def test_008(self):
         expected = 'eight'
-        actual = spellnum._spell_period(period=8)
+        actual = spellnum._get_period_spelling(period=8)
         self.assertMultiLineEqual(expected, actual)
         
     def test_009(self):
         expected = 'nine'
-        actual = spellnum._spell_period(period=9)
+        actual = spellnum._get_period_spelling(period=9)
         self.assertMultiLineEqual(expected, actual)
         
     def test_010(self):
         expected = 'ten'
-        actual = spellnum._spell_period(period=10)
+        actual = spellnum._get_period_spelling(period=10)
         self.assertMultiLineEqual(expected, actual)
         
     def test_011(self):
         expected = 'eleven'
-        actual = spellnum._spell_period(period=11)
+        actual = spellnum._get_period_spelling(period=11)
         self.assertMultiLineEqual(expected, actual)
         
     def test_012(self):
         expected = 'twelve'
-        actual = spellnum._spell_period(period=12)
+        actual = spellnum._get_period_spelling(period=12)
         self.assertMultiLineEqual(expected, actual)
         
     def test_013(self):
         expected = 'thirteen'
-        actual = spellnum._spell_period(period=13)
+        actual = spellnum._get_period_spelling(period=13)
         self.assertMultiLineEqual(expected, actual)
         
     def test_014(self):
         expected = 'fourteen'
-        actual = spellnum._spell_period(period=14)
+        actual = spellnum._get_period_spelling(period=14)
         self.assertMultiLineEqual(expected, actual)
         
     def test_015(self):
         expected = 'fifteen'
-        actual = spellnum._spell_period(period=15)
+        actual = spellnum._get_period_spelling(period=15)
         self.assertMultiLineEqual(expected, actual)
         
     def test_016(self):
         expected = 'sixteen'
-        actual = spellnum._spell_period(period=16)
+        actual = spellnum._get_period_spelling(period=16)
         self.assertMultiLineEqual(expected, actual)
         
     def test_017(self):
         expected = 'seventeen'
-        actual = spellnum._spell_period(period=17)
+        actual = spellnum._get_period_spelling(period=17)
         self.assertMultiLineEqual(expected, actual)
         
     def test_018(self):
         expected = 'eighteen'
-        actual = spellnum._spell_period(period=18)
+        actual = spellnum._get_period_spelling(period=18)
         self.assertMultiLineEqual(expected, actual)
         
     def test_019(self):
         expected = 'nineteen'
-        actual = spellnum._spell_period(period=19)
+        actual = spellnum._get_period_spelling(period=19)
         self.assertMultiLineEqual(expected, actual)
         
     def test_100(self):
         expected = 'one hundred'
-        actual = spellnum._spell_period(period=100)
+        actual = spellnum._get_period_spelling(period=100)
         self.assertMultiLineEqual(expected, actual)
         
     def test_200(self):
         expected = 'two hundred'
-        actual = spellnum._spell_period(period=200)
+        actual = spellnum._get_period_spelling(period=200)
         self.assertMultiLineEqual(expected, actual)
         
     def test_300(self):
         expected = 'three hundred'
-        actual = spellnum._spell_period(period=300)
+        actual = spellnum._get_period_spelling(period=300)
         self.assertMultiLineEqual(expected, actual)
         
     def test_400(self):
         expected = 'four hundred'
-        actual = spellnum._spell_period(period=400)
+        actual = spellnum._get_period_spelling(period=400)
         self.assertMultiLineEqual(expected, actual)
         
     def test_500(self):
         expected = 'five hundred'
-        actual = spellnum._spell_period(period=500)
+        actual = spellnum._get_period_spelling(period=500)
         self.assertMultiLineEqual(expected, actual)
         
     def test_600(self):
         expected = 'six hundred'
-        actual = spellnum._spell_period(period=600)
+        actual = spellnum._get_period_spelling(period=600)
         self.assertMultiLineEqual(expected, actual)
         
     def test_700(self):
         expected = 'seven hundred'
-        actual = spellnum._spell_period(period=700)
+        actual = spellnum._get_period_spelling(period=700)
         self.assertMultiLineEqual(expected, actual)
         
     def test_800(self):
         expected = 'eight hundred'
-        actual = spellnum._spell_period(period=800)
+        actual = spellnum._get_period_spelling(period=800)
         self.assertMultiLineEqual(expected, actual)
         
     def test_900(self):
         expected = 'nine hundred'
-        actual = spellnum._spell_period(period=900)
+        actual = spellnum._get_period_spelling(period=900)
         self.assertMultiLineEqual(expected, actual)
         
     def test_999(self):
         expected = 'nine hundred ninety-nine'
-        actual = spellnum._spell_period(period=999)
+        actual = spellnum._get_period_spelling(period=999)
         self.assertMultiLineEqual(expected, actual)
         
         

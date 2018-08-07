@@ -35,7 +35,7 @@ def _get_period_suffix(base_illion):
     return result.replace('allion', 'illion')
 
 
-def _spell_period(period):
+def _get_period_spelling(period):
     # type: (int) -> str
     """
     Constructs the English spelling of the given integer
@@ -81,7 +81,7 @@ def spell_integer(number):
     for period in periods:
         if int(period):
             result += ' {spelling} {name}'.format(
-                spelling=_spell_period(period=int(period)),
+                spelling=_get_period_spelling(period=int(period)),
                 name=_get_period_suffix(base_illion=base_illion)
             )
         base_illion -= 1
