@@ -28,10 +28,11 @@ For functional purposes, the first index for most of the lexicon's tuples is an 
 messages.py is just home to a couple error messages used by the modules functions and it is not implicitly imported with the rest of the module.
 
 ## functions.py
-functions.py is home to all of the fun stuff, which currently really only consists of one main function and two semi-private functions.
+functions.py is home to all of the fun stuff, which currently really only consists of one main function and two auxiliary functions.
 
 ### get_period_suffix(base_illion)
 This function will return the period suffix or full period name for a number with the given base-illion value. **get_period_suffix** raises a ValueError if the **base_illion** argument falls outside the range [-1, 1000). The base-illion property of a number in the short-scale system is equal to one less than the number of periods in the number, where a period is a set of one to three consecutive digits often separated by commas.
+#### Examples
 ```
 >>> from spellnum import *
 >>> get_period_suffix(base_illion=4)
@@ -50,12 +51,16 @@ This function constructs the spelling for an individual number period consisting
 ```
 
 ### spell_integer(number)
-The **spell_integer** function is the main focus of the module. It will return the english short-scale spelling for the **number** argument which can be any positive or negative integer with an absolute value less than 10<sup>3003</sup> (1 Millinillion). That's a 1 followed by 3003 zeros. To put that into perspective, most of the scientific community seems to agree that there are somewhere between 10<sup>78</sup> and 10<sup>82</sup> atoms in the known universe... If you need a bigger number spelled, you'll just have to look elsewhere. When **number** falls outside the aforementioned range, the subsequent call to **get_period_suffix** will raise a value error as the **base_illion** argument will fall outside the range [-1, 1000). The **number** argument can be an integer or a string.
-#### Example
+The **spell_integer** function is the main focus of the module. It will return the english short-scale spelling for the **number** argument which can be any positive or negative integer with an absolute value less than 10<sup>3003</sup> (1 Millinillion). That's a 1 followed by 3003 zeros. To put that into perspective, most of the scientific community seems to agree that there are somewhere between 10<sup>78</sup> and 10<sup>82</sup> atoms in the known universe... If you need a bigger number spelled, you'll just have to look elsewhere. When **number** falls outside the aforementioned range, the subsequent call to **get_period_suffix** will raise a value error as the **base_illion** argument will fall outside the range [-1, 1000). The **number** argument can be a integer, float, or string.
+
+It should be noted that **spell_integer** *can* handle values that exceed the numerical limitations on float types. Pass **number** as a string using scientific notation for values greater than the maximum float value: 1.7976931348623157e+308.
+#### Examples
 ```
 >>> from spellnum import *
 >>> spell_integer(-123456)
 'negative one hundred twenty-three thousand four hundred fifty-six'
->>> spell_integer('789000000000000000000000000000000000000000000000000')
-'seven hundred eighty-nine quinquadecillion'
+>>> spell_integer(4.56e100)
+'forty-five duotrigintillion six hundred untrigintillion'
+>>> spell_integer('7.89e500')
+'seven hundred eighty-nine quinquasexagintacentillion'
 ```
