@@ -5,7 +5,7 @@ from spellnum import lexicon
 from spellnum import messages
 
 
-def _get_period_suffix(base_illion):
+def get_period_suffix(base_illion):
     # type: (int) -> str
     """
     Constructs and the period name/suffix from a three dimensional table of prefixes for each digit in the given
@@ -35,7 +35,7 @@ def _get_period_suffix(base_illion):
     return result.replace('allion', 'illion')
 
 
-def _get_period_spelling(period):
+def get_period_spelling(period):
     # type: (int) -> str
     """
     Constructs the English spelling of the given integer
@@ -87,8 +87,8 @@ def spell_integer(number):
     for period in periods:
         if int(period):
             result += ' {spelling} {name}'.format(
-                spelling=_get_period_spelling(period=int(period)),
-                name=_get_period_suffix(base_illion=base_illion)
+                spelling=get_period_spelling(period=int(period)),
+                name=get_period_suffix(base_illion=base_illion)
             )
         base_illion -= 1
         

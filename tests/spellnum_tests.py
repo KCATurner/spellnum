@@ -11,165 +11,165 @@ class SpellPeriodTests(unittest.TestCase):
         pass
     
     def test_LTMinimumInput(self):
-        self.assertRaises(ValueError, functions._get_period_spelling, period=-1)
+        self.assertRaises(ValueError, functions.get_period_spelling, period=-1)
         
     def test_GTMaximumInput(self):
-        self.assertRaises(ValueError, functions._get_period_spelling, period=1000)
+        self.assertRaises(ValueError, functions.get_period_spelling, period=1000)
         
     def test_TypeStringInput(self):
-        self.assertRaises(ValueError, functions._get_period_spelling, period='500')
+        self.assertRaises(ValueError, functions.get_period_spelling, period='500')
         
     def test_TypeFloatInput(self):
-        self.assertRaises(ValueError, functions._get_period_spelling, period=12.34)
+        self.assertRaises(ValueError, functions.get_period_spelling, period=12.34)
         
     def test_000(self):
         expected = ''
-        actual = functions._get_period_spelling(period=0)
+        actual = functions.get_period_spelling(period=0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_001(self):
         expected = 'one'
-        actual = functions._get_period_spelling(period=1)
+        actual = functions.get_period_spelling(period=1)
         self.assertMultiLineEqual(expected, actual)
         
     def test_002(self):
         expected = 'two'
-        actual = functions._get_period_spelling(period=2)
+        actual = functions.get_period_spelling(period=2)
         self.assertMultiLineEqual(expected, actual)
         
     def test_003(self):
         expected = 'three'
-        actual = functions._get_period_spelling(period=3)
+        actual = functions.get_period_spelling(period=3)
         self.assertMultiLineEqual(expected, actual)
         
     def test_004(self):
         expected = 'four'
-        actual = functions._get_period_spelling(period=4)
+        actual = functions.get_period_spelling(period=4)
         self.assertMultiLineEqual(expected, actual)
         
     def test_005(self):
         expected = 'five'
-        actual = functions._get_period_spelling(period=5)
+        actual = functions.get_period_spelling(period=5)
         self.assertMultiLineEqual(expected, actual)
 
     def test_006(self):
         expected = 'six'
-        actual = functions._get_period_spelling(period=6)
+        actual = functions.get_period_spelling(period=6)
         self.assertMultiLineEqual(expected, actual)
 
     def test_007(self):
         expected = 'seven'
-        actual = functions._get_period_spelling(period=7)
+        actual = functions.get_period_spelling(period=7)
         self.assertMultiLineEqual(expected, actual)
         
     def test_008(self):
         expected = 'eight'
-        actual = functions._get_period_spelling(period=8)
+        actual = functions.get_period_spelling(period=8)
         self.assertMultiLineEqual(expected, actual)
         
     def test_009(self):
         expected = 'nine'
-        actual = functions._get_period_spelling(period=9)
+        actual = functions.get_period_spelling(period=9)
         self.assertMultiLineEqual(expected, actual)
         
     def test_010(self):
         expected = 'ten'
-        actual = functions._get_period_spelling(period=10)
+        actual = functions.get_period_spelling(period=10)
         self.assertMultiLineEqual(expected, actual)
         
     def test_011(self):
         expected = 'eleven'
-        actual = functions._get_period_spelling(period=11)
+        actual = functions.get_period_spelling(period=11)
         self.assertMultiLineEqual(expected, actual)
         
     def test_012(self):
         expected = 'twelve'
-        actual = functions._get_period_spelling(period=12)
+        actual = functions.get_period_spelling(period=12)
         self.assertMultiLineEqual(expected, actual)
         
     def test_013(self):
         expected = 'thirteen'
-        actual = functions._get_period_spelling(period=13)
+        actual = functions.get_period_spelling(period=13)
         self.assertMultiLineEqual(expected, actual)
         
     def test_014(self):
         expected = 'fourteen'
-        actual = functions._get_period_spelling(period=14)
+        actual = functions.get_period_spelling(period=14)
         self.assertMultiLineEqual(expected, actual)
         
     def test_015(self):
         expected = 'fifteen'
-        actual = functions._get_period_spelling(period=15)
+        actual = functions.get_period_spelling(period=15)
         self.assertMultiLineEqual(expected, actual)
         
     def test_016(self):
         expected = 'sixteen'
-        actual = functions._get_period_spelling(period=16)
+        actual = functions.get_period_spelling(period=16)
         self.assertMultiLineEqual(expected, actual)
         
     def test_017(self):
         expected = 'seventeen'
-        actual = functions._get_period_spelling(period=17)
+        actual = functions.get_period_spelling(period=17)
         self.assertMultiLineEqual(expected, actual)
         
     def test_018(self):
         expected = 'eighteen'
-        actual = functions._get_period_spelling(period=18)
+        actual = functions.get_period_spelling(period=18)
         self.assertMultiLineEqual(expected, actual)
         
     def test_019(self):
         expected = 'nineteen'
-        actual = functions._get_period_spelling(period=19)
+        actual = functions.get_period_spelling(period=19)
         self.assertMultiLineEqual(expected, actual)
         
     def test_100(self):
         expected = 'one hundred'
-        actual = functions._get_period_spelling(period=100)
+        actual = functions.get_period_spelling(period=100)
         self.assertMultiLineEqual(expected, actual)
         
     def test_200(self):
         expected = 'two hundred'
-        actual = functions._get_period_spelling(period=200)
+        actual = functions.get_period_spelling(period=200)
         self.assertMultiLineEqual(expected, actual)
         
     def test_300(self):
         expected = 'three hundred'
-        actual = functions._get_period_spelling(period=300)
+        actual = functions.get_period_spelling(period=300)
         self.assertMultiLineEqual(expected, actual)
         
     def test_400(self):
         expected = 'four hundred'
-        actual = functions._get_period_spelling(period=400)
+        actual = functions.get_period_spelling(period=400)
         self.assertMultiLineEqual(expected, actual)
         
     def test_500(self):
         expected = 'five hundred'
-        actual = functions._get_period_spelling(period=500)
+        actual = functions.get_period_spelling(period=500)
         self.assertMultiLineEqual(expected, actual)
         
     def test_600(self):
         expected = 'six hundred'
-        actual = functions._get_period_spelling(period=600)
+        actual = functions.get_period_spelling(period=600)
         self.assertMultiLineEqual(expected, actual)
         
     def test_700(self):
         expected = 'seven hundred'
-        actual = functions._get_period_spelling(period=700)
+        actual = functions.get_period_spelling(period=700)
         self.assertMultiLineEqual(expected, actual)
         
     def test_800(self):
         expected = 'eight hundred'
-        actual = functions._get_period_spelling(period=800)
+        actual = functions.get_period_spelling(period=800)
         self.assertMultiLineEqual(expected, actual)
         
     def test_900(self):
         expected = 'nine hundred'
-        actual = functions._get_period_spelling(period=900)
+        actual = functions.get_period_spelling(period=900)
         self.assertMultiLineEqual(expected, actual)
         
     def test_999(self):
         expected = 'nine hundred ninety-nine'
-        actual = functions._get_period_spelling(period=999)
+        actual = functions.get_period_spelling(period=999)
         self.assertMultiLineEqual(expected, actual)
         
         
@@ -182,270 +182,270 @@ class PeriodSuffixTests(unittest.TestCase):
         pass
     
     def test_LTMinimumInput(self):
-        self.assertRaises(ValueError, functions._get_period_suffix, base_illion=-2)
+        self.assertRaises(ValueError, functions.get_period_suffix, base_illion=-2)
         
     def test_GTMaximumInput(self):
-        self.assertRaises(ValueError, functions._get_period_suffix, base_illion=1000)
+        self.assertRaises(ValueError, functions.get_period_suffix, base_illion=1000)
         
     def test_TypeStringInput(self):
-        self.assertRaises(ValueError, functions._get_period_suffix, base_illion='500')
+        self.assertRaises(ValueError, functions.get_period_suffix, base_illion='500')
         
     def test_TypeFloatInput(self):
-        self.assertRaises(ValueError, functions._get_period_suffix, base_illion=12.34)
+        self.assertRaises(ValueError, functions.get_period_suffix, base_illion=12.34)
         
     def test_LTZeroInput(self):
         expected = ''
-        actual = functions._get_period_suffix(base_illion=-1)
+        actual = functions.get_period_suffix(base_illion=-1)
         self.assertMultiLineEqual(expected, actual)
         
     def test_000(self):
         expected = 'thousand'
-        actual = functions._get_period_suffix(base_illion=0)
+        actual = functions.get_period_suffix(base_illion=0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_001(self):
         expected = 'million'
-        actual = functions._get_period_suffix(base_illion=1)
+        actual = functions.get_period_suffix(base_illion=1)
         self.assertMultiLineEqual(expected, actual)
         
     def test_002(self):
         expected = 'billion'
-        actual = functions._get_period_suffix(base_illion=2)
+        actual = functions.get_period_suffix(base_illion=2)
         self.assertMultiLineEqual(expected, actual)
         
     def test_023(self):
         expected = 'tresvigintillion'
-        actual = functions._get_period_suffix(base_illion=23)
+        actual = functions.get_period_suffix(base_illion=23)
         self.assertMultiLineEqual(expected, actual)
         
     def test_026(self):
         expected = 'sesvigintillion'
-        actual = functions._get_period_suffix(base_illion=26)
+        actual = functions.get_period_suffix(base_illion=26)
         self.assertMultiLineEqual(expected, actual)
         
     def test_027(self):
         expected = 'septemvigintillion'
-        actual = functions._get_period_suffix(base_illion=27)
+        actual = functions.get_period_suffix(base_illion=27)
         self.assertMultiLineEqual(expected, actual)
         
     def test_029(self):
         expected = 'novemvigintillion'
-        actual = functions._get_period_suffix(base_illion=29)
+        actual = functions.get_period_suffix(base_illion=29)
         self.assertMultiLineEqual(expected, actual)
         
     def test_033(self):
         expected = 'trestrigintillion'
-        actual = functions._get_period_suffix(base_illion=33)
+        actual = functions.get_period_suffix(base_illion=33)
         self.assertMultiLineEqual(expected, actual)
         
     def test_036(self):
         expected = 'sestrigintillion'
-        actual = functions._get_period_suffix(base_illion=36)
+        actual = functions.get_period_suffix(base_illion=36)
         self.assertMultiLineEqual(expected, actual)
         
     def test_037(self):
         expected = 'septentrigintillion'
-        actual = functions._get_period_suffix(base_illion=37)
+        actual = functions.get_period_suffix(base_illion=37)
         self.assertMultiLineEqual(expected, actual)
         
     def test_039(self):
         expected = 'noventrigintillion'
-        actual = functions._get_period_suffix(base_illion=39)
+        actual = functions.get_period_suffix(base_illion=39)
         self.assertMultiLineEqual(expected, actual)
         
     def test_043(self):
         expected = 'tresquadragintillion'
-        actual = functions._get_period_suffix(base_illion=43)
+        actual = functions.get_period_suffix(base_illion=43)
         self.assertMultiLineEqual(expected, actual)
         
     def test_046(self):
         expected = 'sesquadragintillion'
-        actual = functions._get_period_suffix(base_illion=46)
+        actual = functions.get_period_suffix(base_illion=46)
         self.assertMultiLineEqual(expected, actual)
         
     def test_047(self):
         expected = 'septenquadragintillion'
-        actual = functions._get_period_suffix(base_illion=47)
+        actual = functions.get_period_suffix(base_illion=47)
         self.assertMultiLineEqual(expected, actual)
         
     def test_049(self):
         expected = 'novenquadragintillion'
-        actual = functions._get_period_suffix(base_illion=49)
+        actual = functions.get_period_suffix(base_illion=49)
         self.assertMultiLineEqual(expected, actual)
         
     def test_053(self):
         expected = 'tresquinquagintillion'
-        actual = functions._get_period_suffix(base_illion=53)
+        actual = functions.get_period_suffix(base_illion=53)
         self.assertMultiLineEqual(expected, actual)
         
     def test_056(self):
         expected = 'sesquinquagintillion'
-        actual = functions._get_period_suffix(base_illion=56)
+        actual = functions.get_period_suffix(base_illion=56)
         self.assertMultiLineEqual(expected, actual)
         
     def test_057(self):
         expected = 'septenquinquagintillion'
-        actual = functions._get_period_suffix(base_illion=57)
+        actual = functions.get_period_suffix(base_illion=57)
         self.assertMultiLineEqual(expected, actual)
         
     def test_059(self):
         expected = 'novenquinquagintillion'
-        actual = functions._get_period_suffix(base_illion=59)
+        actual = functions.get_period_suffix(base_illion=59)
         self.assertMultiLineEqual(expected, actual)
         
     def test_067(self):
         expected = 'septensexagintillion'
-        actual = functions._get_period_suffix(base_illion=67)
+        actual = functions.get_period_suffix(base_illion=67)
         self.assertMultiLineEqual(expected, actual)
         
     def test_069(self):
         expected = 'novensexagintillion'
-        actual = functions._get_period_suffix(base_illion=69)
+        actual = functions.get_period_suffix(base_illion=69)
         self.assertMultiLineEqual(expected, actual)
         
     def test_077(self):
         expected = 'septenseptuagintillion'
-        actual = functions._get_period_suffix(base_illion=77)
+        actual = functions.get_period_suffix(base_illion=77)
         self.assertMultiLineEqual(expected, actual)
         
     def test_079(self):
         expected = 'novenseptuagintillion'
-        actual = functions._get_period_suffix(base_illion=79)
+        actual = functions.get_period_suffix(base_illion=79)
         self.assertMultiLineEqual(expected, actual)
         
     def test_086(self):
         expected = 'sexoctogintillion'
-        actual = functions._get_period_suffix(base_illion=86)
+        actual = functions.get_period_suffix(base_illion=86)
         self.assertMultiLineEqual(expected, actual)
         
     def test_087(self):
         expected = 'septemoctogintillion'
-        actual = functions._get_period_suffix(base_illion=87)
+        actual = functions.get_period_suffix(base_illion=87)
         self.assertMultiLineEqual(expected, actual)
         
     def test_089(self):
         expected = 'novemoctogintillion'
-        actual = functions._get_period_suffix(base_illion=89)
+        actual = functions.get_period_suffix(base_illion=89)
         self.assertMultiLineEqual(expected, actual)
         
     def test_106(self):
         expected = 'sexcentillion'
-        actual = functions._get_period_suffix(base_illion=106)
+        actual = functions.get_period_suffix(base_illion=106)
         self.assertMultiLineEqual(expected, actual)
         
     def test_107(self):
         expected = 'septencentillion'
-        actual = functions._get_period_suffix(base_illion=107)
+        actual = functions.get_period_suffix(base_illion=107)
         self.assertMultiLineEqual(expected, actual)
         
     def test_109(self):
         expected = 'novencentillion'
-        actual = functions._get_period_suffix(base_illion=109)
+        actual = functions.get_period_suffix(base_illion=109)
         self.assertMultiLineEqual(expected, actual)
         
     def test_207(self):
         expected = 'septenducentillion'
-        actual = functions._get_period_suffix(base_illion=207)
+        actual = functions.get_period_suffix(base_illion=207)
         self.assertMultiLineEqual(expected, actual)
         
     def test_209(self):
         expected = 'novenducentillion'
-        actual = functions._get_period_suffix(base_illion=209)
+        actual = functions.get_period_suffix(base_illion=209)
         self.assertMultiLineEqual(expected, actual)
         
     def test_303(self):
         expected = 'trestrecentillion'
-        actual = functions._get_period_suffix(base_illion=303)
+        actual = functions.get_period_suffix(base_illion=303)
         self.assertMultiLineEqual(expected, actual)
         
     def test_306(self):
         expected = 'sestrecentillion'
-        actual = functions._get_period_suffix(base_illion=306)
+        actual = functions.get_period_suffix(base_illion=306)
         self.assertMultiLineEqual(expected, actual)
         
     def test_307(self):
         expected = 'septentrecentillion'
-        actual = functions._get_period_suffix(base_illion=307)
+        actual = functions.get_period_suffix(base_illion=307)
         self.assertMultiLineEqual(expected, actual)
         
     def test_309(self):
         expected = 'noventrecentillion'
-        actual = functions._get_period_suffix(base_illion=309)
+        actual = functions.get_period_suffix(base_illion=309)
         self.assertMultiLineEqual(expected, actual)
         
     def test_403(self):
         expected = 'tresquadringentillion'
-        actual = functions._get_period_suffix(base_illion=403)
+        actual = functions.get_period_suffix(base_illion=403)
         self.assertMultiLineEqual(expected, actual)
         
     def test_406(self):
         expected = 'sesquadringentillion'
-        actual = functions._get_period_suffix(base_illion=406)
+        actual = functions.get_period_suffix(base_illion=406)
         self.assertMultiLineEqual(expected, actual)
         
     def test_407(self):
         expected = 'septenquadringentillion'
-        actual = functions._get_period_suffix(base_illion=407)
+        actual = functions.get_period_suffix(base_illion=407)
         self.assertMultiLineEqual(expected, actual)
         
     def test_409(self):
         expected = 'novenquadringentillion'
-        actual = functions._get_period_suffix(base_illion=409)
+        actual = functions.get_period_suffix(base_illion=409)
         self.assertMultiLineEqual(expected, actual)
         
     def test_503(self):
         expected = 'tresquingentillion'
-        actual = functions._get_period_suffix(base_illion=503)
+        actual = functions.get_period_suffix(base_illion=503)
         self.assertMultiLineEqual(expected, actual)
         
     def test_506(self):
         expected = 'sesquingentillion'
-        actual = functions._get_period_suffix(base_illion=506)
+        actual = functions.get_period_suffix(base_illion=506)
         self.assertMultiLineEqual(expected, actual)
         
     def test_507(self):
         expected = 'septenquingentillion'
-        actual = functions._get_period_suffix(base_illion=507)
+        actual = functions.get_period_suffix(base_illion=507)
         self.assertMultiLineEqual(expected, actual)
         
     def test_509(self):
         expected = 'novenquingentillion'
-        actual = functions._get_period_suffix(base_illion=509)
+        actual = functions.get_period_suffix(base_illion=509)
         self.assertMultiLineEqual(expected, actual)
         
     def test_607(self):
         expected = 'septensescentillion'
-        actual = functions._get_period_suffix(base_illion=607)
+        actual = functions.get_period_suffix(base_illion=607)
         self.assertMultiLineEqual(expected, actual)
         
     def test_609(self):
         expected = 'novensescentillion'
-        actual = functions._get_period_suffix(base_illion=609)
+        actual = functions.get_period_suffix(base_illion=609)
         self.assertMultiLineEqual(expected, actual)
         
     def test_707(self):
         expected = 'septenseptingentillion'
-        actual = functions._get_period_suffix(base_illion=707)
+        actual = functions.get_period_suffix(base_illion=707)
         self.assertMultiLineEqual(expected, actual)
         
     def test_709(self):
         expected = 'novenseptingentillion'
-        actual = functions._get_period_suffix(base_illion=709)
+        actual = functions.get_period_suffix(base_illion=709)
         self.assertMultiLineEqual(expected, actual)
         
     def test_806(self):
         expected = 'sexoctingentillion'
-        actual = functions._get_period_suffix(base_illion=806)
+        actual = functions.get_period_suffix(base_illion=806)
         self.assertMultiLineEqual(expected, actual)
         
     def test_807(self):
         expected = 'septemoctingentillion'
-        actual = functions._get_period_suffix(base_illion=807)
+        actual = functions.get_period_suffix(base_illion=807)
         self.assertMultiLineEqual(expected, actual)
         
     def test_809(self):
         expected = 'novemoctingentillion'
-        actual = functions._get_period_suffix(base_illion=809)
+        actual = functions.get_period_suffix(base_illion=809)
         self.assertMultiLineEqual(expected, actual)
         
         
