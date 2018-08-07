@@ -66,8 +66,14 @@ def spell_integer(number):
     :param number: a positive integer to be spelt
     :return: the spelling of the given integer as a string
     """
-    number = str(number)
-    
+    number = re.sub('\.0+$', repl='', string=str(number))
+    sci = re.match('^(?P<bwn>\d+)(?P<dec>\.?)(?P<bfr>\d*)e\+?(?P<exp>\d+)$', string=number, flags=re.IGNORECASE)
+    if sci:
+        number = '{num}{z:0{width}d}'.format(
+            num='{bwn}{bfr}'.format(**sci.groupdict()), z=0,
+            width=int(sci.group('exp'))-len(sci.group('bfr'))
+        )
+        
     if number == '-0':
         return 'zero'
     if number[0] == '-':
