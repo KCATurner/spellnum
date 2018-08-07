@@ -457,6 +457,31 @@ class SpellIntegerTests(unittest.TestCase):
     def tearDown(self):
         pass
     
+    def test_SciInputFloat(self):
+        expected = 'one hundred twenty-three vigintillion'
+        actual = functions.spell_integer(number=1.23e65)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputFloatShifted(self):
+        expected = 'one hundred twenty-three vigintillion'
+        actual = functions.spell_integer(number=12.3e64)
+        self.assertMultiLineEqual(expected, actual)
+    
+    def test_SciInputString(self):
+        expected = 'one hundred twenty-three vigintillion'
+        actual = functions.spell_integer(number='1.23e65')
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputStringCaps(self):
+        expected = 'one hundred twenty-three vigintillion'
+        actual = functions.spell_integer(number='1.23E65')
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputStringPadded(self):
+        expected = 'one hundred twenty-three vigintillion'
+        actual = functions.spell_integer(number='01.230e065')
+        self.assertMultiLineEqual(expected, actual)
+    
     def test_000000(self):
         expected = 'zero'
         actual = functions.spell_integer(number=0)
