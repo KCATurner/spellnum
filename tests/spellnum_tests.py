@@ -1,5 +1,5 @@
 import unittest
-import spellnum
+import spellnum.spellnum as spellnum
 
 
 class SpellPeriodTests(unittest.TestCase):
