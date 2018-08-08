@@ -7,19 +7,19 @@ The spellnum module is currently comprised of three different files: lexicon.py,
 ## lexicon.py
 lexicon.py is home to a set of tuples containing number name and period suffix component strings. They are defined in such a way that indexing them will return the appropriate number name or period prefix for the index given (all lowercase). For example, the following code would print the word 'thirteen':
 ```
->>> from spellnum.lexicon import *
+>>> from spellnum import *
 >>> NUMS_LT_TWENTY[13]
 'thirteen'
 ```
 For functional purposes, the first index for most of the lexicon's tuples is an empty string as opposed to being the string literal 'zero' ...
 ```
->>> from spellnum.lexicon import *
+>>> from spellnum import *
 >>> NUMS_LT_TWENTY[0:2]
 ('', 'one')
 ```
 ... and in the case of TENS_GE_TWENTY, the second index is also an empty string:
 ```
->>> from spellnum.lexicon import *
+>>> from spellnum import *
 >>> TENS_GE_TWENTY[0:3]
 ('', '', 'twenty')
 ```
