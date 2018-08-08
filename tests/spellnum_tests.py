@@ -449,7 +449,7 @@ class PeriodSuffixTests(unittest.TestCase):
         self.assertMultiLineEqual(expected, actual)
         
         
-class SpellIntegerTests(unittest.TestCase):
+class SpellNumberTests(unittest.TestCase):
     
     def setUp(self):
         pass
@@ -457,57 +457,112 @@ class SpellIntegerTests(unittest.TestCase):
     def tearDown(self):
         pass
     
-    def test_SciInputFloat(self):
-        expected = 'one hundred twenty-three vigintillion'
-        actual = functions.spell_integer(number=1.23e65)
+    def test_SciInputFloat_XdXeX(self):
+        expected = 'one billion two hundred million'
+        actual = functions.spell_number(num=1.2e9)
         self.assertMultiLineEqual(expected, actual)
         
-    def test_SciInputFloatShifted(self):
-        expected = 'one hundred twenty-three vigintillion'
-        actual = functions.spell_integer(number=12.3e64)
-        self.assertMultiLineEqual(expected, actual)
-    
-    def test_SciInputString(self):
-        expected = 'one hundred twenty-three vigintillion'
-        actual = functions.spell_integer(number='1.23e65')
+    def test_SciInputFloat_XdXenX(self):
+        expected = 'twelve ten billionths'
+        actual = functions.spell_number(num=1.2e-9)
         self.assertMultiLineEqual(expected, actual)
         
-    def test_SciInputStringCaps(self):
-        expected = 'one hundred twenty-three vigintillion'
-        actual = functions.spell_integer(number='1.23E65')
+    def test_SciInputFloat_0dXeXXX(self):
+        expected = 'one duotrigintillion'
+        actual = functions.spell_number(num=0.1e100)
         self.assertMultiLineEqual(expected, actual)
         
-    def test_SciInputStringPadded(self):
-        expected = 'one hundred twenty-three vigintillion'
-        actual = functions.spell_integer(number='01.230e065')
+    def test_SciInputFloat_Xd0eXXX(self):
+        expected = 'ten duotrigintillion'
+        actual = functions.spell_number(num=1.0e100)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputFloat_XXXdXXXeXXX(self):
+        expected = 'one trestrigintillion two hundred thirty-four duotrigintillion five hundred sixty untrigintillion'
+        actual = functions.spell_number(num=123.456e100)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputFloat_0XXXdXXX0e0XXX(self):
+        expected = 'one trestrigintillion two hundred thirty-four duotrigintillion five hundred sixty untrigintillion'
+        actual = functions.spell_number(num=0123.4560e0100)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputString_XdXenXXX(self):
+        expected = 'twelve one hundred duotrigintillionths'
+        actual = functions.spell_number(num='1.2e-100')
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputString_XdXeXXX(self):
+        expected = 'one duotrigintatrecentillion two hundred untrigintatrecentillion'
+        actual = functions.spell_number(num='1.2e999')
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputString_XdXEXXX(self):
+        expected = 'one duotrigintatrecentillion two hundred untrigintatrecentillion'
+        actual = functions.spell_number(num='1.2E999')
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputString_XXXdXXXeXXX(self):
+        expected = 'one hundred twenty-three duotrigintatrecentillion four hundred fifty-six untrigintatrecentillion'
+        actual = functions.spell_number(num='123.456e999')
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_SciInputString_0XXXdXXX0e0XXX(self):
+        expected = 'one hundred twenty-three duotrigintatrecentillion four hundred fifty-six untrigintatrecentillion'
+        actual = functions.spell_number(num='0123.4560e0999')
         self.assertMultiLineEqual(expected, actual)
     
     def test_000000(self):
         expected = 'zero'
-        actual = functions.spell_integer(number=0)
+        actual = functions.spell_number(num=0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_001000(self):
         expected = 'one thousand'
-        actual = functions.spell_integer(number=1000)
+        actual = functions.spell_number(num=1000)
         self.assertMultiLineEqual(expected, actual)
         
     def test_001111(self):
         expected = 'one thousand one hundred eleven'
-        actual = functions.spell_integer(number=1111)
+        actual = functions.spell_number(num=1111)
         self.assertMultiLineEqual(expected, actual)
         
     def test_001Million(self):
         expected = 'one million'
-        actual = functions.spell_integer(number=1000000)
+        actual = functions.spell_number(num=1000000)
         self.assertMultiLineEqual(expected, actual)
         
     def test_010Million(self):
         expected = 'ten million'
-        actual = functions.spell_integer(number=10000000)
+        actual = functions.spell_number(num=10000000)
         self.assertMultiLineEqual(expected, actual)
         
     def test_100Million(self):
         expected = 'one hundred million'
-        actual = functions.spell_integer(number=100000000)
+        actual = functions.spell_number(num=100000000)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_Tenths(self):
+        expected = 'twelve million three hundred forty-five thousand six hundred seventy-eight and nine tenths'
+        actual = functions.spell_number(num=12345678.9)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_Hundredths(self):
+        expected = 'one million two hundred thirty-four thousand five hundred sixty-seven and eighty-nine one hundredths'
+        actual = functions.spell_number(num=1234567.89)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_Thousandths(self):
+        expected = 'one hundred twenty-three thousand four hundred fifty-six and seven hundred eighty-nine one thousandths'
+        actual = functions.spell_number(num=123456.789)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_TenThousandths(self):
+        expected = 'twelve thousand three hundred forty-five and six thousand seven hundred eighty-nine ten thousandths'
+        actual = functions.spell_number(num=12345.6789)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_HundredThousandths(self):
+        expected = 'one thousand two hundred thirty-four and fifty-six thousand seven hundred eighty-nine one hundred thousandths'
+        actual = functions.spell_number(num=1234.56789)
         self.assertMultiLineEqual(expected, actual)
