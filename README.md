@@ -50,17 +50,17 @@ This function constructs the spelling for an individual number period consisting
 'one hundred twenty-three'
 ```
 
-### spell_integer(number)
-The **spell_integer** function is the main focus of the module. It will return the english short-scale spelling for the **number** argument which can be any positive or negative integer with an absolute value less than 10<sup>3003</sup> (1 Millinillion). That's a 1 followed by 3003 zeros. To put that into perspective, most of the scientific community seems to agree that there are somewhere between 10<sup>78</sup> and 10<sup>82</sup> atoms in the known universe... If you need a bigger number spelled, you'll just have to look elsewhere. When **number** falls outside the aforementioned range, the subsequent call to **get_period_suffix** will raise a value error as the **base_illion** argument will fall outside the range [-1, 1000). The **number** argument can be a integer, float, or string.
+### spell_number(number)
+The **spell_number** function is the main focus of the module. It will return the english short-scale spelling for the **number** argument which can be any positive or negative integer with an absolute value less than 10<sup>3003</sup> (1 Millinillion). That's a 1 followed by 3003 zeros. To put that into perspective, most of the scientific community seems to agree that there are somewhere between 10<sup>78</sup> and 10<sup>82</sup> atoms in the known universe... If you need a bigger number spelled, you'll just have to look elsewhere. When **number** falls outside the aforementioned range, the subsequent call to **get_period_suffix** will raise a value error as the **base_illion** argument will fall outside the range [-1, 1000). The **number** argument can be a integer, float, or string.
 
-It should be noted that **spell_integer** *can* handle values that exceed the numerical limitations on float types. Pass **number** as a string using scientific notation for values greater than the maximum float value: 1.7976931348623157e+308.
+It should be noted that **spell_number** *can* handle values that exceed the numerical limitations on float types. Pass **number** as a string using scientific notation for values requiring more precision or values greater maximum and minimum float values.
 #### Examples
 ```
 >>> from spellnum import *
->>> spell_integer(-123456)
+>>> spell_number(-123456)
 'negative one hundred twenty-three thousand four hundred fifty-six'
->>> spell_integer(4.56e100)
+>>> spell_number(4.56e100)
 'forty-five duotrigintillion six hundred untrigintillion'
->>> spell_integer('7.89e500')
+>>> spell_number('7.89e500')
 'seven hundred eighty-nine quinquasexagintacentillion'
 ```
