@@ -14,7 +14,7 @@ if __name__ == '__main__':
             print("Enter a number or type 'exit' to quit")
             continue
         while number != 4:
-            spelling = spellnum.spell_integer(number)
+            spelling = spellnum.spell_number(number)
             print('{0:,}: {1}'.format(int(number), spelling))
             number = len(spelling.translate(None, ' -'))
         print('4: four')

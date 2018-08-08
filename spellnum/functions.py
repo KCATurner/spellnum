@@ -59,28 +59,34 @@ def get_period_spelling(period):
     return '{0} {1}'.format(prefix, suffix).strip()
 
 
-def spell_integer(number):
+def spell_number(num):
     """
-    Constructs the English short-scale spelling of the given integer
+    Constructs the English short-scale spelling of the given number
     
-    :param number: a positive integer to be spelt
-    :return: the spelling of the given integer as a string
+    :param num: a number to be spelt
+    :return: the spelling of the given number as a string
     """
-    number = re.sub('\.0+$', repl='', string=str(number))
-    sci = re.match('^(?P<bwn>\d+)(?P<dec>\.?)(?P<bfr>\d*)e\+?(?P<exp>\d+)$', string=number, flags=re.IGNORECASE)
+    sci = re.match('^(?P<base>(?P<whole>\d+)\.?\d*)e\+?(?P<exp>-?\d+)$', string=str(num), flags=re.IGNORECASE)
     if sci:
-        number = '{num}{z:0{width}d}'.format(
-            num='{bwn}{bfr}'.format(**sci.groupdict()), z=0,
-            width=int(sci.group('exp'))-len(sci.group('bfr'))
-        )
-        
-    if number == '-0':
-        return 'zero'
-    if number[0] == '-':
-        return 'negative {0}'.format(spell_integer(number=number[1:]))
+        pos = sci.end('whole') + int(sci.group('exp'))
+        num = sci.group('base').replace('.', '')
+        if pos >= len(sci.group('base')):
+            num = '{num}{zeros}'.format(num=num, zeros=''.zfill(pos-len(num)))
+        elif pos <= 0:
+            num = '0.{zeros}{num}'.format(zeros=''.zfill(abs(pos)), num=num)
+        else:
+            num = num[:pos] + '.' + num[pos:]
     
-    number = '{:,}'.format(int(number))
-    periods = number.split(',')
+    match = re.match('^-?0*(\d+)\.?(\d*[1-9]+)?0*$', string=str(num))
+    if not match:
+        raise ValueError(messages.ERROR_INVALID_NUMBER.format(num=num))
+    
+    whole, fraction = match.group(1, 2)
+    
+    if whole.startswith('-') and (int(whole) or int(fraction)):
+        return 'negative {spelling}'.format(spelling=spell_number(num=num[1:]))
+    
+    periods = '{:,}'.format(int(whole)).split(',')
     base_illion = len(periods) - 2
     
     result = str()
@@ -92,4 +98,9 @@ def spell_integer(number):
             )
         base_illion -= 1
         
+    if fraction is not None:
+        numerator = spell_number(fraction)
+        denominator = spell_number('{one}{z:0{width}d}'.format(one=1, z=0, width=len(fraction)))
+        result += '{a}{num} {den}ths'.format(a='and ' if result else '', num=numerator, den=denominator)
+    
     return result.strip() or 'zero'
