@@ -278,6 +278,11 @@ class GetPeriodSuffixLexicalControlTests(TestCase):
         actual = functions.get_period_suffix(base_illion=99)
         self.assertMultiLineEqual(expected, actual)
         
+    def test_300(self):
+        expected = 'trecentillion'
+        actual = functions.get_period_suffix(base_illion=300)
+        self.assertMultiLineEqual(expected, actual)
+        
         
 class GetPeriodSuffixLexicalExceptionTests(TestCase):
     """
