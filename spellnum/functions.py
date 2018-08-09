@@ -30,10 +30,11 @@ def get_period_suffix(base_illion):
     )
     
     # catches and corrects lexical component combination exceptions
-    result = re.sub('(?<=^se)(?=[co])', repl='x', string=result)
-    result = re.sub('(?<=^se)(?=[qtv])|(?<=^tre)(?=[coqtv])', repl='s', string=result)
-    result = re.sub('(?<=^septe)(?=[ov])|(?<=^nove)(?=[ov])', repl='m', string=result)
-    result = re.sub('(?<=^septe)(?=[cdqst])|(?<=nove)(?=[cdqst])', repl='n', string=result)
+    if lexicon.PERIOD_COMPONENTS_UNIT[(base_illion % 10) // 1] in ('tre', 'se', 'septe', 'nove'):
+        result = re.sub('(?<=^se)(?=[co])', repl='x', string=result)
+        result = re.sub('(?<=^se)(?=[qtv])|(?<=^tre)(?=[coqtv])', repl='s', string=result)
+        result = re.sub('(?<=^septe)(?=[ov])|(?<=^nove)(?=[ov])', repl='m', string=result)
+        result = re.sub('(?<=^septe)(?=[cdqst])|(?<=nove)(?=[cdqst])', repl='n', string=result)
     
     return result.replace('allion', 'illion')
 
