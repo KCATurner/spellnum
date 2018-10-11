@@ -117,6 +117,6 @@ def spell_number(num):
     if fraction is not None:
         numerator = spell_number(fraction)
         denominator = spell_number('{one}{zeros}'.format(one=1, zeros=''.zfill(len(fraction))))
-        result += '{a}{num} {den}ths'.format(a=' and ' if result else '', num=numerator, den=denominator)
+        result += '{a}{num} {den}ths'.format(a='and ' if result else '', num=numerator, den=denominator)
         
     return result.strip() or 'zero'
