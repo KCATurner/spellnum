@@ -6,13 +6,12 @@ from spellnum import messages
 
 
 def get_period_suffix(base_illion):
-    # type: (int) -> str
     """
     Constructs the period name/suffix from tuples of lexical components using each digit in the given base-illion
     value; currently limited to base-illion values less than 1000 (millinillion)
     
-    :param base_illion: The base-illion value of the period name
-    :return: The suffix for the period with the given base-illion
+    :param int base_illion: The base-illion value of the period name
+    :return str: The suffix for the period with the given base-illion
     """
     # catches input outside function capabilities
     if base_illion not in range(-1, 1000, 1):
@@ -40,12 +39,11 @@ def get_period_suffix(base_illion):
 
 
 def get_period_spelling(period):
-    # type: (int) -> str
     """
     Constructs the English spelling of the given integer
     
-    :param period: a positive integer less than 1000
-    :return: the spelling of the given integer as a string
+    :param int period: a positive integer less than 1000
+    :return str: the spelling of the given integer as a string
     """
     # catches invalid input
     if period not in range(0, 1000, 1):
@@ -71,8 +69,8 @@ def spell_number(num):
     """
     Constructs the English short-scale spelling of the given number
     
-    :param num: a number to be spelt
-    :return: the spelling of the given number as a string
+    :param any num: a number to be spelt
+    :return str: the spelling of the given number as a string
     """
     # parses input if given in scientific notation (preserves precession for string inputs)
     sci = re.match('^(?P<base>(?P<whole>\d+)\.?\d*)e\+?(?P<exp>-?\d+)$', string=str(num), flags=re.IGNORECASE)
@@ -87,16 +85,16 @@ def spell_number(num):
             num = num[:pos] + '.' + num[pos:]
             
     # catch invalid num input
-    match = re.match('^-?0*(\d+)\.?(\d*[1-9]+)?0*$', string=str(num))
+    match = re.match('^(-?)0*(\d+)\.?(\d*[1-9]+)?0*$', string=str(num))
     if not match:
         raise ValueError(messages.ERROR_INVALID_NUMBER.format(num=num))
     
     # split number into key components
-    whole, fraction = match.group(1, 2)
+    sign, whole, fraction = match.group(1, 2, 3)
     
     # catches negative numbers
-    if whole.startswith('-') and (int(whole) or int(fraction)):
-        return 'negative {spelling}'.format(spelling=spell_number(num=num[1:]))
+    if sign == '-' and (int(whole) or int(fraction)):
+        return 'negative {spelling}'.format(spelling=spell_number(num=str(num)[1:]))
     
     # splits number into list of periods
     periods = '{w:,}'.format(w=int(whole)).split(',')
@@ -110,13 +108,13 @@ def spell_number(num):
             result += ' {sp} {suf}'.format(
                 sp=get_period_spelling(period=int(period)),
                 suf=get_period_suffix(base_illion=base_illion)
-            )
+            ).rstrip()
         base_illion -= 1
         
     # appends spelling for any fraction component
     if fraction is not None:
         numerator = spell_number(fraction)
         denominator = spell_number('{one}{zeros}'.format(one=1, zeros=''.zfill(len(fraction))))
-        result += '{a}{num} {den}ths'.format(a='and ' if result else '', num=numerator, den=denominator)
+        result += '{a}{num} {den}ths'.format(a=' and ' if result else '', num=numerator, den=denominator)
         
     return result.strip() or 'zero'

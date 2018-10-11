@@ -716,3 +716,23 @@ class SpellNumberWithFractionTests(TestCase):
         expected = 'one thousand and twenty thousand three one hundred thousandths'
         actual = functions.spell_number(num=1000.20003)
         self.assertMultiLineEqual(expected, actual)
+        
+    def test_OneMillionths(self):
+        expected = 'one hundred and two hundred thousand three one millionths'
+        actual = functions.spell_number(num=100.200003)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_TenMillionths(self):
+        expected = 'ten and two million three ten millionths'
+        actual = functions.spell_number(num=10.2000003)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_OneHundredMillionths(self):
+        expected = 'one and twenty million three one hundred millionths'
+        actual = functions.spell_number(num=1.20000003)
+        self.assertMultiLineEqual(expected, actual)
+        
+    def test_OneBillionths(self):
+        expected = 'two hundred million three one billionths'
+        actual = functions.spell_number(num=.200000003)
+        self.assertMultiLineEqual(expected, actual)
