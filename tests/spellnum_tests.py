@@ -1,5 +1,5 @@
 """
-Unit tests for spellnum module
+Unit tests for spellnum module.
 """
 
 import unittest
@@ -12,17 +12,17 @@ class LexiconStructure(unittest.TestCase):
     """
     
     def test_1DigitIntegers(self):
-        self.assertTupleEqual(spellnum.lexicon.UNIQUE_WORDS[:9],
+        self.assertTupleEqual(spellnum.lexicon.__UNIQUE_WORDS[:9],
                               spellnum.lexicon.INTEGERS_LT_1000[:9])
         
     def test_2DigitIntegers(self):
         self.assertTupleEqual(spellnum.lexicon.INTEGERS_LT_1000[10:99],
-                              spellnum.lexicon.INTEGERS_LT_100[10:99])
+                              spellnum.lexicon.__INTEGERS_LT_100[10:99])
             
     def test_3DigitIntegers(self):
         for index in range(100, 1000):
             self.assertRegex(spellnum.lexicon.INTEGERS_LT_1000[index],
-                             f'^[a-z]+ hundred {spellnum.lexicon.INTEGERS_LT_100[index%100]}'.strip())
+                             f'^[a-z]+ hundred {spellnum.lexicon.__INTEGERS_LT_100[index%100]}'.strip())
             
             
 class LexicalExceptions(unittest.TestCase):
