@@ -98,8 +98,7 @@ def spell_number(number):
     # append spelling for any fraction component
     fraction = dec_match.group('frac')
     result += (f"{' and ' if result else ''}{spell_number(fraction)} "
-               f"{spell_number(f'1{str().zfill(len(fraction))}')}ths") if fraction else ''
-    
-    # Todo: remove 's' from 'ths' for singular fractions. i.e. 'one tenth' instead of 'one tenths'
+               f"{spell_number(f'1{str().zfill(len(fraction))}')}th"
+               f"{'s' if spell_number(fraction) != 'one' else ''}") if fraction else ''
     
     return result.strip() or 'zero'

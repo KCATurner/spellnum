@@ -12,17 +12,17 @@ class LexiconStructure(unittest.TestCase):
     """
     
     def test_1DigitIntegers(self):
-        self.assertTupleEqual(spellnum.lexicon.__UNIQUE_WORDS[:9],
+        self.assertTupleEqual(spellnum.lexicon._UNIQUE_WORDS[:9],
                               spellnum.lexicon.INTEGERS_LT_1000[:9])
         
     def test_2DigitIntegers(self):
         self.assertTupleEqual(spellnum.lexicon.INTEGERS_LT_1000[10:99],
-                              spellnum.lexicon.__INTEGERS_LT_100[10:99])
-            
+                              spellnum.lexicon._INTEGERS_LT_100[10:99])
+        
     def test_3DigitIntegers(self):
         for index in range(100, 1000):
             self.assertRegex(spellnum.lexicon.INTEGERS_LT_1000[index],
-                             f'^[a-z]+ hundred {spellnum.lexicon.__INTEGERS_LT_100[index%100]}'.strip())
+                             f'^[a-z]+ hundred {spellnum.lexicon._INTEGERS_LT_100[index%100]}'.strip())
             
             
 class LexicalExceptions(unittest.TestCase):
@@ -304,3 +304,11 @@ class SpellNumberFractions(unittest.TestCase):
         expected = 'two hundred million three one billionths'
         self.assertMultiLineEqual(expected, spellnum.spell_number(.200000003))
         self.assertMultiLineEqual(expected, spellnum.spell_number('.200000003'))
+        
+    def test_SingularFractions(self):
+        self.assertMultiLineEqual('one tenth', spellnum.spell_number(0.1))
+        self.assertMultiLineEqual('one tenth', spellnum.spell_number('0.1'))
+        self.assertMultiLineEqual('one one hundredth', spellnum.spell_number(0.01))
+        self.assertMultiLineEqual('one one hundredth', spellnum.spell_number('0.01'))
+        self.assertMultiLineEqual('one ten quadragintillionth', spellnum.spell_number(0.1e-123))
+        self.assertMultiLineEqual('one ten quadragintillionth', spellnum.spell_number('0.1e-123'))

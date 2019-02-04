@@ -3,21 +3,21 @@ Separate home for lexical components used by spellnum functions.
 """
 
 # index-aligned unique spellings
-__UNIQUE_WORDS = tuple(['', 'one', 'two', 'three', 'four',
-                        'five', 'six', 'seven', 'eight', 'nine',
-                        'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
-                        'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen',
-                        'twenty', *['']*9, 'thirty', *['']*9, 'forty', *['']*9, 'fifty', *['']*9,
-                        'sixty', *['']*9, 'seventy', *['']*9, 'eighty', *['']*9, 'ninety', *['']*9])
+_UNIQUE_WORDS = tuple(['', 'one', 'two', 'three', 'four',
+                       'five', 'six', 'seven', 'eight', 'nine',
+                       'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
+                       'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen',
+                       'twenty', *['']*9, 'thirty', *['']*9, 'forty', *['']*9, 'fifty', *['']*9,
+                       'sixty', *['']*9, 'seventy', *['']*9, 'eighty', *['']*9, 'ninety', *['']*9])
 
 # index-aligned 2 digit spellings
-__INTEGERS_LT_100 = tuple([*__UNIQUE_WORDS[:20],
-                           *((f'{__UNIQUE_WORDS[10*(i//10)]}-'
-                              f'{__UNIQUE_WORDS[i%10]}').strip('-') for i in range(20, 100))])
+_INTEGERS_LT_100 = tuple([*_UNIQUE_WORDS[:20],
+                          *((f'{_UNIQUE_WORDS[10*(i//10)]}-'
+                             f'{_UNIQUE_WORDS[i%10]}').strip('-') for i in range(20, 100))])
 
 # index-aligned 3 digit spellings
-INTEGERS_LT_1000 = tuple([*((f"{__INTEGERS_LT_100[i//100] + ' hundred' if i >= 100 else ''} "
-                             f"{__INTEGERS_LT_100[i%100]}").strip() for i in range(1000))])
+INTEGERS_LT_1000 = tuple([*((f"{_INTEGERS_LT_100[i//100] + ' hundred' if i >= 100 else ''} "
+                             f"{_INTEGERS_LT_100[i%100]}").strip() for i in range(1000))])
 
 UNIQUE_PERIODS = ('thousand', 'million', 'billion', 'trillion', 'quadrillion',
                   'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion')
