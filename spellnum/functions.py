@@ -82,8 +82,7 @@ def spell_number(number):
     
     # catch negative numbers
     if dec_match.group('sign') == '-':
-        result = spell_number(number[1:])
-        return f'negative {result}'
+        return f'negative {spell_number(number[1:])}'
     
     result = str()
     # split number into list of periods
