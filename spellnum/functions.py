@@ -72,7 +72,7 @@ def spell_number(number):
         shift = int(sci_match.group('exp'))
         position = sci_match.start('frac') + shift
         number = (f'{sci_match.group("sign")}'
-                  f'{digits[:position]}{"".zfill(abs(max(shift - len(sci_match.group("frac")), 1)))}.'
+                  f'{digits[:position]}{"".zfill(abs(max(shift - len(sci_match.group("frac")), 0)))}.'
                   f'{"".zfill(abs(min(len(sci_match.group("whole")) + shift, 0)))}{digits[position:]}')
         
     # catch invalid decimal strings
