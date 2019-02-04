@@ -1,4 +1,3 @@
-from lexicon import *
-from functions import *
+from spellnum.functions import *
 
 __name__ = "spellnum"
