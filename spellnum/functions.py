@@ -2,20 +2,29 @@
 Functions of the spellnum module.
 """
 
-from __future__ import absolute_import, division, print_function
-
-import re
+from re import compile
 from spellnum import lexicon
-from spellnum import messages
 
 
-__RE_X_EXCEPTION = re.compile(r'(?<=^se)(?=[co])')
-__RE_S_EXCEPTION = re.compile(r'(?<=^se)(?=[qtv])|(?<=^tre)(?=[coqtv])')
-__RE_M_EXCEPTION = re.compile(r'(?<=^septe)(?=[ov])|(?<=^nove)(?=[ov])')
-__RE_N_EXCEPTION = re.compile(r'(?<=^septe)(?=[cdqst])|(?<=nove)(?=[cdqst])')
-__RE_BASE_ILLION = re.compile(r'^(?P<sign>[-+]?)0*?(?P<value>\d{1,3})$')
-__RE_FLOAT_DEC = re.compile(r'^(?P<sign>[-+]?)(?P<whole>\d*)\.?(?P<frac>\d*[1-9]+)?0*$')
-__RE_FLOAT_SCI = re.compile(r'^(?P<sign>[-+]?)(?P<base>(?P<whole>\d*)\.?(?P<frac>\d*))[eE](?P<exp>[-+]?\d+)$')
+__RE_X_EXCEPTION = compile(r'(?<=^se)(?=[co])')
+__RE_S_EXCEPTION = compile(r'(?<=^se)(?=[qtv])|(?<=^tre)(?=[coqtv])')
+__RE_M_EXCEPTION = compile(r'(?<=^septe)(?=[ov])|(?<=^nove)(?=[ov])')
+__RE_N_EXCEPTION = compile(r'(?<=^septe)(?=[cdqst])|(?<=nove)(?=[cdqst])')
+
+__RE_BASE_ILLION = compile(r'^(?P<sign>[-+]?)0*?(?P<value>\d{1,3})(\.0+)?$')
+__RE_VALID_FLOAT = compile((r'^(?P<sign>[-+]?)(?# capture sign if exists)'
+                            r'0*(?# match, but exclude leading zeros from whole)'
+                            r'(?P<whole>\d+)?(?# capture whole number value)'
+                            r'\.?(?# match decimal that may come after whole number)'
+                            r'(?P<fraction>(?<=\.)(?# must follow decimal)\d*[1-9])?'
+                            r'0*(?# match, but exclude trailing zeros from fraction)'
+                            r'(?<!\.)(?# e/E cannot follow decimal without fraction)'
+                            r'[eE]?(?# match, but exclude e/E from exponent)'
+                            r'(?P<exponent>(?<=[eE])(?# must follow e/E)[-+]?\d+)'
+                            r'?(?<=\d)(?# match must end with at least one digit)$'))
+
+__ERROR_INVALID_BASEILLION = 'base-illion must be an integer in the range [-1, 1000)'
+__ERROR_INVALID_NUMBER = "we gave it our best, but we don't understand what you meant by "
 
 
 def get_period_suffix(base_illion):
@@ -28,11 +37,11 @@ def get_period_suffix(base_illion):
     :return str: The suffix for the period with the given base-illion
     """
     # capture any numerical integer string input
-    base_illion = int(str(base_illion)) if re.match(__RE_BASE_ILLION, str(base_illion)) else base_illion
+    base_illion = int(str(base_illion)) if __RE_BASE_ILLION.match(str(base_illion)) else base_illion
     
     # catch input outside function capabilities
     if base_illion not in range(-1, 1000, 1):
-        raise ValueError(messages.ERROR_INVALID_BASEILLION)
+        raise ValueError(__ERROR_INVALID_BASEILLION)
     elif base_illion == -1:
         return ''
     elif base_illion < 10:
@@ -46,10 +55,10 @@ def get_period_suffix(base_illion):
     
     # catch and correct lexical component combination exceptions
     if lexicon.PERIOD_COMPONENTS_UNIT[unit] in ('tre', 'se', 'septe', 'nove'):
-        result = re.sub(__RE_X_EXCEPTION, repl='x', string=result)
-        result = re.sub(__RE_S_EXCEPTION, repl='s', string=result)
-        result = re.sub(__RE_M_EXCEPTION, repl='m', string=result)
-        result = re.sub(__RE_N_EXCEPTION, repl='n', string=result)
+        result = __RE_X_EXCEPTION.sub(repl='x', string=result)
+        result = __RE_S_EXCEPTION.sub(repl='s', string=result)
+        result = __RE_M_EXCEPTION.sub(repl='m', string=result)
+        result = __RE_N_EXCEPTION.sub(repl='n', string=result)
         
     return result.replace('allion', 'illion')
 
@@ -58,46 +67,35 @@ def spell_number(number):
     """
     Constructs the English short-scale spelling of the given number.
     
-    :param any number: a number to be spelt
+    :param number: a number to be spelt
     :return str: the spelling of the given number as a string
     """
-    # sterilize input as string and pad if necessary
-    number = '0' + str(number) if str(number).startswith('.') else str(number)
+    # raise exception for invalid numerical input
+    match = __RE_VALID_FLOAT.match(str(number).strip())
+    if not match:
+        raise ValueError(__ERROR_INVALID_NUMBER + str(number))
+    
+    # collect number components
+    sign, whole, fraction, exponent = match.groups(default='')
     
     # parses input if given in scientific notation
-    sci_match = re.match(__RE_FLOAT_SCI, number)
-    if sci_match:
-        digits = sci_match.group('base').replace('.', '')
-        # shift decimal and pad with zeros where necessary
-        shift = int(sci_match.group('exp'))
-        position = sci_match.start('frac') + shift
-        number = (f'{sci_match.group("sign")}'
-                  f'{digits[:position]}{"".zfill(abs(max(shift - len(sci_match.group("frac")), 0)))}.'
-                  f'{"".zfill(abs(min(len(sci_match.group("whole")) + shift, 0)))}{digits[position:]}')
+    if int(exponent or 0):
+        digits = whole + fraction
+        position = len(whole) + int(exponent)
+        whole, fraction = [digits[:max(position, 0):].ljust(max(position, 1), '0'),
+                           digits[max(position, 0)::].rjust(max(len(digits)-position, 1), '0')]
         
-    # catch invalid decimal strings
-    dec_match = re.match(__RE_FLOAT_DEC, number)
-    if not dec_match:
-        raise ValueError(messages.ERROR_INVALID_NUMBER + number)
+    # handle negative numbers recursively
+    if sign == '-' and whole + fraction:
+        return f'negative {spell_number(f"{whole.zfill(1)}.{fraction.zfill(1)}")}'
     
-    # catch negative numbers
-    if dec_match.group('sign') == '-':
-        return f'negative {spell_number(number[1:])}'
+    # spell the whole potion of the number
+    periods = f'{int(whole or 0):,}'.split(',') # splits number into list of periods
+    whole = ' '.join([f'{lexicon.INTEGERS_LT_1000[int(p)]} {get_period_suffix(b)}'
+                      for b, p in zip(range(len(periods)-2, -2, -1), periods) if int(p) > 0]).strip()
     
-    result = str()
-    # split number into list of periods
-    periods = f'{int(dec_match.group("whole") or 0):,}'.split(',')
-    # calculate base-illion value
-    base_illion = len(periods) - 2
-    # construct spelling for the whole number component
-    for period in (int(period) for period in periods):
-        result += f' {lexicon.INTEGERS_LT_1000[period]} {get_period_suffix(base_illion)}'.rstrip() if period > 0 else ''
-        base_illion -= 1
-        
-    # append spelling for any fraction component
-    fraction = dec_match.group('frac')
-    result += (f"{' and ' if result else ''}{spell_number(fraction)} "
-               f"{spell_number(f'1{str().zfill(len(fraction))}')}th"
-               f"{'s' if spell_number(fraction) != 'one' else ''}") if fraction else ''
+    # spell any fractional potion of the number recursively
+    fraction = (f"{spell_number(fraction)} {spell_number(10 ** len(fraction))}th"
+                f"{'s' if int(fraction) > 1 else ''}") if int(fraction or 0) else ''
     
-    return result.strip() or 'zero'
+    return f"{whole}{' and ' if whole and fraction else ''}{fraction}".strip() or 'zero'
