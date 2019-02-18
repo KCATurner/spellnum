@@ -1,5 +1,13 @@
 """
+usage: demo.py [-h] [-nl] [-c4] number
 
+positional arguments:
+  number      a number to spell
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -nl         delimit periods with newlines
+  -c4         execute cosmic four algorithm
 """
 
 import argparse

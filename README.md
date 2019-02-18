@@ -1,11 +1,11 @@
 # Overview
 spellnum is a Python module for spelling really large numbers in english using a small combination of functions and some cleverly built tuples. For more information on the large number names and period naming conventions used by this module see the wikipedia page [here](https://en.wikipedia.org/wiki/Names_of_large_numbers).
 
-# Component Files
-The spellnum module is currently comprised of three different files: `lexicon.py`, `messages.py`, and `functions.py`.
+# Components
+The spellnum module is currently comprised of two primary submodules: `lexicon`, and `functions`.
 
-## lexicon.py
-`lexicon.py` is home to a set of tuples containing number name and period suffix component strings. They are defined in such a way that indexing them will return the appropriate number name or period spelling for the index given (all lowercase). The main construct here is the `INTEGERS_LT_1000` tuple. Indexing this will return the spelling for any integer less than 1000 as the name suggests.
+## lexicon
+`lexicon` is home to a set of tuples containing number name and period suffix component strings. They are defined in such a way that indexing them will return the appropriate number name or period spelling for the index given (all lowercase). The main construct here is the `INTEGERS_LT_1000` tuple. Indexing this will return the spelling for any integer less than 1000 as the name suggests.
 ```
 >>> from spellnum import *
 >>> INTEGERS_LT_1000[7]
@@ -22,11 +22,8 @@ For functional purposes, the first index of lexicon's `INTEGERS_LT_1000` tuple i
 ('', 'one', 'two')
 ```
 
-## messages.py
-`messages.py` is just home to a couple error messages used by the modules functions and it is not implicitly imported with the rest of the module.
-
-## functions.py
-`functions.py` is home to all of the fun stuff, which currently really only consists of two main functions, `get_period_suffix` and `spell_number`.
+## functions
+`functions` is home to all of the fun stuff, which currently really only consists of two main functions, `get_period_suffix` and `spell_number`.
 
 ### `get_period_suffix(base_illion)`
 This function will return the period suffix or full period name for a number with the given base-illion value. `get_period_suffix` raises a ValueError if the **base_illion** argument falls outside the range [-1, 1000). The base-illion property of a number in the short-scale system is equal to one less than the number of periods in the number, where a period is a set of one to three consecutive digits often separated by commas.
