@@ -1,5 +1,5 @@
 """
-usage: demo.py [-h] [-nl] [-c4] number
+usage: spellnum [-h] [-nl] [-c4] number
 
 positional arguments:
   number      a number to spell
@@ -14,17 +14,17 @@ import argparse
 import spellnum
 
 
-HELP_NUMBER = 'a number to spell'
-HELP_NEWLINE = 'delimit periods with newlines'
-HELP_COSMIC4 = 'execute cosmic four algorithm'
-
-
-if __name__ == '__main__':
+def main():
+    """
+    CLI entry point for spellnum
+    """
     parser = argparse.ArgumentParser()
-    parser.add_argument('number', type=str, help=HELP_NUMBER)
-    parser.add_argument('-nl', action='store_true', help=HELP_NEWLINE)
-    parser.add_argument('-c4', action='store_true', help=HELP_COSMIC4)
+    parser.add_argument('number', type=str, help='a number to spell')
+    parser.add_argument('-nl', action='store_true', help='delimit periods with newlines')
+    parser.add_argument('-c4', action='store_true', help='execute cosmic four algorithm')
     args = parser.parse_args()
+    
+    print(f'\n\n{__file__}\n\n')
     
     spelling = str()
     number = args.number
@@ -37,10 +37,14 @@ if __name__ == '__main__':
             spelling = spelling.replace('thousand ', f'thousand{delimiter}')
             print(f'{number}{delimiter if args.nl else ": "}{spelling}')
             number = len(spelling.replace('-', '').replace(' ', ''))
-            
+        
         except ValueError as error:
             print(error)
             break
-            
+        
         if not args.c4:
             break
+
+
+if __name__ == '__main__':
+    main()
