@@ -24,8 +24,6 @@ def main():
     parser.add_argument('-c4', action='store_true', help='execute cosmic four algorithm')
     args = parser.parse_args()
     
-    print(f'\n\n{__file__}\n\n')
-    
     spelling = str()
     number = args.number
     delimiter = '\n' if args.nl else ' '
