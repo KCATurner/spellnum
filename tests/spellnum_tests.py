@@ -25,9 +25,9 @@ class LexiconStructure(unittest.TestCase):
         for index in range(100, 1000):
             hundred = spellnum.lexicon.UNIQUE_WORDS[index // 100]
             tens = spellnum.lexicon.INTEGERS_LT_100[index % 100]
-            expected = f'{hundred} hundred {tens}'.strip()
+            expected = '{} hundred {}'.format(hundred, tens).strip()
             actual = spellnum.lexicon.INTEGERS_LT_1000[index]
-            self.assertRegex(expected, actual)
+            self.assertMultiLineEqual(expected, actual)
             
             
 class SuffixInputValidity(unittest.TestCase):
@@ -408,13 +408,14 @@ class SuffixExceptions(unittest.TestCase):
         
     def test_103_vs_300(self):
         """
-        This is a known 'close' case. It is the reason for conditional in get_period_suffix where
-        lexical component combination exceptions are caught and corrected with regular expressions.
+        This is a known 'close' case. It is the reason for conditional
+        in get_period_suffix where lexical component combination
+        exceptions are caught and corrected with regular expressions.
         A base-illion of 103 should return 'trescentillion' since it IS an exception.
         A base-illion of 300 should return 'trecentillion' since it IS NOT an exception.
         """
-        trescentillion = spellnum.functions.spell_number(103)
-        trecentillion = spellnum.functions.spell_number(300)
+        trescentillion = spellnum.functions.get_period_suffix(103)
+        trecentillion = spellnum.functions.get_period_suffix(300)
         self.assertNotEqual(trescentillion, trecentillion)
         
         
@@ -464,77 +465,75 @@ class SpellingInputValidity(unittest.TestCase):
     def test_string_dXXX(self):
         expected = 'one hundred twenty-three one thousandths'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('.123'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-.123'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-.123'))
         
     def test_string_ndXXX(self):
         expected = 'one hundred twenty-three one thousandths'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('.123'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-.123'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-.123'))
         
     def test_ValidFormat_dXeX(self):
         expected = 'one hundred million'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number(.1e9))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('.1e9'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-.1e9))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-.1e9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-.1e9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-.1e9'))
         
     def test_ValidFormat_XdXEX(self):
         expected = 'one billion two hundred million'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.2E9))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.2E9'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-1.2E9))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-1.2E9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-1.2E9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.2E9'))
         
     def test_ValidFormat_XdXeX(self):
         expected = 'one billion two hundred million'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.2e9))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.2e9'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-1.2e9))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-1.2e9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-1.2e9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.2e9'))
         
     def test_ValidFormat_XdXenX(self):
         expected = 'twelve ten billionths'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.2e-9))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.2e-9'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-1.2e-9))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-1.2e-9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-1.2e-9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.2e-9'))
         
     def test_ValidFormat_0dXeX(self):
         expected = 'one hundred million'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number(0.1e9))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('0.1e9'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-0.1e9))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-0.1e9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-0.1e9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-0.1e9'))
         
     def test_ValidFormat_Xd0eX(self):
         expected = 'one billion'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.0e9))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.0e9'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-1.0e9))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-1.0e9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-1.0e9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.0e9'))
         
     def test_ValidFormat_XXXdXXXeXXX(self):
         expected = 'one hundred twenty-three quadragintillion four hundred fifty-six noventrigintillion'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number(123.456e123))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('123.456e123'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-123.456e123))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-123.456e123'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-123.456e123))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-123.456e123'))
         
     def test_ValidFormat_0XXdXX0e0XX(self):
         expected = 'twelve trillion three hundred forty billion'
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number(012.340e012))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('012.340e012'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-012.340e012))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-012.340e012'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-012.340e012))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-012.340e012'))
         
     def test_PrecisionRetention(self):
         expected = ('one quadragintillion two hundred thirty-four noventrigintillion five hundred sixty-seven '
                     'octotrigintillion eight hundred ninety-eight septentrigintillion seven hundred sixty-five '
                     'sestrigintillion four hundred thirty-two quinquatrigintillion one hundred quattuortrigintillion')
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.2345678987654321e123))
         self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.2345678987654321e123'))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number(-1.2345678987654321e123))
-        self.assertMultiLineEqual(f'negative {expected}', spellnum.functions.spell_number('-1.2345678987654321e123'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.2345678987654321e123'))
         
     def test_InvalidInputs(self):
         self.assertRaises(ValueError, spellnum.functions.spell_number, '')
