@@ -1,54 +1,18 @@
-# Overview
-spellnum is a Python module for spelling really large numbers in english using a small combination of functions and some cleverly built tuples. For more information on the large number names and period naming conventions used by this module see the wikipedia page [here](https://en.wikipedia.org/wiki/Names_of_large_numbers).
+# Spellnum
+Spellnum is a Python package for spelling _really_ large numbers in english using a  couple functions and some cleverly built tuples. For more information on the large number names and period naming conventions used by this module see the wikipedia page [here](https://en.wikipedia.org/wiki/Names_of_large_numbers).  
 
-# Components
-The spellnum module is currently comprised of two primary submodules: `lexicon`, and `functions`.
+Read more about the package contents and structure [here](spellnum/README.md), or just run the d4mn thing. It's like... two moderately robust functions.  
 
-## lexicon
-`lexicon` is home to a set of tuples containing number name and period suffix component strings. They are defined in such a way that indexing them will return the appropriate number name or period spelling for the index given (all lowercase). The main construct here is the `INTEGERS_LT_1000` tuple. Indexing this will return the spelling for any integer less than 1000 as the name suggests.
+### CLI
+Spellnum also comes with a _very_ simple command line interface. Run the help command after installing with pip for more insight.  
 ```
->>> from spellnum import *
->>> INTEGERS_LT_1000[7]
-'seven'
->>> INTEGERS_LT_1000[13]
-'thirteen'
->>> INTEGERS_LT_1000[999]
-'nine hundred ninety-nine'
-```
-For functional purposes, the first index of lexicon's `INTEGERS_LT_1000` tuple is an empty string as opposed to being the string literal 'zero' ...
-```
->>> from spellnum import *
->>> INTEGERS_LT_1000[0:3]
-('', 'one', 'two')
+$ spellnum --help
 ```
 
-## functions
-`functions` is home to all of the fun stuff, which currently really only consists of two main functions, `get_period_suffix` and `spell_number`.
+# Developer's Note
+This is really just a personal project I started for fun. When I first heard about [this](https://www.youtube.com/watch?v=LYKn0yUTIU4) interesting property of the number four whilst mindlessly falling down the youtube rabbit hole, I was inspired to break from my nominal comatose daze and write something that could demonstrate such behavior with some simple guess-and-check fun in the terminal. However, for said fun and futility to ensue, one must first be able to spell whatever number one desires, and while there seem to be some pretty neat solutions out there already ([numspell](https://github.com/alco/numspell) for example), I was far too lazy to read through them. I'd also wager they have limitations which would have left me unsatisfied. Besides, in my inevitable dive through wikipedia, I had become rather infatuated with large number names and the process of generating them algorithmically.  
 
-### `get_period_suffix(base_illion)`
-This function will return the period suffix or full period name for a number with the given base-illion value. `get_period_suffix` raises a ValueError if the **base_illion** argument falls outside the range [-1, 1000). The base-illion property of a number in the short-scale system is equal to one less than the number of periods in the number, where a period is a set of one to three consecutive digits often separated by commas.
-#### Examples
-```
->>> from spellnum import *
->>> get_period_suffix(base_illion=4)
-'quadrillion'
->>> get_period_suffix(base_illion=789)
-'novemoctogintaseptingentillion'
-```
+So here we are, both wasting our time spelling numbers so we can count letters and then spell more numbers... Eventually I wanted to try writing a "bonafide" python package, so that happened. Then I wanted to practice using [click](https://click.palletsprojects.com) for CLI instead of [argparse](https://docs.python.org/3/library/argparse.html) (I may never go back). Anyway, I digress. If you find any use for what's here, then that's awesome. Happy to help! However, I don't plan on fixing, maintaining, or enhancing anything beyond this point, so... do with that what you will.  
 
-### `spell_number(number)`
-The `spell_number` function is the main focus of the module. It will return the english short-scale spelling for the **number** argument which can be any positive or negative number with an absolute value less than 10<sup>3003</sup> (1 Millinillion). That's a 1 followed by 3003 zeros. To put that into perspective, most of the scientific community seems to agree that there are somewhere between 10<sup>78</sup> and 10<sup>82</sup> atoms in the known universe... If you need a bigger number spelled, you'll just have to look elsewhere. When **number** falls outside the aforementioned range, the subsequent call to `get_period_suffix` will raise a value error as the **base_illion** argument will fall outside the range [-1, 1000). The **number** argument can be a integer, float, or string.
-
-It should be noted that `spell_number` *can* handle values that exceed limitations on numerical types. Pass **number** as a string for values requiring more precision or values greater maximum and minimum int/float values.
-#### Examples
-```
->>> from spellnum import *
->>> spell_number(-123456)
-'negative one hundred twenty-three thousand four hundred fifty-six'
->>> spell_number(4.56e100)
-'forty-five duotrigintillion six hundred untrigintillion'
->>> spell_number('7.89e500')
-'seven hundred eighty-nine quinquasexagintacentillion'
->>> spell_number('-1.2e-9')
-'negative twelve ten billionths'
-```
+Godspeed,  
+Kc4T  
