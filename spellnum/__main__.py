@@ -1,48 +1,30 @@
 """
-usage: spellnum [-h] [-nl] [-c4] number
+Usage: spellnum [OPTIONS] NUMBER
 
-positional arguments:
-  number      a number to spell
-
-optional arguments:
-  -h, --help  show this help message and exit
-  -nl         delimit periods with newlines
-  -c4         execute cosmic four algorithm
+Options:
+  --cosmic  Execute the cosmic algorithm.
+  --help    Show this message and exit.
 """
 
-import argparse
-import spellnum
+import click
+import spellnum.functions
 
 
-def main():
+@click.command()
+@click.argument('number')
+@click.option('--cosmic', is_flag=True, help='Execute the cosmic algorithm.')
+def cli(number, cosmic=False):
     """
-    CLI entry point for spellnum
+    Command line interface for spellnum package.
     """
-    parser = argparse.ArgumentParser()
-    parser.add_argument('number', type=str, help='a number to spell')
-    parser.add_argument('-nl', action='store_true', help='delimit periods with newlines')
-    parser.add_argument('-c4', action='store_true', help='execute cosmic four algorithm')
-    args = parser.parse_args()
-    
     spelling = str()
-    number = args.number
-    delimiter = '\n' if args.nl else ' '
     while spelling != 'four':
-        
         try:
             spelling = spellnum.functions.spell_number(number)
-            spelling = spelling.replace('illion ', f'illion{delimiter}')
-            spelling = spelling.replace('thousand ', f'thousand{delimiter}')
-            print(f'{number}{delimiter if args.nl else ": "}{spelling}')
+            print('\n{}\n{}'.format(number, spelling))
             number = len(spelling.replace('-', '').replace(' ', ''))
-        
         except ValueError as error:
             print(error)
             break
-        
-        if not args.c4:
+        if not cosmic:
             break
-
-
-if __name__ == '__main__':
-    main()
