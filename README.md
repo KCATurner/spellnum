@@ -6,6 +6,7 @@ Read more about the package contents and structure [here](spellnum/README.md), o
 ### CLI
 Spellnum also comes with a _very_ simple command line interface. Run the help command after installing with pip for more insight.  
 ```
+$ pip install git+https://github.com/KCATurner/spellnum
 $ spellnum --help
 ```
 
