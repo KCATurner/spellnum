@@ -3,8 +3,8 @@ Spellnum is a Python package for spelling _really_ large numbers in english usin
 
 Read more about the package contents and structure [here](spellnum/README.md), or just run the d4mn thing. It's like... two moderately robust functions.  
 
-### CLI
-Spellnum also comes with a _very_ simple command line interface. Run the help command after installing with pip for more insight.  
+### Command-line Interface
+Spellnum also comes with an excruciatingly simple CLI. Run the help command after installing with pip for more insight.  
 ```
 $ pip install git+https://github.com/KCATurner/spellnum
 $ spellnum --help
