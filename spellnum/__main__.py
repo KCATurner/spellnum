@@ -2,7 +2,7 @@
 Usage: spellnum [OPTIONS] NUMBER
 
 Options:
-  --cosmic  Execute the cosmic algorithm.
+  --four    Spell recursively to four.
   --help    Show this message and exit.
 """
 
@@ -14,8 +14,8 @@ from spellnum.functions import spell_number
 
 @click.command()
 @click.argument('number')
-@click.option('--cosmic', is_flag=True, help='Execute the cosmic algorithm.')
-def cli(number, cosmic=False):
+@click.option('--four', is_flag=True, help='Spell recursively to four.')
+def cli(number, four=False):
     """
     Command line interface for spellnum package.
     """
@@ -28,7 +28,7 @@ def cli(number, cosmic=False):
     while spelling != 'four':
         try:
             spelling = spell_number(number)
-            if cosmic:
+            if four:
                 number = len(spelling.replace('-', '').replace(' ', ''))
                 print('There are ', Fore.CYAN, str(number), Fore.RESET,
                       ' letters in ', Fore.LIGHTBLACK_EX, spelling, Fore.RESET, sep='')
