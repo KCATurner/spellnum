@@ -9,7 +9,7 @@ Options:
 import sys
 import click
 from colorama import init, Fore
-from spellnum.functions import spell_number
+from spellnum.functions import spell, unspell
 
 
 @click.command()
@@ -27,7 +27,7 @@ def cli(number, four=False):
     spelling = str()
     while spelling != 'four':
         try:
-            spelling = spell_number(number)
+            spelling = spell(number)
             if four:
                 number = len(spelling.replace('-', '').replace(' ', ''))
                 print('There are ', Fore.CYAN, str(number), Fore.RESET,
