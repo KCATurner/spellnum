@@ -12,7 +12,7 @@ class LexiconStructure(unittest.TestCase):
     """
     
     def test_1_digit_integers(self):
-        expected = spellnum.lexicon.UNIQUE_WORDS[:9]
+        expected = spellnum.lexicon._UNIQUE_WORDS[:9]
         actual = spellnum.lexicon.INTEGERS_LT_1000[:9]
         self.assertTupleEqual(expected, actual)
         
@@ -23,7 +23,7 @@ class LexiconStructure(unittest.TestCase):
         
     def test_3_digit_integers(self):
         for index in range(100, 1000):
-            hundred = spellnum.lexicon.UNIQUE_WORDS[index // 100]
+            hundred = spellnum.lexicon._UNIQUE_WORDS[index // 100]
             tens = spellnum.lexicon.INTEGERS_LT_100[index % 100]
             expected = '{} hundred {}'.format(hundred, tens).strip()
             actual = spellnum.lexicon.INTEGERS_LT_1000[index]
@@ -421,238 +421,238 @@ class SuffixExceptions(unittest.TestCase):
         
 class SpellingInputValidity(unittest.TestCase):
     """
-    Tests valid and invalid input type and boundary values for spell_number.
+    Tests valid and invalid input type and boundary values for spell.
     """
     
     def test_input_EQ_minimum(self):
         # smallest value would actually be -9.99...(repeating forever)...e3002
         expected = 'negative nine hundred ninety-nine novenonagintanongentillion'
-        actual = spellnum.functions.spell_number('-9.99e3002')
+        actual = spellnum.functions.spell('-9.99e3002')
         self.assertMultiLineEqual(expected, actual)
         
     def test_input_EQ_maximum(self):
         # largest value would actually be 9.99...(repeating forever)...e3002
         expected = 'nine hundred ninety-nine novenonagintanongentillion'
-        actual = spellnum.functions.spell_number('9.99e3002')
+        actual = spellnum.functions.spell('9.99e3002')
         self.assertMultiLineEqual(expected, actual)
         
     def test_precision_EQ_maximum(self):
         expected = 'one one hundred novenonagintanongentillionth'
-        actual = spellnum.functions.spell_number('1e-3002')
+        actual = spellnum.functions.spell('1e-3002')
         self.assertMultiLineEqual(expected, actual)
         
     def test_input_LT_minimum(self):
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '-1e3003')
+        self.assertRaises(ValueError, spellnum.functions.spell, '-1e3003')
         
     def test_input_GT_Maximum(self):
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '1e3003')
+        self.assertRaises(ValueError, spellnum.functions.spell, '1e3003')
         
     def test_precision_GT_maximum(self):
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '0.1e-3002')
+        self.assertRaises(ValueError, spellnum.functions.spell, '0.1e-3002')
         
     def test_input_none(self):
-        self.assertRaises(ValueError, spellnum.functions.spell_number, None)
+        self.assertRaises(ValueError, spellnum.functions.spell, None)
         
     def test_input_set(self):
-        self.assertRaises(ValueError, spellnum.functions.spell_number, {123, })
+        self.assertRaises(ValueError, spellnum.functions.spell, {123, })
         
     def test_input_list(self):
-        self.assertRaises(ValueError, spellnum.functions.spell_number, [123, ])
+        self.assertRaises(ValueError, spellnum.functions.spell, [123, ])
         
     def test_input_tuple(self):
-        self.assertRaises(ValueError, spellnum.functions.spell_number, (123,))
+        self.assertRaises(ValueError, spellnum.functions.spell, (123,))
         
     def test_string_dXXX(self):
         expected = 'one hundred twenty-three one thousandths'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('.123'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-.123'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('.123'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-.123'))
         
     def test_string_ndXXX(self):
         expected = 'one hundred twenty-three one thousandths'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('.123'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-.123'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('.123'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-.123'))
         
     def test_ValidFormat_dXeX(self):
         expected = 'one hundred million'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(.1e9))
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('.1e9'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-.1e9))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-.1e9'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell(.1e9))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('.1e9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell(-.1e9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-.1e9'))
         
     def test_ValidFormat_XdXEX(self):
         expected = 'one billion two hundred million'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.2E9))
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.2E9'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-1.2E9))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.2E9'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell(1.2E9))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('1.2E9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell(-1.2E9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-1.2E9'))
         
     def test_ValidFormat_XdXeX(self):
         expected = 'one billion two hundred million'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.2e9))
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.2e9'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-1.2e9))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.2e9'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell(1.2e9))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('1.2e9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell(-1.2e9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-1.2e9'))
         
     def test_ValidFormat_XdXenX(self):
         expected = 'twelve ten billionths'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.2e-9))
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.2e-9'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-1.2e-9))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.2e-9'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell(1.2e-9))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('1.2e-9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell(-1.2e-9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-1.2e-9'))
         
     def test_ValidFormat_0dXeX(self):
         expected = 'one hundred million'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(0.1e9))
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('0.1e9'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-0.1e9))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-0.1e9'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell(0.1e9))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('0.1e9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell(-0.1e9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-0.1e9'))
         
     def test_ValidFormat_Xd0eX(self):
         expected = 'one billion'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(1.0e9))
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.0e9'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-1.0e9))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.0e9'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell(1.0e9))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('1.0e9'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell(-1.0e9))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-1.0e9'))
         
     def test_ValidFormat_XXXdXXXeXXX(self):
         expected = 'one hundred twenty-three quadragintillion four hundred fifty-six noventrigintillion'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(123.456e123))
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('123.456e123'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-123.456e123))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-123.456e123'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell(123.456e123))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('123.456e123'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell(-123.456e123))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-123.456e123'))
         
     def test_ValidFormat_0XXdXX0e0XX(self):
         expected = 'twelve trillion three hundred forty billion'
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number(012.340e012))
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('012.340e012'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number(-012.340e012))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-012.340e012'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell(012.340e012))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('012.340e012'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell(-012.340e012))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-012.340e012'))
         
     def test_PrecisionRetention(self):
         expected = ('one quadragintillion two hundred thirty-four noventrigintillion five hundred sixty-seven '
                     'octotrigintillion eight hundred ninety-eight septentrigintillion seven hundred sixty-five '
                     'sestrigintillion four hundred thirty-two quinquatrigintillion one hundred quattuortrigintillion')
-        self.assertMultiLineEqual(expected, spellnum.functions.spell_number('1.2345678987654321e123'))
-        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell_number('-1.2345678987654321e123'))
+        self.assertMultiLineEqual(expected, spellnum.functions.spell('1.2345678987654321e123'))
+        self.assertMultiLineEqual('negative ' + expected, spellnum.functions.spell('-1.2345678987654321e123'))
         
     def test_InvalidInputs(self):
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '.')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, 'e')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '-')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '+')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '.e')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '.0e')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '.0e-')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '0.0e')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '0.0e-')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '0.e-0')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '--123')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '++123')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '-+123')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '+-123')
-        self.assertRaises(ValueError, spellnum.functions.spell_number, '1.2.3')
+        self.assertRaises(ValueError, spellnum.functions.spell, '')
+        self.assertRaises(ValueError, spellnum.functions.spell, '.')
+        self.assertRaises(ValueError, spellnum.functions.spell, 'e')
+        self.assertRaises(ValueError, spellnum.functions.spell, '-')
+        self.assertRaises(ValueError, spellnum.functions.spell, '+')
+        self.assertRaises(ValueError, spellnum.functions.spell, '.e')
+        self.assertRaises(ValueError, spellnum.functions.spell, '.0e')
+        self.assertRaises(ValueError, spellnum.functions.spell, '.0e-')
+        self.assertRaises(ValueError, spellnum.functions.spell, '0.0e')
+        self.assertRaises(ValueError, spellnum.functions.spell, '0.0e-')
+        self.assertRaises(ValueError, spellnum.functions.spell, '0.e-0')
+        self.assertRaises(ValueError, spellnum.functions.spell, '--123')
+        self.assertRaises(ValueError, spellnum.functions.spell, '++123')
+        self.assertRaises(ValueError, spellnum.functions.spell, '-+123')
+        self.assertRaises(ValueError, spellnum.functions.spell, '+-123')
+        self.assertRaises(ValueError, spellnum.functions.spell, '1.2.3')
         
         
 class SpellingExceptions(unittest.TestCase):
     """
-    Tests 'zero' spelling use cases for spell_number.
+    Tests 'zero' spelling use cases for spell.
     NOTE: Due to the number of valid input formats, these tests are not exhaustive.
     """
     
     def test_singular_fraction(self):
         expected = 'one tenth'
-        actual = spellnum.functions.spell_number(0.1)
+        actual = spellnum.functions.spell(0.1)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(0)
+        actual = spellnum.functions.spell(0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_0d0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(0.0)
+        actual = spellnum.functions.spell(0.0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_0e0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(0e0)
+        actual = spellnum.functions.spell(0e0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_d0e0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(.0e0)
+        actual = spellnum.functions.spell(.0e0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_0d0e0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(0.0e0)
+        actual = spellnum.functions.spell(0.0e0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_n0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(-0)
+        actual = spellnum.functions.spell(-0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_n0d0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(-0.0)
+        actual = spellnum.functions.spell(-0.0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_n0en0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(-0e-0)
+        actual = spellnum.functions.spell(-0e-0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_n0d0en0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number(-0.0e-0)
+        actual = spellnum.functions.spell(-0.0e-0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('0')
+        actual = spellnum.functions.spell('0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_0d0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('0.0')
+        actual = spellnum.functions.spell('0.0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_d0e0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('.0e0')
+        actual = spellnum.functions.spell('.0e0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_0e0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('0e0')
+        actual = spellnum.functions.spell('0e0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_0d0e0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('0.0e0')
+        actual = spellnum.functions.spell('0.0e0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_n0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('-0')
+        actual = spellnum.functions.spell('-0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_n0d0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('-0.0')
+        actual = spellnum.functions.spell('-0.0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_n0en0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('-0e-0')
+        actual = spellnum.functions.spell('-0e-0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_n0d0en0(self):
         expected = 'zero'
-        actual = spellnum.functions.spell_number('-0.0e-0')
+        actual = spellnum.functions.spell('-0.0e-0')
         self.assertMultiLineEqual(expected, actual)
         
         
@@ -662,123 +662,123 @@ class SpellingScientific(unittest.TestCase):
     """
     
     def test_float_XXdXXe3(self):
-        expected = spellnum.functions.spell_number(12340)
-        actual = spellnum.functions.spell_number(12.34e3)
+        expected = spellnum.functions.spell(12340)
+        actual = spellnum.functions.spell(12.34e3)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XXdXXe2(self):
-        expected = spellnum.functions.spell_number(1234)
-        actual = spellnum.functions.spell_number(12.34e2)
+        expected = spellnum.functions.spell(1234)
+        actual = spellnum.functions.spell(12.34e2)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XXdXXe1(self):
-        expected = spellnum.functions.spell_number(123.4)
-        actual = spellnum.functions.spell_number(12.34e1)
+        expected = spellnum.functions.spell(123.4)
+        actual = spellnum.functions.spell(12.34e1)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XXdXXe0(self):
-        expected = spellnum.functions.spell_number(12.34)
-        actual = spellnum.functions.spell_number(12.34e0)
+        expected = spellnum.functions.spell(12.34)
+        actual = spellnum.functions.spell(12.34e0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XXdXXen0(self):
-        expected = spellnum.functions.spell_number(12.34)
-        actual = spellnum.functions.spell_number(12.34e-0)
+        expected = spellnum.functions.spell(12.34)
+        actual = spellnum.functions.spell(12.34e-0)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XXdXXen1(self):
-        expected = spellnum.functions.spell_number(1.234)
-        actual = spellnum.functions.spell_number(12.34e-1)
+        expected = spellnum.functions.spell(1.234)
+        actual = spellnum.functions.spell(12.34e-1)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XXdXXen2(self):
-        expected = spellnum.functions.spell_number(.1234)
-        actual = spellnum.functions.spell_number(12.34e-2)
+        expected = spellnum.functions.spell(.1234)
+        actual = spellnum.functions.spell(12.34e-2)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XXdXXen3(self):
-        expected = spellnum.functions.spell_number(.01234)
-        actual = spellnum.functions.spell_number(12.34e-3)
+        expected = spellnum.functions.spell(.01234)
+        actual = spellnum.functions.spell(12.34e-3)
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdXXe3(self):
-        expected = spellnum.functions.spell_number(12340)
-        actual = spellnum.functions.spell_number('12.34e3')
+        expected = spellnum.functions.spell(12340)
+        actual = spellnum.functions.spell('12.34e3')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdXXe2(self):
-        expected = spellnum.functions.spell_number(1234)
-        actual = spellnum.functions.spell_number('12.34e2')
+        expected = spellnum.functions.spell(1234)
+        actual = spellnum.functions.spell('12.34e2')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdXXe1(self):
-        expected = spellnum.functions.spell_number(123.4)
-        actual = spellnum.functions.spell_number('12.34e1')
+        expected = spellnum.functions.spell(123.4)
+        actual = spellnum.functions.spell('12.34e1')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdXXe0(self):
-        expected = spellnum.functions.spell_number(12.34)
-        actual = spellnum.functions.spell_number('12.34e0')
+        expected = spellnum.functions.spell(12.34)
+        actual = spellnum.functions.spell('12.34e0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdXXen0(self):
-        expected = spellnum.functions.spell_number(12.34)
-        actual = spellnum.functions.spell_number('12.34e-0')
+        expected = spellnum.functions.spell(12.34)
+        actual = spellnum.functions.spell('12.34e-0')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdXXen1(self):
-        expected = spellnum.functions.spell_number(1.234)
-        actual = spellnum.functions.spell_number('12.34e-1')
+        expected = spellnum.functions.spell(1.234)
+        actual = spellnum.functions.spell('12.34e-1')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdXXen2(self):
-        expected = spellnum.functions.spell_number(.1234)
-        actual = spellnum.functions.spell_number('12.34e-2')
+        expected = spellnum.functions.spell(.1234)
+        actual = spellnum.functions.spell('12.34e-2')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdXXen3(self):
-        expected = spellnum.functions.spell_number(.01234)
-        actual = spellnum.functions.spell_number('12.34e-3')
+        expected = spellnum.functions.spell(.01234)
+        actual = spellnum.functions.spell('12.34e-3')
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_0d1eXX(self):
         expected = 'one vigintillion'
-        actual = spellnum.functions.spell_number(0.1e64)
+        actual = spellnum.functions.spell(0.1e64)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_1d0eXX(self):
         expected = 'one vigintillion'
-        actual = spellnum.functions.spell_number(1.0e63)
+        actual = spellnum.functions.spell(1.0e63)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_0d1enXX(self):
         expected = 'one one vigintillionth'
-        actual = spellnum.functions.spell_number(0.1e-62)
+        actual = spellnum.functions.spell(0.1e-62)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_1d0enXX(self):
         expected = 'one one vigintillionth'
-        actual = spellnum.functions.spell_number(1.0e-63)
+        actual = spellnum.functions.spell(1.0e-63)
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_0d1eXX(self):
         expected = 'one vigintillion'
-        actual = spellnum.functions.spell_number('0.1e64')
+        actual = spellnum.functions.spell('0.1e64')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_1d0eXX(self):
         expected = 'one vigintillion'
-        actual = spellnum.functions.spell_number('1.0e63')
+        actual = spellnum.functions.spell('1.0e63')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_0d1enXX(self):
         expected = 'one one vigintillionth'
-        actual = spellnum.functions.spell_number('0.1e-62')
+        actual = spellnum.functions.spell('0.1e-62')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_1d0enXX(self):
         expected = 'one one vigintillionth'
-        actual = spellnum.functions.spell_number('1.0e-63')
+        actual = spellnum.functions.spell('1.0e-63')
         self.assertMultiLineEqual(expected, actual)
         
         
@@ -789,50 +789,50 @@ class SpellingDecimal(unittest.TestCase):
     
     def test_float_X00XdX(self):
         expected = 'one thousand two and three tenths'
-        actual = spellnum.functions.spell_number(1002.3)
+        actual = spellnum.functions.spell(1002.3)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_X0XdXX(self):
         expected = 'one hundred two and thirty-four one hundredths'
-        actual = spellnum.functions.spell_number(102.34)
+        actual = spellnum.functions.spell(102.34)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XXdX0X(self):
         expected = 'twelve and three hundred four one thousandths'
-        actual = spellnum.functions.spell_number(12.304)
+        actual = spellnum.functions.spell(12.304)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_XdX00X(self):
         expected = 'two and three thousand four ten thousandths'
-        actual = spellnum.functions.spell_number(2.3004)
+        actual = spellnum.functions.spell(2.3004)
         self.assertMultiLineEqual(expected, actual)
         
     def test_float_dX000X(self):
         expected = 'thirty thousand four one hundred thousandths'
-        actual = spellnum.functions.spell_number(.30004)
+        actual = spellnum.functions.spell(.30004)
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_X00XdX(self):
         expected = 'one thousand two and three tenths'
-        actual = spellnum.functions.spell_number('1002.3')
+        actual = spellnum.functions.spell('1002.3')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_X0XdXX(self):
         expected = 'one hundred two and thirty-four one hundredths'
-        actual = spellnum.functions.spell_number('102.34')
+        actual = spellnum.functions.spell('102.34')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XXdX0X(self):
         expected = 'twelve and three hundred four one thousandths'
-        actual = spellnum.functions.spell_number('12.304')
+        actual = spellnum.functions.spell('12.304')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_XdX00X(self):
         expected = 'two and three thousand four ten thousandths'
-        actual = spellnum.functions.spell_number('2.3004')
+        actual = spellnum.functions.spell('2.3004')
         self.assertMultiLineEqual(expected, actual)
         
     def test_string_dX000X(self):
         expected = 'thirty thousand four one hundred thousandths'
-        actual = spellnum.functions.spell_number('.30004')
+        actual = spellnum.functions.spell('.30004')
         self.assertMultiLineEqual(expected, actual)
