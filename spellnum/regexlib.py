@@ -20,3 +20,9 @@ VALID_NUMERIC_FLOAT = _re.compile((r'^(?P<sign>[-+]?)(?# capture sign if exists)
                                    r'[eE]?(?# match, but exclude e/E from exponent)'
                                    r'(?P<exponent>(?<=[eE])(?# must follow e/E)[-+]?\d+)'
                                    r'?(?<=\d)(?# match must end with at least one digit)$'))
+
+FRACTION_SPELLING_FORMAT = _re.compile(r'^(?:(?P<whole>.+)\s+and\s+)?(?# " and " separates whole from fraction)'
+                                       r'(?P<fnumer>.+\s+)?(?# fraction made of numerator and base-10 denominator)'
+                                       r'(?P<fdenom>(?:one hundred|ten|one\s+)(?# denominator period value)'
+                                       r'\s*\w*)(?# capture period suffix if exists)'
+                                       r'ths?$(?# spelling is only valid if it ends in "th" or "ths")')

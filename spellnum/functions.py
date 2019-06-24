@@ -44,7 +44,7 @@ def get_period_suffix(base_illion):
     return result.replace('allion', 'illion')
 
 
-def spell_number(number):
+def spell(number):
     """
     Constructs the English short-scale spelling of the given number.
     
@@ -68,7 +68,7 @@ def spell_number(number):
         
     # handle negative numbers recursively
     if sign == '-' and whole + fraction:
-        return 'negative ' + spell_number('{}.{}'.format(whole.zfill(1), fraction.zfill(1)))
+        return 'negative ' + spell('{}.{}'.format(whole.zfill(1), fraction.zfill(1)))
     
     # spell the whole potion of the number
     periods = '{:,}'.format(int(whole or 0)).split(',') # splits number into list of periods
@@ -76,9 +76,41 @@ def spell_number(number):
                       for b, p in zip(range(len(periods)-2, -2, -1), periods) if int(p) > 0]).strip()
     
     # spell any fractional potion of the number recursively
-    fraction = '{} {}th{}'.format(spell_number(fraction),
-                                  spell_number(10 ** len(fraction)),
+    fraction = '{} {}th{}'.format(spell(fraction),
+                                  spell(10 ** len(fraction)),
                                   's' if int(fraction) > 1 else '') if int(fraction or 0) else ''
     
     # return resulting spelling or 'zero' if nothing was spelled
     return whole + (' and ' if whole and fraction else '') + fraction or 'zero'
+
+
+def unspell(spelling):
+    """"""
+    # handle negatives recursively
+    if spelling.startswith('negative'):
+        return '-{}'.format(unspell(spelling.replace('negative', '', 1)))
+    
+    whole = spelling.strip()
+    match = spellnum.regexlib.FRACTION_SPELLING_FORMAT.match(whole)
+    if match: # handle fractions recursively
+        whole, numerator, denominator = match.groups(default='')
+        numerator, denominator = int(unspell(numerator)), int(unspell(denominator))
+        return '{}.{}'.format(int(unspell(whole)) + (numerator // denominator),
+                              str(numerator % denominator).zfill(str(denominator).count('0')))
+    
+    suffixes = spellnum.lexicon.UNIQUE_PERIODS \
+               + tuple(get_period_suffix(b) for b in range(21, 1000))
+    
+    result = 0
+    period = list()
+    for word in str(spelling).split():
+        if word not in ('hundred',) + spellnum.lexicon.INTEGERS_LT_100:
+            # TODO: raise more meaningful exception on index failure...
+            value = spellnum.lexicon.INTEGERS_LT_1000.index(' '.join(period))
+            result += value * (10**((suffixes.index(word) + 1) * 3))
+            period.clear()
+        else:
+            period.append(word)
+            
+    result += spellnum.lexicon.INTEGERS_LT_1000.index(' '.join(period))
+    return str(result)
