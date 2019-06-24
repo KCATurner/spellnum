@@ -4,19 +4,19 @@ Separate home for lexical components used by spellnum functions.
 
 
 # index-aligned unique spellings
-UNIQUE_WORDS = ('', 'one', 'two', 'three', 'four',
-                'five', 'six', 'seven', 'eight', 'nine',
-                'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
-                'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen')\
-                + ('twenty',) + ('',)*9 + ('thirty',) + ('',)*9\
-                + ('forty',) + ('',)*9 + ('fifty',) + ('',)*9\
-                + ('sixty',) + ('',)*9 + ('seventy',) + ('',)*9\
-                + ('eighty',) + ('',)*9 + ('ninety',) + ('',)*9
+_UNIQUE_WORDS = ('', 'one', 'two', 'three', 'four',
+                 'five', 'six', 'seven', 'eight', 'nine',
+                 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
+                 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen')\
+                 + ('twenty',) + ('',)*9 + ('thirty',) + ('',)*9\
+                 + ('forty',) + ('',)*9 + ('fifty',) + ('',)*9\
+                 + ('sixty',) + ('',)*9 + ('seventy',) + ('',)*9\
+                 + ('eighty',) + ('',)*9 + ('ninety',) + ('',)*9
 
 # index-aligned 2 digit spellings
-INTEGERS_LT_100 = UNIQUE_WORDS[:20]\
-                  + tuple('{}-{}'.format(UNIQUE_WORDS[10*(i//10)],
-                                         UNIQUE_WORDS[i % 10]
+INTEGERS_LT_100 = _UNIQUE_WORDS[:20]\
+                  + tuple('{}-{}'.format(_UNIQUE_WORDS[10*(i//10)],
+                                         _UNIQUE_WORDS[i % 10]
                                          ).strip('-') for i in range(20, 100))
 
 # index-aligned 3 digit spellings
