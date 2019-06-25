@@ -108,7 +108,7 @@ def unspell(spelling):
             # TODO: raise more meaningful exception on index failure...
             value = spellnum.lexicon.INTEGERS_LT_1000.index(' '.join(period))
             result += value * (10**((suffixes.index(word) + 1) * 3))
-            period.clear()
+            period = list()
         else:
             period.append(word)
             
