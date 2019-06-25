@@ -3,6 +3,7 @@ Usage: spellnum [OPTIONS] NUMBER
 
 Options:
   --four    Spell recursively to four.
+  --copy    Copy result to clipboard.
   --help    Show this message and exit.
 """
 
@@ -10,9 +11,8 @@ from __future__ import print_function
 
 import sys
 import click
-import clipboard
 from colorama import init, Fore
-from spellnum.functions import spell, unspell
+from spellnum.functions import num2txt, txt2num
 
 
 @click.command()
@@ -24,32 +24,16 @@ def cli(number, four=False, copy=False):
     Command line interface for spellnum package.
     """
     
-    # deduce whether to spell or unspell
-    
-    
-    
     # because Windows is just the wrong kind of special
     if sys.platform == 'win32':
         init()
         
-        
-    template = ''
+    # TODO: implement copy option functionality
     
-    
-    result = str()
     spelling = str()
     while spelling != 'four':
-        
         try:
-            spelling = spell(number)
-            
-            
-            message = 'There are {}{}{} letters in {}{}{}'.format(
-                Fore.CYAN, str(number), Fore.RESET,
-                Fore.LIGHTBLACK_EX, spelling, Fore.RESET,
-            )
-            
-            result += spelling
+            spelling = num2txt(number)
             if four:
                 number = len(spelling.replace('-', '').replace(' ', ''))
                 print('There are ', Fore.CYAN, str(number), Fore.RESET,
@@ -60,5 +44,3 @@ def cli(number, four=False, copy=False):
         except ValueError as error:
             print(error)
             break
-    if copy:
-        clipboard.copy(result)
