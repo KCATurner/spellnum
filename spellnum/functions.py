@@ -16,32 +16,32 @@ def get_period_suffix(base_illion):
     :param base_illion: the base-illion value of the period name
     :return str: the suffix for the period with the given base-illion
     """
-    # capture any numerical integer string input
-    if spellnum.regexlib.VALID_NUMERIC_FLOAT.match(str(base_illion)):
-        base_illion = float(base_illion)
-        
-    # catch input outside function capabilities
-    if base_illion not in range(-1, 1000, 1):
-        raise spellnum.exceptions.BaseIllionOutOfBounds(base_illion)
-    elif base_illion == -1:
+    
+    if not isinstance(base_illion, int):
+        raise TypeError('base_illion value must be an integer!')
+    
+    if base_illion < 0:
         return ''
     elif base_illion < 10:
         return spellnum.lexicon.UNIQUE_PERIODS[int(base_illion)]
+    elif base_illion >= 1000:
+        return get_period_suffix(base_illion // 1000)[:-2]\
+               + get_period_suffix(base_illion % 1000).replace('thousand', 'nillion')
     
     # build suffix from lexical components
     hund, tens, unit = (int(digit) for digit in str(int(base_illion)).zfill(3))
-    result = spellnum.lexicon.PERIOD_COMPONENTS_UNIT[unit]\
+    suffix = spellnum.lexicon.PERIOD_COMPONENTS_UNIT[unit]\
              + spellnum.lexicon.PERIOD_COMPONENTS_TENS[tens]\
              + spellnum.lexicon.PERIOD_COMPONENTS_HUND[hund] + 'llion'
     
     # catch and correct lexical component combination exceptions
     if spellnum.lexicon.PERIOD_COMPONENTS_UNIT[unit] in ('tre', 'se', 'septe', 'nove'):
-        result = spellnum.regexlib.X_LEXICAL_EXCEPTION.sub(repl='x', string=result)
-        result = spellnum.regexlib.S_LEXICAL_EXCEPTION.sub(repl='s', string=result)
-        result = spellnum.regexlib.M_LEXICAL_EXCEPTION.sub(repl='m', string=result)
-        result = spellnum.regexlib.N_LEXICAL_EXCEPTION.sub(repl='n', string=result)
+        suffix = spellnum.regexlib.X_LEXICAL_EXCEPTION.sub(repl='x', string=suffix)
+        suffix = spellnum.regexlib.S_LEXICAL_EXCEPTION.sub(repl='s', string=suffix)
+        suffix = spellnum.regexlib.M_LEXICAL_EXCEPTION.sub(repl='m', string=suffix)
+        suffix = spellnum.regexlib.N_LEXICAL_EXCEPTION.sub(repl='n', string=suffix)
         
-    return result.replace('allion', 'illion')
+    return suffix.replace('allion', 'illion')
 
 
 def num2txt(number):
