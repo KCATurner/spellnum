@@ -1,5 +1,5 @@
 """
-Setup script for spellnum package
+Setup script for spellnum package.
 """
 
 import setuptools
@@ -14,7 +14,7 @@ setuptools.setup(
     version='1.0.0',
     author='Kevin Turner',
     author_email='kct0004@auburn.edu',
-    description='A module for spelling numbers in conventional English short-scale',
+    description='A module for spelling numbers using the Conway-Wechsler naming system',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/KCATurner/spellnum',
