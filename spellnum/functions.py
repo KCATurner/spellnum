@@ -2,6 +2,9 @@
 Functions of the spellnum module.
 """
 
+from decimal import Decimal
+
+
 import spellnum.lexicon
 import spellnum.regexlib
 import spellnum.exceptions
@@ -13,23 +16,24 @@ def get_period_suffix(base_illion):
     using each digit in the given base-illion value; currently limited
     to base-illion values less than 1000 (millinillion).
     
-    :param base_illion: the base-illion value of the period name
+    :param int base_illion: the base-illion value of the period name
     :return str: the suffix for the period with the given base-illion
     """
     
     if not isinstance(base_illion, int):
-        raise TypeError('base_illion value must be an integer!')
+        raise TypeError('base_illion must be an integer!')
     
     if base_illion < 0:
         return ''
     elif base_illion < 10:
-        return spellnum.lexicon.UNIQUE_PERIODS[int(base_illion)]
+        return spellnum.lexicon.UNIQUE_PERIODS[base_illion]
     elif base_illion >= 1000:
+        # TODO: handling this with recursion is basically daring the user to go insane with scientific notation...
         return get_period_suffix(base_illion // 1000)[:-2]\
                + get_period_suffix(base_illion % 1000).replace('thousand', 'nillion')
     
     # build suffix from lexical components
-    hund, tens, unit = (int(digit) for digit in str(int(base_illion)).zfill(3))
+    hund, tens, unit = (int(digit) for digit in str(base_illion).zfill(3))
     suffix = spellnum.lexicon.PERIOD_COMPONENTS_UNIT[unit]\
              + spellnum.lexicon.PERIOD_COMPONENTS_TENS[tens]\
              + spellnum.lexicon.PERIOD_COMPONENTS_HUND[hund] + 'llion'
@@ -51,37 +55,38 @@ def num2txt(number):
     :param number: an int float or numeric string to be spelled
     :return str: the spelling of the given number as a string
     """
-    # raise exception for invalid numerical input
-    match = spellnum.regexlib.VALID_NUMERIC_FLOAT.match(str(number).strip())
-    if not match:
-        raise spellnum.exceptions.InvalidNumericalFormat(str(number))
+    number = Decimal(str(number)).normalize()
+    sign, digits, exponent = number.as_tuple()
+    position = len(digits) + exponent
+    whole = digits[:max(position, 0)]
     
-    # collect number components
-    sign, whole, fraction, exponent = match.groups(default='')
+    if sign and number:
+        return 'negative ' + num2txt(abs(number))
     
-    # parses input if given in scientific notation
-    if int(exponent or 0):
-        digits = whole + fraction
-        position = len(whole) + int(exponent)
-        whole = digits[:max(position, 0):].ljust(max(position, 1), '0')
-        fraction = digits[max(position, 0)::].rjust(max(len(digits)-position, 1), '0')
+    periods = []
+    base_illion = max(position - 1, 0) // 3 - 1
+    whole = (0,)*(3 - (max(position, 0) % 3 or 3)) + whole
+    whole = whole + (0,)*(3 - (len(whole) % 3 or 3))
+    for period in (int(''.join(str(d) for d in whole[i:i+3])) for i in range(0, len(whole), 3)):
+        if period > 0:
+            periods.append(' '.join([spellnum.lexicon.INTEGERS_LT_1000[period],
+                                     get_period_suffix(base_illion=base_illion)]))
+        base_illion -= 1
+    
+    delimiter = ' '  # TODO: Should I make the delimiter a keyword argument?
+    whole = delimiter.join(periods).strip(delimiter)
+    
+    fraction = ''.join(str(d) for d in digits[position:])
+    if fraction:
+        numerator, denominator = int(fraction), 10**-exponent
+        fraction = '{} {}th{}'.format(num2txt(numerator),
+                                      num2txt(denominator),
+                                      's' if numerator > 1 else '')
         
-    # handle negative numbers recursively
-    if sign == '-' and whole + fraction:
-        return 'negative ' + num2txt('{}.{}'.format(whole.zfill(1), fraction.zfill(1)))
+    if whole and fraction:
+        return whole + ' and ' + fraction
     
-    # spell the whole potion of the number
-    periods = '{:,}'.format(int(whole or 0)).split(',') # splits number into list of periods
-    whole = ' '.join([spellnum.lexicon.INTEGERS_LT_1000[int(p)] + ' ' + get_period_suffix(b)
-                      for b, p in zip(range(len(periods)-2, -2, -1), periods) if int(p) > 0]).strip()
-    
-    # spell any fractional potion of the number recursively
-    fraction = '{} {}th{}'.format(num2txt(fraction),
-                                  num2txt(10 ** len(fraction)),
-                                  's' if int(fraction) > 1 else '') if int(fraction or 0) else ''
-    
-    # return resulting spelling or 'zero' if nothing was spelled
-    return whole + (' and ' if whole and fraction else '') + fraction or 'zero'
+    return whole or fraction or 'zero'
 
 
 def txt2num(spelling):
