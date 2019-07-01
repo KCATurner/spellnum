@@ -28,15 +28,6 @@ class InputValidity(unittest.TestCase):
         actual = spellnum.functions.num2txt('1e-3002')
         self.assertMultiLineEqual(expected, actual)
     
-    def test_input_LT_minimum(self):
-        self.assertRaises(ValueError, spellnum.functions.num2txt, '-1e3003')
-    
-    def test_input_GT_Maximum(self):
-        self.assertRaises(ValueError, spellnum.functions.num2txt, '1e3003')
-    
-    def test_precision_GT_maximum(self):
-        self.assertRaises(ValueError, spellnum.functions.num2txt, '0.1e-3002')
-    
     def test_input_none(self):
         self.assertRaises(ValueError, spellnum.functions.num2txt, None)
     
