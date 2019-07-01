@@ -14,38 +14,28 @@ class SuffixInputValidity(unittest.TestCase):
     def test_input_EQ_minimum(self):
         expected = ''
         self.assertMultiLineEqual(expected, spellnum.functions.get_period_suffix(-1))
-        self.assertMultiLineEqual(expected, spellnum.functions.get_period_suffix('-1'))
         
     def test_input_EQ_maximum(self):
         expected = 'novenonagintanongentillion'
         self.assertMultiLineEqual(expected, spellnum.functions.get_period_suffix(999))
-        self.assertMultiLineEqual(expected, spellnum.functions.get_period_suffix('999'))
-        
-    def test_input_LT_minimum(self):
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, -2)
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, '-2')
-        
-    def test_input_GT_maximum(self):
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, 1000)
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, '1000')
         
     def test_input_none(self):
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, None)
+        self.assertRaises(TypeError, spellnum.functions.get_period_suffix, None)
         
     def test_input_float(self):
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, 12.34)
+        self.assertRaises(TypeError, spellnum.functions.get_period_suffix, 12.34)
         
     def test_input_string(self):
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, '12.34')
+        self.assertRaises(TypeError, spellnum.functions.get_period_suffix, '12.34')
         
     def test_input_set(self):
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, set())
+        self.assertRaises(TypeError, spellnum.functions.get_period_suffix, set())
         
     def test_input_list(self):
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, list())
+        self.assertRaises(TypeError, spellnum.functions.get_period_suffix, list())
         
     def test_input_tuple(self):
-        self.assertRaises(ValueError, spellnum.functions.get_period_suffix, tuple())
+        self.assertRaises(TypeError, spellnum.functions.get_period_suffix, tuple())
         
         
 class SuffixNominalCases(unittest.TestCase):
