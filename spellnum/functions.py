@@ -55,7 +55,13 @@ def num2txt(number):
     :param number: an int float or numeric string to be spelled
     :return str: the spelling of the given number as a string
     """
-    number = Decimal(str(number)).normalize()
+    
+    number = str(number)
+    # check for valid input format
+    if not spellnum.regexlib.VALID_NUMERIC_FLOAT.match(number):
+        raise spellnum.exceptions.InvalidNumericalFormat(number)
+    
+    number = Decimal(number).normalize()
     sign, digits, exponent = number.as_tuple()
     position = len(digits) + exponent
     whole = digits[:max(position, 0)]
