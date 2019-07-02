@@ -2,9 +2,6 @@
 Functions of the spellnum module.
 """
 
-from decimal import Decimal
-
-
 import spellnum.lexicon
 import spellnum.regexlib
 import spellnum.exceptions
@@ -56,43 +53,48 @@ def num2txt(number):
     :return str: the spelling of the given number as a string
     """
     
-    number = str(number)
     # check for valid input format
-    if not spellnum.regexlib.VALID_NUMERIC_FLOAT.match(number):
+    match = spellnum.regexlib.VALID_NUMERIC_STRING.match(str(number))
+    if not match:
         raise spellnum.exceptions.InvalidNumericalFormat(number)
     
-    number = Decimal(number).normalize()
-    sign, digits, exponent = number.as_tuple()
+    # capture and "normalize" components of input number
+    sign, whole, fraction, exponent = match.groups(default='')
+    digits = whole + fraction
+    exponent = int(exponent or 0) - len(fraction)
     position = len(digits) + exponent
     whole = digits[:max(position, 0)]
+    fraction = digits[max(position, 0):]
     
-    if sign and number:
-        return 'negative ' + num2txt(abs(number))
+    # handle negative numbers recursively
+    if sign == '-' and digits:
+        return 'negative ' + num2txt(str(number).lstrip('-'))
+    
+    # pad whole to align periods
+    base_illion = max(position - 1, 0) // 3 - 1
+    whole = '0'*(3 - (max(position, 0) % 3 or 3)) + whole
+    whole = whole + '0'*(3 - (len(whole) % 3 or 3))
     
     periods = []
-    base_illion = max(position - 1, 0) // 3 - 1
-    whole = (0,)*(3 - (max(position, 0) % 3 or 3)) + whole
-    whole = whole + (0,)*(3 - (len(whole) % 3 or 3))
-    for period in (int(''.join(str(d) for d in whole[i:i+3])) for i in range(0, len(whole), 3)):
+    # spell each period in whole
+    for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3)):
         if period > 0:
             periods.append(' '.join([spellnum.lexicon.INTEGERS_LT_1000[period],
                                      get_period_suffix(base_illion=base_illion)]))
         base_illion -= 1
-    
-    delimiter = ' '  # TODO: Should I make the delimiter a keyword argument?
+        
+    # combine periods into single string
+    delimiter = ' ' # TODO: Should I make the delimiter a keyword argument?
     whole = delimiter.join(periods).strip(delimiter)
     
-    fraction = ''.join(str(d) for d in digits[position:])
+    # handle fractions recursively
     if fraction:
-        numerator, denominator = int(fraction), 10**-exponent
-        fraction = '{} {}th{}'.format(num2txt(numerator),
+        denominator = 10**-exponent
+        fraction = '{} {}th{}'.format(num2txt(fraction),
                                       num2txt(denominator),
-                                      's' if numerator > 1 else '')
+                                      's' if int(fraction) > 1 else '')
         
-    if whole and fraction:
-        return whole + ' and ' + fraction
-    
-    return whole or fraction or 'zero'
+    return whole + ' and ' + fraction if whole and fraction else whole or fraction or 'zero'
 
 
 def txt2num(spelling):
