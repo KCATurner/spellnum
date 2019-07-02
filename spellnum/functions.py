@@ -54,7 +54,7 @@ def num2txt(number):
     """
     
     # check for valid input format
-    match = spellnum.regexlib.VALID_NUMERIC_STRING.match(str(number))
+    match = spellnum.regexlib.VALID_INPUT_NUMBER.match(str(number))
     if not match:
         raise spellnum.exceptions.InvalidNumericalFormat(number)
     
@@ -89,22 +89,21 @@ def num2txt(number):
     
     # handle fractions recursively
     if fraction:
-        denominator = 10**-exponent
         fraction = '{} {}th{}'.format(num2txt(fraction),
-                                      num2txt(denominator),
+                                      num2txt('1e' + str(abs(exponent))),
                                       's' if int(fraction) > 1 else '')
         
     return whole + ' and ' + fraction if whole and fraction else whole or fraction or 'zero'
 
 
-def txt2num(spelling):
+def txt2num(text):
     """"""
-    # handle negatives recursively
-    if spelling.startswith('negative'):
-        return '-{}'.format(txt2num(spelling.replace('negative', '', 1)))
+    # handle negative numbers recursively
+    if text.startswith('negative'):
+        return '-{}'.format(txt2num(text.replace('negative', '', 1)))
     
-    whole = spelling.strip()
-    match = spellnum.regexlib.FRACTION_SPELLING_FORMAT.match(whole)
+    whole = text.strip()
+    match = spellnum.regexlib.VALID_INPUT_TEXT.match(whole)
     if match: # handle fractions recursively
         whole, numerator, denominator = match.groups(default='')
         numerator, denominator = int(txt2num(numerator)), int(txt2num(denominator))
@@ -117,7 +116,7 @@ def txt2num(spelling):
     
     result = 0
     period = list()
-    for word in str(spelling).split():
+    for word in str(text).split():
         if word not in ('hundred',) + spellnum.lexicon.INTEGERS_LT_100:
             # TODO: raise more meaningful exception on index failure...
             value = spellnum.lexicon.INTEGERS_LT_1000.index(' '.join(period))
