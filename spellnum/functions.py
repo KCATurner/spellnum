@@ -7,14 +7,14 @@ import spellnum.regexlib
 import spellnum.exceptions
 
 
-def get_period_suffix(base_illion):
+def get_period_name(base_illion):
     """
-    Constructs the period suffix/name from tuples of lexical components
+    Constructs the period name/suffix from tuples of lexical components
     using each digit in the given base-illion value; currently limited
     to base-illion values less than 1000 (millinillion).
     
     :param int base_illion: the base-illion value of the period name
-    :return str: the suffix for the period with the given base-illion
+    :return str: the name for the period with the given base-illion value
     """
     
     if not isinstance(base_illion, int):
@@ -26,8 +26,8 @@ def get_period_suffix(base_illion):
         return spellnum.lexicon.UNIQUE_PERIODS[base_illion]
     elif base_illion >= 1000:
         # TODO: handling this with recursion is basically daring the user to go insane with scientific notation...
-        return get_period_suffix(base_illion // 1000)[:-2]\
-               + get_period_suffix(base_illion % 1000).replace('thousand', 'nillion')
+        return get_period_name(base_illion // 1000)[:-2]\
+               + get_period_name(base_illion % 1000).replace('thousand', 'nillion')
     
     # build suffix from lexical components
     hund, tens, unit = (int(digit) for digit in str(base_illion).zfill(3))
@@ -80,7 +80,7 @@ def num2txt(number):
     for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3)):
         if period > 0:
             periods.append(' '.join([spellnum.lexicon.INTEGERS_LT_1000[period],
-                                     get_period_suffix(base_illion=base_illion)]))
+                                     get_period_name(base_illion=base_illion)]))
         base_illion -= 1
         
     # combine periods into single string
@@ -111,8 +111,9 @@ def txt2num(spelling):
         return '{}.{}'.format(int(txt2num(whole)) + (numerator // denominator),
                               str(numerator % denominator).zfill(str(denominator).count('0')))
     
+    # TODO: This is going to be broken now that we can spell to infinity...
     suffixes = spellnum.lexicon.UNIQUE_PERIODS \
-               + tuple(get_period_suffix(b) for b in range(21, 1000))
+               + tuple(get_period_name(b) for b in range(21, 1000))
     
     result = 0
     period = list()
