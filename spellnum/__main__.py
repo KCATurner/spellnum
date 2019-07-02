@@ -10,16 +10,61 @@ Options:
 from __future__ import print_function
 
 import sys
-import click
+import pyperclip
 from colorama import init, Fore
+from argparse import ArgumentParser
+from spellnum.lexicon import INTEGERS_LT_100
 from spellnum.functions import num2txt, txt2num
 
 
-@click.command()
-@click.argument('number')
-@click.option('--four', is_flag=True, help='Spell recursively to four.')
-@click.option('--copy', is_flag=True, help='Copy result to clipboard.')
-def cli(number, four=False, copy=False):
+def __read(number, copy=False):
+    """"""
+    result = txt2num(text=number)
+    
+    if copy:
+        pyperclip.copy(result)
+    
+    print(result)
+
+
+def __spell(number, copy=False):
+    """"""
+    result = num2txt(number=number)
+    
+    if copy:
+        pyperclip.copy(result)
+    
+    message = list()
+    for word in result.split(sep=' '):
+        if word in ('hundred',) + INTEGERS_LT_100:
+            message.append(Fore.LIGHTBLACK_EX + word)
+        elif word in ('negative', 'and'):
+            message.append(Fore.YELLOW + word)
+        else: # (period names)
+            message.append(Fore.RESET + word)
+            
+    message = ' '.join(message)
+    print(message)
+
+
+def __four(number, copy=False):
+    """"""
+    result = spelling = str()
+    while spelling != 'four':
+        try:
+            spelling = num2txt(number)
+            number = len(spelling.replace('-', '').replace(' ', ''))
+            print('There are ', Fore.CYAN, str(number), Fore.RESET,
+                  ' letters in ', Fore.LIGHTBLACK_EX, spelling, Fore.RESET, sep='')
+        except ValueError as error:
+            print(error)
+            break
+            
+    if copy:
+        pyperclip.copy(result)
+        
+        
+def cli():
     """
     Command line interface for spellnum package.
     """
@@ -28,19 +73,22 @@ def cli(number, four=False, copy=False):
     if sys.platform == 'win32':
         init()
         
-    # TODO: implement copy option functionality
+    arguments = ArgumentParser(add_help=False)
+    arguments.add_argument('number', type=str, help='number or text to convert')
+    arguments.add_argument('-c', '--copy', action='store_true', help='copy result to clipboard')
     
-    spelling = str()
-    while spelling != 'four':
-        try:
-            spelling = num2txt(number)
-            if four:
-                number = len(spelling.replace('-', '').replace(' ', ''))
-                print('There are ', Fore.CYAN, str(number), Fore.RESET,
-                      ' letters in ', Fore.LIGHTBLACK_EX, spelling, Fore.RESET, sep='')
-            else:
-                print(spelling)
-                break
-        except ValueError as error:
-            print(error)
-            break
+    parser = ArgumentParser()
+    command = parser.add_subparsers()
+    
+    read = command.add_parser('read', parents=[arguments], help='convert text to number')
+    read.set_defaults(func=__read)
+    
+    spell = command.add_parser('spell', parents=[arguments], help='convert number to text')
+    spell.set_defaults(func=__spell)
+    
+    four = command.add_parser('four', parents=[arguments], help='spell recursively to four')
+    four.set_defaults(func=__four)
+    
+    inputs = vars(parser.parse_args())
+    func = inputs.pop('func')
+    func(**inputs)
