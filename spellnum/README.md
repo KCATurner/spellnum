@@ -20,7 +20,7 @@ For functional purposes, the first index of lexicon's `INTEGERS_LT_1000` tuple i
 ```
 
 ## spellnum.functions
-[functions.py](functions.py) is home to all of the fun stuff, which really only consists of three main functions, `num2txt`, `txt2num`, and `get_period_name`.
+[functions.py](functions.py) is home to all of the fun stuff, which really only consists of three main functions, `number2text`, `text2number`, and `get_period_name`.
 
 ### `get_period_name(base_illion)`
 This function will return the Conway-Wechsler name for a number with the given base-illion value. The base-illion property of a number in the short-scale system is equal to one less than the number of periods in the number, where a period is a set of one to three consecutive digits often separated by commas.
@@ -33,28 +33,28 @@ This function will return the Conway-Wechsler name for a number with the given b
 'novemoctogintaseptingentillion'
 ```
 
-### `num2txt(number)`
-The `num2txt` function will return the english short-scale spelling for the **number** argument which can be any positive or negative number passed as an integer, float, or string. `num2txt` *can* handle values that exceed limitations on numerical types. Pass **number** as a string for values requiring more precision or values greater maximum and minimum int/float values.
+### `number2text(number)`
+The `number2text` function will return the english short-scale spelling for the **number** argument which can be any positive or negative number passed as an integer, float, or string. `number2text` *can* handle values that exceed limitations on numerical types. Pass **number** as a string for values requiring more precision or values greater maximum and minimum int/float values.
 #### Examples
 ```
->>> from spellnum.functions import num2txt
->>> num2txt(-123456)
+>>> from spellnum.functions import number2text
+>>> number2text(-123456)
 'negative one hundred twenty-three thousand four hundred fifty-six'
->>> num2txt(4.56e100)
+>>> number2text(4.56e100)
 'forty-five duotrigintillion six hundred untrigintillion'
->>> num2txt('7.89e500')
+>>> number2text('7.89e500')
 'seven hundred eighty-nine quinquasexagintacentillion'
->>> num2txt('-1.2e-9')
+>>> number2text('-1.2e-9')
 'negative twelve ten billionths'
 ```
 
-### `txt2num(text)`
-This is a work in progress. What I had been working towards would have been fine if `num2txt` had remained bounded at millinillion, but my ambition got the better of me and we can now spell whatever the h3ll we want... Stay posted, I guess.
+### `text2number(text)`
+This is a work in progress. What I had been working towards would have been fine if `number2text` had remained bounded at millinillion, but my ambition got the better of me and we can now spell whatever the h3ll we want... Stay posted, I guess.
 
 #### Examples
 ```
->>> from spellnum.functions import txt2num
-txt2num('one hundred twenty-three thousand four hundred fifty-six and seven hundred eighty-nine one thousandths')
+>>> from spellnum.functions import text2number
+text2number('one hundred twenty-three thousand four hundred fifty-six and seven hundred eighty-nine one thousandths')
 '123456.789'
 ```
 
@@ -69,4 +69,4 @@ Pre-compiled regular expression patterns for use with and throughout the package
 - **VALID_INPUT_TEXT** - TODO: document...
 
 ## spellnum.exceptions
-Since the great un-bounding of `get_period_name` and subsequently `num2txt`, [exceptions.py](exceptions.py) is home to only one custom exception, `InvalidNumericalFormat`, which extends the built-in `ValueError` purely for the sake of verbosity.
+Since the great un-bounding of `get_period_name` and subsequently `number2text`, [exceptions.py](exceptions.py) is home to only one custom exception, `InvalidNumericalFormat`, which extends the built-in `ValueError` purely for the sake of verbosity.
