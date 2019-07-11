@@ -14,12 +14,12 @@ import pyperclip
 from colorama import init, Fore
 from argparse import ArgumentParser
 from spellnum.lexicon import INTEGERS_LT_100
-from spellnum.functions import num2txt, txt2num
+from spellnum.functions import number2text, text2number
 
 
 def __read(number, copy=False):
     """"""
-    result = txt2num(text=number)
+    result = text2number(text=number)
     
     if copy:
         pyperclip.copy(result)
@@ -29,7 +29,7 @@ def __read(number, copy=False):
 
 def __spell(number, copy=False):
     """"""
-    result = num2txt(number=number)
+    result = number2text(number=number)
     
     if copy:
         pyperclip.copy(result)
@@ -52,7 +52,7 @@ def __four(number, copy=False):
     result = spelling = str()
     while spelling != 'four':
         try:
-            spelling = num2txt(number)
+            spelling = number2text(number)
             number = len(spelling.replace('-', '').replace(' ', ''))
             print('There are ', Fore.CYAN, str(number), Fore.RESET,
                   ' letters in ', Fore.LIGHTBLACK_EX, spelling, Fore.RESET, sep='')
