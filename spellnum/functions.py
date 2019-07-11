@@ -7,45 +7,60 @@ import spellnum.regexlib
 import spellnum.exceptions
 
 
-def get_period_name(base_illion):
+def nameperiod(base_illion):
     """
-    Constructs the period name/suffix from tuples of lexical components
-    using each digit in the given base-illion value; currently limited
-    to base-illion values less than 1000 (millinillion).
+    Constructs a period name from lexical prefix components using each
+    digit in the given base-illion value. A base-illion value (b)
+    represents a period's exponent (x), where b = (x - 3) / 3.
     
     :param int base_illion: the base-illion value of the period name
     :return str: the name for the period with the given base-illion value
     """
     
+    # a base-illion must be an integer (see docstring)
     if not isinstance(base_illion, int):
         raise TypeError('base_illion must be an integer!')
     
-    if base_illion < 0:
-        return ''
-    elif base_illion < 10:
-        return spellnum.lexicon.UNIQUE_PERIODS[base_illion]
-    elif base_illion >= 1000:
-        # TODO: handling this with recursion is basically daring the user to go insane with scientific notation...
-        return get_period_name(base_illion // 1000)[:-2]\
-               + get_period_name(base_illion % 1000).replace('thousand', 'nillion')
+    # special cases
+    if base_illion <= 0:
+        return '' if base_illion else 'thousand'
     
-    # build suffix from lexical components
-    hund, tens, unit = (int(digit) for digit in str(base_illion).zfill(3))
-    suffix = spellnum.lexicon.PERIOD_COMPONENTS_UNIT[unit]\
-             + spellnum.lexicon.PERIOD_COMPONENTS_TENS[tens]\
-             + spellnum.lexicon.PERIOD_COMPONENTS_HUND[hund] + 'llion'
+    # generates prefix for each period of the base-illion value
+    prefixes = (spellnum.lexicon.COMPOSITE_PERIOD_PREFIXES[int(p)]
+                for p in '{:,}'.format(base_illion).split(','))
     
-    # catch and correct lexical component combination exceptions
-    if spellnum.lexicon.PERIOD_COMPONENTS_UNIT[unit] in ('tre', 'se', 'septe', 'nove'):
-        suffix = spellnum.regexlib.X_LEXICAL_EXCEPTION.sub(repl='x', string=suffix)
-        suffix = spellnum.regexlib.S_LEXICAL_EXCEPTION.sub(repl='s', string=suffix)
-        suffix = spellnum.regexlib.M_LEXICAL_EXCEPTION.sub(repl='m', string=suffix)
-        suffix = spellnum.regexlib.N_LEXICAL_EXCEPTION.sub(repl='n', string=suffix)
+    # combine prefixes and end with "illion"
+    return 'illi'.join(prefixes) + 'illion'
+
+
+def readperiod(period_name):
+    """
+    Parses the given period name by indexing a tuple of valid period
+    prefix components with the given period name.
+    
+    :param str period_name: the period name of any number period
+    :return int: the base-illion value for the period with the given name
+    """
+    
+    # handle special cases
+    if period_name in ['', 'thousand']:
+        return -1 if period_name else 0
+    
+    # the name will be easier to parse in its composite parts
+    period_prefixes = str(period_name).replace('illion', '').split('illi')
+    
+    base_illion = ''
+    for prefix in period_prefixes:
+        # iteration > list comprehension here (for more helpful exceptions)
+        if prefix not in spellnum.lexicon.COMPOSITE_PERIOD_PREFIXES:
+            raise spellnum.exceptions.InvalidPeriodName(str(period_name), prefix)
+        base_illion += str(spellnum.lexicon.COMPOSITE_PERIOD_PREFIXES.index(prefix)).zfill(3)
         
-    return suffix.replace('allion', 'illion')
+    # always return base_illion as int
+    return int(base_illion)
 
 
-def num2txt(number):
+def number2text(number):
     """
     Constructs the English short-scale spelling of the given number.
     
@@ -54,76 +69,103 @@ def num2txt(number):
     """
     
     # check for valid input format
-    match = spellnum.regexlib.VALID_INPUT_NUMBER.match(str(number))
+    match = spellnum.regexlib.NUMERIC_STRING_PATTERN.match(str(number))
     if not match:
         raise spellnum.exceptions.InvalidNumericalFormat(number)
     
     # capture and "normalize" components of input number
-    sign, whole, fraction, exponent = match.groups(default='')
-    digits = whole + fraction
-    exponent = int(exponent or 0) - len(fraction)
+    sign, whole, numerator, exponent = match.groups(default='')
+    digits = whole + numerator
+    exponent = int(exponent or 0) - len(numerator)
     position = len(digits) + exponent
     whole = digits[:max(position, 0)]
-    fraction = digits[max(position, 0):]
+    numerator = digits[max(position, 0):]
     
     # handle negative numbers recursively
-    if sign == '-' and digits:
-        return 'negative ' + num2txt(str(number).lstrip('-'))
+    if sign == '-' and digits: # checking digits prevents "negative zero"
+        return 'negative ' + number2text(str(number).lstrip('-'))
     
     # pad whole to align periods
-    base_illion = max(position - 1, 0) // 3 - 1
     whole = '0'*(3 - (max(position, 0) % 3 or 3)) + whole
-    whole = whole + '0'*(3 - (len(whole) % 3 or 3))
+    whole += '0'*(3 - (len(whole) % 3 or 3))
     
-    periods = []
-    # spell each period in whole
-    for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3)):
-        if period > 0:
-            periods.append(' '.join([spellnum.lexicon.INTEGERS_LT_1000[period],
-                                     get_period_name(base_illion=base_illion)]))
+    periods = list()
+    base_illion = max(position - 1, 0) // 3 - 1
+    # spell each period value and name individually
+    for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3) if int(whole[i:i+3]) > 0):
+        periods.append(' '.join([spellnum.lexicon.INTEGERS_LT_1000[period],
+                                 nameperiod(base_illion=base_illion)]))
         base_illion -= 1
         
-    # combine periods into single string
-    delimiter = ' ' # TODO: Should I make the delimiter a keyword argument?
-    whole = delimiter.join(periods).strip(delimiter)
-    
-    # handle fractions recursively
-    if fraction:
-        fraction = '{} {}th{}'.format(num2txt(fraction),
-                                      num2txt('1e' + str(abs(exponent))),
-                                      's' if int(fraction) > 1 else '')
+    # add whole spelling to output list
+    text = [' '.join(periods).strip(), ]
+    if numerator: # handle fractions recursively
+        denominator = number2text('1e' + str(abs(exponent))) + 'th'
+        text.append(' '.join([number2text(numerator), denominator])
+                    + ('s' if int(numerator) > 1 else '')) # plurality
         
-    return whole + ' and ' + fraction if whole and fraction else whole or fraction or 'zero'
+    # return "<whole> and <fraction>" or "zero" if nothing was spelled
+    return ' and '.join(t for t in text if t) or 'zero'
 
 
-def txt2num(text):
-    """"""
+def text2number(text):
+    """
+    Parses the given English short-scale spelling and returns the
+    appropriate numerical value as a string.
+    
+    :param str text: the spelling of a number as a string
+    :return str: a numeric string representing the given spelling
+    """
+    
+    # handle special case(s)
+    if text == 'zero':
+        return '0'
     # handle negative numbers recursively
-    if text.startswith('negative'):
-        return '-{}'.format(txt2num(text.replace('negative', '', 1)))
+    elif text.startswith('negative'):
+        return '-' + text2number(text.replace('negative', '', 1))
     
-    whole = text.strip()
-    match = spellnum.regexlib.VALID_INPUT_TEXT.match(whole)
-    if match: # handle fractions recursively
-        whole, numerator, denominator = match.groups(default='')
-        numerator, denominator = int(txt2num(numerator)), int(txt2num(denominator))
-        return '{}.{}'.format(int(txt2num(whole)) + (numerator // denominator),
-                              str(numerator % denominator).zfill(str(denominator).count('0')))
+    # check for valid input format
+    match = spellnum.regexlib.FRACTION_TEXT_PATTERN.match(str(text))
+    if not match:
+        raise spellnum.exceptions.InvalidLexicalFormat(text)
     
-    # TODO: This is going to be broken now that we can spell to infinity...
-    suffixes = spellnum.lexicon.UNIQUE_PERIODS \
-               + tuple(get_period_name(b) for b in range(21, 1000))
-    
-    result = 0
-    period = list()
-    for word in str(text).split():
-        if word not in ('hundred',) + spellnum.lexicon.INTEGERS_LT_100:
-            # TODO: raise more meaningful exception on index failure...
-            value = spellnum.lexicon.INTEGERS_LT_1000.index(' '.join(period))
-            result += value * (10**((suffixes.index(word) + 1) * 3))
-            period = list()
-        else:
-            period.append(word)
+    # reused iterative functionality
+    def iterperiods(number_text):
+        previous_exponent = 0  # for enforcing period order and uniqueness
+        for period_value, period_name in spellnum.regexlib.PERIOD_TEXT_PATTERN.findall(number_text):
             
-    result += spellnum.lexicon.INTEGERS_LT_1000.index(' '.join(period))
-    return str(result)
+            # raise exception for invalid period values
+            if period_value not in spellnum.lexicon.INTEGERS_LT_1000:
+                raise spellnum.exceptions.InvalidPeriodValue(period_value, period_name)
+            
+            period_value = spellnum.lexicon.INTEGERS_LT_1000.index(period_value)
+            period_exponent = 3 * readperiod(period_name) + 3
+            
+            #  raise exception when periods are out of order
+            if previous_exponent and previous_exponent <= period_exponent:
+                raise spellnum.exceptions.InvalidPeriodOrder(nameperiod((previous_exponent // 3) + 3), period_name)
+            
+            yield period_value, period_exponent
+            
+    # get period information for each portion of input text
+    whole, numerator, denominator = [list(iterperiods(t)) for t in match.groups(default='')]
+    # correct numerator exponents (this line assumes denominator is a multiple of ten)
+    fraction = [(v, e - (denominator[0][1] + str(denominator[0][0]).count('0'))) for v, e in numerator]
+    
+    periods = dict()
+    # combine whole and fraction for all unique parts
+    for value, exponent in (whole + fraction)[::-1]:
+        periods[exponent + 3], periods[exponent] = divmod(periods.get(exponent, 0) + value, 1000)
+        
+    periods = ((str(v).zfill(3), e) for e, v in sorted(periods.items(), reverse=True) if v)
+    numbers = [next(periods, ('', 0)), ] # prep result with first period
+    for value, exponent in periods:
+        digits, previous = numbers[-1]
+        difference = previous - exponent
+        if difference > 100:
+            numbers.append((value.lstrip('0'), exponent))
+        else:
+            numbers[-1] = digits + '0'*(difference - 3) + value, exponent
+            
+    # return string representing the sum of numbers in normalized scientific notation
+    return ' + '.join('{}.{}e{}'.format(v[:1], v[1:], e + len(v[1:])) for v, e in numbers)
