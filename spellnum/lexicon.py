@@ -2,6 +2,8 @@
 Separate home for lexical components used by spellnum functions.
 """
 
+import re as __re
+
 
 # index-aligned unique spellings
 _UNIQUE_WORDS = ('', 'one', 'two', 'three', 'four',
@@ -25,21 +27,53 @@ INTEGERS_LT_1000 = tuple('{} {}'.format(INTEGERS_LT_100[i//100]
                                         INTEGERS_LT_100[i % 100]
                                         ).strip() for i in range(1000))
 
-# index-aligned unique period suffixes (base-illion 0-9)
-UNIQUE_PERIODS = ('thousand', 'million', 'billion', 'trillion',
-                  'quadrillion', 'quintillion', 'sextillion',
-                  'septillion', 'octillion', 'nonillion')
 
-# index-aligned period suffix components for base-illion units
-PERIOD_COMPONENTS_UNIT = ('', 'un', 'duo', 'tre', 'quattuor',
-                          'quinqua', 'se', 'septe', 'octo', 'nove')
+# index-aligned unique period names (base-illion 0-9)
+_UNIQUE_PERIOD_NAMES = ('nillion', 'million', 'billion', 'trillion',
+                        'quadrillion', 'quintillion', 'sextillion',
+                        'septillion', 'octillion', 'nonillion')
 
-# index-aligned period suffix components for base-illion tens
-PERIOD_COMPONENTS_TENS = ('', 'deci', 'viginti', 'triginta',
-                          'quadraginta', 'quinquaginta', 'sexaginta',
-                          'septuaginta', 'octoginta', 'nonaginta')
+# index-aligned period prefix components for base-illion units
+_PREFIX_COMPONENTS_UNIT = ('', 'un', 'duo', 'tre', 'quattuor',
+                           'quinqua', 'se', 'septe', 'octo', 'nove')
 
-# index-aligned period suffix components for base-illion hundreds
-PERIOD_COMPONENTS_HUND = ('', 'centi', 'ducenti', 'trecenti',
-                          'quadringenti', 'quingenti', 'sescenti',
-                          'septingenti', 'octingenti', 'nongenti')
+# index-aligned period prefix components for base-illion tens
+_PREFIX_COMPONENTS_TENS = ('', 'deci', 'viginti', 'triginta',
+                           'quadraginta', 'quinquaginta', 'sexaginta',
+                           'septuaginta', 'octoginta', 'nonaginta')
+
+# index-aligned period prefix components for base-illion hundreds
+_PREFIX_COMPONENTS_HUND = ('', 'centi', 'ducenti', 'trecenti',
+                           'quadringenti', 'quingenti', 'sescenti',
+                           'septingenti', 'octingenti', 'nongenti')
+
+
+# prefix combination exception patterns
+__X_LEXICAL_EXCEPTION = __re.compile(r'(?<=^se)(?=[co])')
+__S_LEXICAL_EXCEPTION = __re.compile(r'(?<=^se)(?=[qtv])|(?<=^tre)(?=[coqtv])')
+__M_LEXICAL_EXCEPTION = __re.compile(r'(?<=^septe)(?=[ov])|(?<=^nove)(?=[ov])')
+__N_LEXICAL_EXCEPTION = __re.compile(r'(?<=^septe)(?=[cdqst])|(?<=^nove)(?=[cdqst])')
+
+
+def __buildprefix(base_illion):
+    """ For internal use only! Inaccurate for base_illion outside [10, 1000) """
+    
+    # build prefix from lexical components
+    base_illion = str(base_illion).zfill(3)
+    prefix = str(_PREFIX_COMPONENTS_UNIT[int(base_illion[-1])]
+                 + _PREFIX_COMPONENTS_TENS[int(base_illion[-2])]
+                 + _PREFIX_COMPONENTS_HUND[int(base_illion[-3])])
+    
+    # catch and correct exceptions
+    if int(base_illion[-1]) in (3, 6, 7, 9):
+        prefix = __X_LEXICAL_EXCEPTION.sub(repl='x', string=prefix)
+        prefix = __S_LEXICAL_EXCEPTION.sub(repl='s', string=prefix)
+        prefix = __M_LEXICAL_EXCEPTION.sub(repl='m', string=prefix)
+        prefix = __N_LEXICAL_EXCEPTION.sub(repl='n', string=prefix)
+        
+    return prefix.rstrip('ai')
+
+
+# index-aligned prefixes for any base-illion period value
+COMPOSITE_PERIOD_PREFIXES = tuple(__s.replace('illion', '') for __s in _UNIQUE_PERIOD_NAMES) \
+                            + tuple(__buildprefix(__i) for __i in range(10, 1000))
