@@ -40,9 +40,8 @@ FRACTION_TEXT_PATTERN = __re.compile((r'^(?P<whole>.+\w)?(?# capture whole numbe
                                       r'\s*\w*)ths?(?# to capture fraction, must end in th/ths)'
                                       r')?$(?# string must end after whole or fraction)'))
 
-# TODO: comment this expression
-PERIOD_TEXT_PATTERN = __re.compile((r'(?:^|\s+)(?# )'
-                                    r'\b(?P<value>.+?)(?# )'
-                                    r'(?:\s+(?# )'
-                                    r'(?P<period>\w+illion\b|thousand\b)(?# )'
-                                    r'|\s*$)(?# )'))
+PERIOD_TEXT_PATTERN = __re.compile((r'(?:^|\s+)(?# period must follow whitespace or start of string)'
+                                    r'\b(?P<value>.+?)(?# capture period value without consuming name)'
+                                    r'(?:\s+(?# period value and name must be separated by whitespace)'
+                                    r'(?P<period>\w+illion\b|thousand\b)(?# capture the period name)'
+                                    r'|\s*$)(?# second option allows period value to end a match)'))
