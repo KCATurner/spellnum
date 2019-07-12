@@ -67,7 +67,7 @@ talk.
 """
 
 
-class InvalidNumberlikeString(ValueError):
+class InvalidNumberLikeString(ValueError):
     """
     Custom exception for number2text function.
     """
@@ -78,7 +78,7 @@ class InvalidNumberlikeString(ValueError):
             number (str): Invalid number-like string input.
             *args: Additional ValueError positional arguments.
         """
-        super(InvalidNumberlikeString, self).__init__(
+        super(InvalidNumberLikeString, self).__init__(
             '\n\n\tInput is not a valid number-like format!'
             '\n\tDid not understand "{}"'.format(number),
             *args
