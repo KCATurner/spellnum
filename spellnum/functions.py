@@ -9,14 +9,19 @@ import spellnum.exceptions
 
 def nameperiod(base_illion):
     """
+    Names the period for the given base-illion value.
+    
     Constructs a period name from lexical prefix components using each
-    digit in the given base-illion value. A base-illion value (b)
-    represents a period's exponent (x), where b = (x - 3) / 3.
+    period in the given base-illion value. A base-illion value (b)
+    represents a period's exponent (x) where b = (x - 3) / 3.
     
-    :param int base_illion: the base-illion value of the period name
-    :return str: the name for the period with the given base-illion value
+    Args:
+        base_illion (int): The base-illion value of the period name.
+        
+    Returns:
+        The name for the period with the given base-illion value.
+    
     """
-    
     # a base-illion must be an integer (see docstring)
     if not isinstance(base_illion, int):
         raise TypeError('base_illion must be an integer!')
@@ -38,13 +43,16 @@ def readperiod(period_name):
     Parses the given period name by indexing a tuple of valid period
     prefix components with the given period name.
     
-    :param str period_name: the period name of any number period
-    :return int: the base-illion value for the period with the given name
+    Args:
+        period_name (str): The period name of any number period.
+        
+    Returns:
+        The base-illion value for the period with the given name.
+        
     """
-    
     # handle special cases
     if period_name in ['', 'thousand']:
-        return -1 if period_name else 0
+        return -1 if not period_name else 0
     
     # the name will be easier to parse in its composite parts
     period_prefixes = str(period_name).replace('illion', '').split('illi')
@@ -53,7 +61,7 @@ def readperiod(period_name):
     for prefix in period_prefixes:
         # iteration > list comprehension here (for more helpful exceptions)
         if prefix not in spellnum.lexicon.COMPOSITE_PERIOD_PREFIXES:
-            raise spellnum.exceptions.InvalidPeriodName(str(period_name), prefix)
+            raise spellnum.exceptions.InvalidTextForPeriodName(str(period_name), prefix)
         base_illion += str(spellnum.lexicon.COMPOSITE_PERIOD_PREFIXES.index(prefix)).zfill(3)
         
     # always return base_illion as int
@@ -64,14 +72,17 @@ def number2text(number):
     """
     Constructs the English short-scale spelling of the given number.
     
-    :param number: an int float or numeric string to be spelled
-    :return str: the spelling of the given number as a string
+    Args:
+        number (int, float, str): The number to spell.
+        
+    Returns:
+        The spelling of the given number.
+        
     """
-    
     # check for valid input format
     match = spellnum.regexlib.NUMERIC_STRING_PATTERN.match(str(number))
     if not match:
-        raise spellnum.exceptions.InvalidNumericalFormat(number)
+        raise spellnum.exceptions.InvalidNumberlikeString(number)
     
     # capture and "normalize" components of input number
     sign, whole, numerator, exponent = match.groups(default='')
@@ -113,10 +124,13 @@ def text2number(text):
     Parses the given English short-scale spelling and returns the
     appropriate numerical value as a string.
     
-    :param str text: the spelling of a number as a string
-    :return str: a numeric string representing the given spelling
+    Args:
+        text (str): The spelling of a number as a string.
+        
+    Returns:
+        A numeric string representing the given spelling.
+        
     """
-    
     # handle special case(s)
     if text == 'zero':
         return '0'
@@ -127,25 +141,18 @@ def text2number(text):
     # check for valid input format
     match = spellnum.regexlib.FRACTION_TEXT_PATTERN.match(str(text))
     if not match:
-        raise spellnum.exceptions.InvalidLexicalFormat(text)
+        raise spellnum.exceptions.UnexpectedNumberTextFormat(text)
     
     # reused iterative functionality
     def iterperiods(number_text):
-        previous_exponent = 0  # for enforcing period order and uniqueness
         for period_value, period_name in spellnum.regexlib.PERIOD_TEXT_PATTERN.findall(number_text):
             
             # raise exception for invalid period values
             if period_value not in spellnum.lexicon.INTEGERS_LT_1000:
-                raise spellnum.exceptions.InvalidPeriodValue(period_value, period_name)
+                raise spellnum.exceptions.UnrecognizedTextForPeriodValue(period_value, period_name)
             
-            period_value = spellnum.lexicon.INTEGERS_LT_1000.index(period_value)
-            period_exponent = 3 * readperiod(period_name) + 3
-            
-            #  raise exception when periods are out of order
-            if previous_exponent and previous_exponent <= period_exponent:
-                raise spellnum.exceptions.InvalidPeriodOrder(nameperiod((previous_exponent // 3) + 3), period_name)
-            
-            yield period_value, period_exponent
+            yield (spellnum.lexicon.INTEGERS_LT_1000.index(period_value),
+                   3 * readperiod(period_name) + 3)
             
     # get period information for each portion of input text
     whole, numerator, denominator = [list(iterperiods(t)) for t in match.groups(default='')]
@@ -157,15 +164,17 @@ def text2number(text):
     for value, exponent in (whole + fraction)[::-1]:
         periods[exponent + 3], periods[exponent] = divmod(periods.get(exponent, 0) + value, 1000)
         
-    periods = ((str(v).zfill(3), e) for e, v in sorted(periods.items(), reverse=True) if v)
-    numbers = [next(periods, ('', 0)), ] # prep result with first period
+    periods = ((str(v), e) for e, v in sorted(periods.items(), reverse=True) if v)
+    numbers = [next(periods, ('', 0)), ]
     for value, exponent in periods:
         digits, previous = numbers[-1]
         difference = previous - exponent
-        if difference > 100:
-            numbers.append((value.lstrip('0'), exponent))
+        if difference > 10000:
+            numbers.append((value, exponent))
         else:
-            numbers[-1] = digits + '0'*(difference - 3) + value, exponent
+            numbers[-1] = digits + value.zfill(difference), exponent
             
     # return string representing the sum of numbers in normalized scientific notation
-    return ' + '.join('{}.{}e{}'.format(v[:1], v[1:], e + len(v[1:])) for v, e in numbers)
+    return ' + '.join(v[:1] + ('.' + v[1:]).rstrip('.')
+                      + ('e' + str(e + len(v[1:]))).rstrip('0e')
+                      for v, e in numbers)
