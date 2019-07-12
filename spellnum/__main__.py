@@ -5,6 +5,7 @@ Options:
   --four    Spell recursively to four.
   --copy    Copy result to clipboard.
   --help    Show this message and exit.
+  
 """
 
 from __future__ import print_function
