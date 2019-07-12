@@ -2,23 +2,21 @@
 Separate home for lexical components used by spellnum functions.
 
 Attributes:
-    INTEGERS_LT_100 (tuple): index-aligned 2 digit spellings
-    INTEGERS_LT_1000 (tuple): index-aligned 3 digit spellings
-    COMPOSITE_PERIOD_PREFIXES (tuple): index-aligned prefixes for any base-illion period value
-    
-    _UNIQUE_WORDS (tuple): index-aligned unique spellings
-    _UNIQUE_PERIOD_NAMES (tuple): index-aligned unique period names (base-illion 0-9)
-    _PREFIX_COMPONENTS_UNIT (tuple): index-aligned period prefix components for base-illion units
-    _PREFIX_COMPONENTS_TENS (tuple): index-aligned period prefix components for base-illion tens
-    _PREFIX_COMPONENTS_HUND (tuple): index-aligned period prefix components for base-illion hundreds
+    INTEGERS_LT_100 (tuple): all 2 digit numeric text combinations
+    INTEGERS_LT_1000 (tuple): all 3 digit numeric text combinations
+    COMPOSITE_PERIOD_PREFIXES (tuple): prefixes for all base-illion period values
+    _UNIQUE_NUMERIC_WORDS (tuple): unique words for english numeric text
+    _UNIQUE_PERIOD_NAMES (tuple): unique period names (base-illion 0-9)
+    _PREFIX_COMPONENTS_UNIT (tuple): prefix components for base-illion units
+    _PREFIX_COMPONENTS_TENS (tuple): period prefix components for base-illion tens
+    _PREFIX_COMPONENTS_HUND (tuple): period prefix components for base-illion hundreds
     
 """
-
 
 import re as __re
 
 
-_UNIQUE_WORDS = ('', 'one', 'two', 'three', 'four',
+_UNIQUE_NUMERIC_WORDS = ('', 'one', 'two', 'three', 'four',
                  'five', 'six', 'seven', 'eight', 'nine',
                  'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
                  'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen')\
@@ -27,9 +25,9 @@ _UNIQUE_WORDS = ('', 'one', 'two', 'three', 'four',
                  + ('sixty',) + ('',)*9 + ('seventy',) + ('',)*9\
                  + ('eighty',) + ('',)*9 + ('ninety',) + ('',)*9
 
-INTEGERS_LT_100 = _UNIQUE_WORDS[:20]\
-                  + tuple('{}-{}'.format(_UNIQUE_WORDS[10*(i//10)],
-                                         _UNIQUE_WORDS[i % 10]
+INTEGERS_LT_100 = _UNIQUE_NUMERIC_WORDS[:20]\
+                  + tuple('{}-{}'.format(_UNIQUE_NUMERIC_WORDS[10*(i//10)],
+                                         _UNIQUE_NUMERIC_WORDS[i % 10]
                                          ).strip('-') for i in range(20, 100))
 
 INTEGERS_LT_1000 = tuple('{} {}'.format(INTEGERS_LT_100[i//100]
@@ -62,7 +60,7 @@ __N_LEXICAL_EXCEPTION = __re.compile(r'(?<=^septe)(?=[cdqst])|(?<=^nove)(?=[cdqs
 
 
 def __buildprefix(base_illion):
-    """ For internal use only! Inaccurate for base_illion outside [10, 1000) """
+    """ For internal use only! Inaccurate for base-illion outside [10, 1000) """
     
     # build prefix from lexical components
     base_illion = str(base_illion).zfill(3)
