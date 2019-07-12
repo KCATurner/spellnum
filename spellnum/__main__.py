@@ -18,7 +18,7 @@ from spellnum.functions import number2text, text2number
 
 
 def __read(number, copy=False):
-    """"""
+    """ For internal use only! """
     result = text2number(text=number)
     
     if copy:
@@ -28,7 +28,7 @@ def __read(number, copy=False):
 
 
 def __spell(number, copy=False):
-    """"""
+    """ For internal use only! """
     result = number2text(number=number)
     
     if copy:
@@ -48,7 +48,7 @@ def __spell(number, copy=False):
 
 
 def __four(number, copy=False):
-    """"""
+    """ For internal use only! """
     result = spelling = str()
     while spelling != 'four':
         try:
