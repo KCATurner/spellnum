@@ -1,5 +1,17 @@
 """
 Separate home for useful, precompiled regular expressions.
+
+Attributes:
+    NUMERIC_STRING_PATTERN (Pattern): Pre-compiled regular expression
+        for capturing numerical elements of a number-like string.
+        
+    FRACTION_TEXT_PATTERN (Pattern): Pre-compiled regular expression
+        for capturing specific segments of number text.
+        
+    PERIOD_TEXT_PATTERN (Pattern): Pre-compiled regular expression
+        for capturing the value and name of each period in each segment
+        of numeric text.
+        
 """
 
 import re as __re
