@@ -24,14 +24,14 @@ def nameperiod(base_illion):
     """
     # a base-illion must be an integer (see docstring)
     if not isinstance(base_illion, int):
-        raise TypeError('base_illion must be an integer!')
+        raise TypeError('base_illion argument must be an integer!')
     
     # special cases
     if base_illion <= 0:
         return '' if base_illion else 'thousand'
     
     # generates prefix for each period of the base-illion value
-    prefixes = (spellnum.lexicon.COMPOSITE_PERIOD_PREFIXES[int(p)]
+    prefixes = (spellnum.lexicon.BASE_ILLION_PERIOD_PREFIXES[int(p)]
                 for p in '{:,}'.format(base_illion).split(','))
     
     # combine prefixes and end with "illion"
@@ -60,9 +60,9 @@ def readperiod(period_name):
     base_illion = ''
     for prefix in period_prefixes:
         # iteration > list comprehension here (for more helpful exceptions)
-        if prefix not in spellnum.lexicon.COMPOSITE_PERIOD_PREFIXES:
+        if prefix not in spellnum.lexicon.BASE_ILLION_PERIOD_PREFIXES:
             raise spellnum.exceptions.InvalidTextForPeriodName(str(period_name), prefix)
-        base_illion += str(spellnum.lexicon.COMPOSITE_PERIOD_PREFIXES.index(prefix)).zfill(3)
+        base_illion += str(spellnum.lexicon.BASE_ILLION_PERIOD_PREFIXES.index(prefix)).zfill(3)
         
     # always return base_illion as int
     return int(base_illion)
@@ -80,9 +80,9 @@ def number2text(number):
         
     """
     # check for valid input format
-    match = spellnum.regexlib.NUMERIC_STRING_PATTERN.match(str(number))
+    match = spellnum.regexlib.NUMBER_LIKE_STRING.match(str(number))
     if not match:
-        raise spellnum.exceptions.InvalidNumberlikeString(number)
+        raise spellnum.exceptions.InvalidNumberLikeString(number)
     
     # capture and "normalize" components of input number
     sign, whole, numerator, exponent = match.groups(default='')
@@ -105,7 +105,7 @@ def number2text(number):
     # spell each period value and name individually
     for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3) if int(whole[i:i+3]) > 0):
         periods.append(' '.join([spellnum.lexicon.INTEGERS_LT_1000[period],
-                                 nameperiod(base_illion=base_illion)]))
+                                 nameperiod(base_illion)]))
         base_illion -= 1
         
     # add whole spelling to output list
@@ -139,13 +139,13 @@ def text2number(text):
         return '-' + text2number(text.replace('negative', '', 1))
     
     # check for valid input format
-    match = spellnum.regexlib.FRACTION_TEXT_PATTERN.match(str(text))
+    match = spellnum.regexlib.NUMBER_TEXT_FORMAT.match(str(text))
     if not match:
         raise spellnum.exceptions.UnexpectedNumberTextFormat(text)
     
     # reused iterative functionality
     def iterperiods(number_text):
-        for period_value, period_name in spellnum.regexlib.PERIOD_TEXT_PATTERN.findall(number_text):
+        for period_value, period_name in spellnum.regexlib.PERIOD_TEXT_FORMAT.findall(number_text):
             
             # raise exception for invalid period values
             if period_value not in spellnum.lexicon.INTEGERS_LT_1000:
