@@ -2,8 +2,29 @@
 Unit tests for spellnum.regexlib module.
 """
 
-import unittest
-import spellnum
+from unittest import TestCase
+from spellnum import regexlib
 
 
-# TODO: test d4mn code, Kevin! - Love, Kevin
+class NumberLikeString(TestCase):
+    """"""
+    
+    def test_empty_string(self):
+        match = regexlib.NUMBER_LIKE_STRING.match('')
+        self.assertIsNone(match)
+        
+        
+class NumberTextFormat(TestCase):
+    """"""
+    
+    def test_empty_string(self):
+        match = regexlib.NUMBER_TEXT_FORMAT.match('')
+        self.assertIsNotNone(match)
+        
+        
+class PeriodTextFormat(TestCase):
+    """"""
+    
+    def test_empty_string(self):
+        match = regexlib.PERIOD_TEXT_FORMAT.match('')
+        self.assertIsNone(match)
