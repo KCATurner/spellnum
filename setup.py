@@ -25,7 +25,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'spn = spellnum.__main__:cli'
+            'num = spellnum.__main__:cli'
         ]
     },
     classifiers=(
