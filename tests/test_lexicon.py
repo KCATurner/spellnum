@@ -13,18 +13,18 @@ class LexiconStructure(TestCase):
     
     def test_1_digit_integers(self):
         expected = lexicon._UNIQUE_NUMERIC_WORDS[:9]
-        actual = lexicon.INTEGERS_LT_1000[:9]
+        actual = lexicon.NATURAL_NUMBERS_LT_1000[:9]
         self.assertTupleEqual(expected, actual)
         
     def test_2_digit_integers(self):
-        expected = lexicon.INTEGERS_LT_100[10:99]
-        actual = lexicon.INTEGERS_LT_1000[10:99]
+        expected = lexicon.NATURAL_NUMBERS_LT_100[10:99]
+        actual = lexicon.NATURAL_NUMBERS_LT_1000[10:99]
         self.assertTupleEqual(expected, actual)
         
     def test_3_digit_integers(self):
         for index in range(100, 1000):
             hundred = lexicon._UNIQUE_NUMERIC_WORDS[index // 100]
-            tens = lexicon.INTEGERS_LT_100[index % 100]
+            tens = lexicon.NATURAL_NUMBERS_LT_100[index % 100]
             expected = '{} hundred {}'.format(hundred, tens).strip()
-            actual = lexicon.INTEGERS_LT_1000[index]
+            actual = lexicon.NATURAL_NUMBERS_LT_1000[index]
             self.assertMultiLineEqual(expected, actual)

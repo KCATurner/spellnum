@@ -104,7 +104,7 @@ def number2text(number):
     base_illion = max(position - 1, 0) // 3 - 1
     # spell each period value and name individually
     for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3) if int(whole[i:i+3]) > 0):
-        periods.append(' '.join([spellnum.lexicon.INTEGERS_LT_1000[period],
+        periods.append(' '.join([spellnum.lexicon.NATURAL_NUMBERS_LT_1000[period],
                                  nameperiod(base_illion)]))
         base_illion -= 1
         
@@ -148,10 +148,10 @@ def text2number(text):
         for period_value, period_name in spellnum.regexlib.PERIOD_TEXT_FORMAT.findall(number_text):
             
             # raise exception for invalid period values
-            if period_value not in spellnum.lexicon.INTEGERS_LT_1000:
+            if period_value not in spellnum.lexicon.NATURAL_NUMBERS_LT_1000:
                 raise spellnum.exceptions.UnrecognizedTextForPeriodValue(period_value, period_name)
             
-            yield (spellnum.lexicon.INTEGERS_LT_1000.index(period_value),
+            yield (spellnum.lexicon.NATURAL_NUMBERS_LT_1000.index(period_value),
                    3 * readperiod(period_name) + 3)
             
     # get period information for each portion of input text

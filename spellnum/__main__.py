@@ -14,7 +14,7 @@ import sys
 import pyperclip
 from colorama import init, Fore
 from argparse import ArgumentParser
-from spellnum.lexicon import INTEGERS_LT_100
+from spellnum.lexicon import NATURAL_NUMBERS_LT_100
 from spellnum.functions import number2text, text2number
 
 
@@ -37,7 +37,7 @@ def __spell(number, copy=False):
     
     message = list()
     for word in result.split(sep=' '):
-        if word in ('hundred',) + INTEGERS_LT_100:
+        if word in ('hundred',) + NATURAL_NUMBERS_LT_100:
             message.append(Fore.LIGHTBLACK_EX + word)
         elif word in ('negative', 'and'):
             message.append(Fore.YELLOW + word)
@@ -93,3 +93,7 @@ def cli():
     inputs = vars(parser.parse_args())
     func = inputs.pop('func')
     func(**inputs)
+
+
+if __name__ == '__main__':
+    cli()

@@ -18,19 +18,19 @@ Unique words for english numeric text.
 """
 
 
-INTEGERS_LT_100 = _UNIQUE_NUMERIC_WORDS[:20] \
-                  + tuple('-'.join((_UNIQUE_NUMERIC_WORDS[10 * (__i // 10)],
-                                    _UNIQUE_NUMERIC_WORDS[__i % 10])
-                                   ).strip('-') for __i in range(20, 100))
+NATURAL_NUMBERS_LT_100 = _UNIQUE_NUMERIC_WORDS[:20] \
+                         + tuple('-'.join((_UNIQUE_NUMERIC_WORDS[10 * (__i // 10)],
+                                           _UNIQUE_NUMERIC_WORDS[__i % 10])
+                                          ).strip('-') for __i in range(20, 100))
 """
 All 2 digit numeric text combinations.
 """
 
 
-INTEGERS_LT_1000 = INTEGERS_LT_100 \
-                   + tuple(' hundred '.join((INTEGERS_LT_100[__i // 100],
-                                             INTEGERS_LT_100[__i % 100])
-                                            ).strip() for __i in range(100, 1000))
+NATURAL_NUMBERS_LT_1000 = NATURAL_NUMBERS_LT_100 \
+                          + tuple(' hundred '.join((NATURAL_NUMBERS_LT_100[__i // 100],
+                                                    NATURAL_NUMBERS_LT_100[__i % 100])
+                                                   ).strip() for __i in range(100, 1000))
 """
 All 3 digit numeric text combinations.
 """
