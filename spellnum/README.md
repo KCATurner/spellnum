@@ -123,7 +123,6 @@ __COMING SOON...__
 'one millinillinillion and two one millinillinillionths'
 ```
 
-
 ### text2number(text)
 The `text2number` takes a string and attempts to parse it and return a string containing the number (or in some cases sum of numbers) representing the value of the text. The number(s) in the string will almost always be in scientific notation.  
 ```
