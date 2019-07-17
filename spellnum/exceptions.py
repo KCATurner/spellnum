@@ -5,7 +5,14 @@ What's that you ask? Why on earth would you subclass ValueError for so
 many specific cases when you can just raise one from the function call?
 
 What an insightful question! I'm so glad you asked...
-    1)  In order to be more explicit about what exactly went wrong,
+    1)  The main reason is that when a function is designed to take
+        input as a string that must conform to a particular format, it
+        helps to have very informative exceptions to say not just, "Hey
+        I want a string!" but also to whine about the format it needs
+        that string to be in and having different types of exceptions
+        for different violations of that format can help.
+        
+    2)  In order to be more explicit about what exactly went wrong,
         some of these exceptions warrant fairly long/detailed messages,
         especially if the user doesn't know what a base-illion value is
         for instance. You're README and published documentation is your
@@ -20,7 +27,7 @@ What an insightful question! I'm so glad you asked...
         clearing of the throat to the kindest god-smack to the user's
         face for passing up the aforementioned handshake.
         
-    2)  The exception type is the very first thing a user sees. That
+    3)  The exception type is the very first thing a user sees. That
         being the case, the more experienced a developer gets, the more
         information they tend to glean directly from the name of the
         exception with little need to read further. In keeping with the
@@ -28,7 +35,7 @@ What an insightful question! I'm so glad you asked...
         that most of these exceptions have very verbose names. This is
         by design. Now, let's shift paradigms.
         
-    3)  Readability... Not necessarily the exceptions per se (although
+    4)  Readability... Not necessarily the exceptions per se (although
         there's a good case there too), but the functions tasked with
         calling them. Usually, when raising exceptions, the programmer
         is left with an ultimatum. Do I lay everything out and explain
@@ -49,7 +56,7 @@ What an insightful question! I'm so glad you asked...
         my second point (directly above). The function should tell you
         how it works, not how it doesn't. Leave that to the exception.
         
-    4)  In a similar vein of thought, intelligent use of custom
+    5)  In a similar vein of thought, intelligent use of custom
         exceptions can help with Q&A. Simple exceptions look more like
         half-a$$ed built-in exceptions which could already be hit or
         miss, but as a developer, the more distinctive your exceptions
