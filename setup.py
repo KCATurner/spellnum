@@ -20,8 +20,7 @@ setuptools.setup(
     url='https://github.com/KCATurner/spellnum',
     packages=setuptools.find_packages(exclude=['tests*', ]),
     install_requires=[
-        'click==7.0',
-        'colorama'
+        'colorama',
     ],
     entry_points={
         'console_scripts': [
