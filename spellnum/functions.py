@@ -20,7 +20,7 @@ def nameperiod(base_illion):
         
     Returns:
         The name for the period with the given base-illion value.
-    
+        
     """
     # a base-illion must be an integer (see docstring)
     if not isinstance(base_illion, int):
@@ -85,15 +85,15 @@ def number2text(number):
         raise spellnum.exceptions.InvalidNumberLikeString(number)
     
     # capture and "normalize" components of input number
-    sign, whole, numerator, exponent = match.groups(default='')
-    digits = whole + numerator
-    exponent = int(exponent or 0) - len(numerator)
+    bsign, bwhole, bfraction, esign, evalue = match.groups(default='')
+    exponent = int(esign + (evalue or '0')) - len(bfraction)
+    digits = bwhole + bfraction
     position = len(digits) + exponent
     whole = digits[:max(position, 0)]
     numerator = digits[max(position, 0):]
     
     # handle negative numbers recursively
-    if sign == '-' and digits: # checking digits prevents "negative zero"
+    if bsign == '-' and digits: # checking digits prevents "negative zero"
         return 'negative ' + number2text(str(number).lstrip('-'))
     
     # pad whole to align periods
@@ -151,13 +151,15 @@ def text2number(text):
             if period_value not in spellnum.lexicon.NATURAL_NUMBERS_LT_1000:
                 raise spellnum.exceptions.UnrecognizedTextForPeriodValue(period_value, period_name)
             
+            # yields pairs of (value, base-illion)
             yield (spellnum.lexicon.NATURAL_NUMBERS_LT_1000.index(period_value),
                    3 * readperiod(period_name) + 3)
             
     # get period information for each portion of input text
     whole, numerator, denominator = [list(iterperiods(t)) for t in match.groups(default='')]
     # correct numerator exponents (this line assumes denominator is a multiple of ten)
-    fraction = [(v, e - (denominator[0][1] + str(denominator[0][0]).count('0'))) for v, e in numerator]
+    fraction = [(v, e - (denominator[0][1] + str(denominator[0][0]).count('0')))
+                for v, e in numerator]
     
     periods = dict()
     # combine whole and fraction for all unique parts
@@ -175,6 +177,5 @@ def text2number(text):
             numbers[-1] = digits + value.zfill(difference), exponent
             
     # return string representing the sum of numbers in normalized scientific notation
-    return ' + '.join(v[:1] + ('.' + v[1:]).rstrip('.')
-                      + ('e' + str(e + len(v[1:]))).rstrip('0e')
+    return ' + '.join(v[:1] + ('.' + v[1:]).rstrip('.') + ('e' + str(e + len(v[1:]))).rstrip('0e')
                       for v, e in numbers)
