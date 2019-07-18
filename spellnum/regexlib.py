@@ -21,7 +21,7 @@ NUMBER_LIKE_STRING = __re.compile(
      r'(?P<esign>[-+])?(?# capture exponent sign if exists)'
      r'0*(?# match, but exclude leading zeros from exponent value)'
      r'(?P<evalue>\d+)?)?(?# capture exponent value if exists)'
-     r'(?<=[.\d])(?# number must end in a decimal or digit to be valid)'
+     r'(?<=[.\d])(?# number must end in decimal or digit to be valid)'
      r'\s*(?# match, but exclude any trailing whitespace)$')
 )
 """
