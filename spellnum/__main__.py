@@ -1,11 +1,14 @@
 """
-Usage: spellnum [OPTIONS] NUMBER
+usage: spellnum [-h] {read,spell,four} ...
 
-Options:
-  --four    Spell recursively to four.
-  --copy    Copy result to clipboard.
-  --help    Show this message and exit.
-  
+positional arguments:
+  {read,spell,four}
+    read             convert text to number
+    spell            convert number to text
+    four             spell recursively to four
+
+optional arguments:
+  -h, --help         show this help message and exit
 """
 
 from __future__ import print_function
