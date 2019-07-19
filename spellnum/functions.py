@@ -103,9 +103,10 @@ def number2text(number):
     periods = list()
     base_illion = max(position - 1, 0) // 3 - 1
     # spell each period value and name individually
-    for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3) if int(whole[i:i+3]) > 0):
-        periods.append(' '.join([spellnum.lexicon.NATURAL_NUMBERS_LT_1000[period],
-                                 nameperiod(base_illion)]))
+    for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3)):
+        if period > 0:
+            periods.append(' '.join([spellnum.lexicon.NATURAL_NUMBERS_LT_1000[period],
+                                     nameperiod(base_illion)]))
         base_illion -= 1
         
     # add whole spelling to output list
@@ -177,5 +178,5 @@ def text2number(text):
             numbers[-1] = digits + value.zfill(difference), exponent
             
     # return string representing the sum of numbers in normalized scientific notation
-    return ' + '.join(v[:1] + ('.' + v[1:]).rstrip('.') + ('e' + str(e + len(v[1:]))).rstrip('0e')
+    return ' + '.join(v[:1] + ('.' + v[1:]).rstrip('.0') + ('e' + str(e + len(v[1:]))).rstrip('e')
                       for v, e in numbers)

@@ -2,9 +2,13 @@
 Unit tests for spellnum module.
 """
 
+import sys
+import random
 from unittest import TestCase
+
 from spellnum.functions import *
 from spellnum.exceptions import *
+from spellnum.lexicon import BASE_ILLION_PERIOD_PREFIXES
 
 
 class NamePeriodTests(TestCase):
@@ -29,6 +33,16 @@ class NamePeriodTests(TestCase):
             with self.subTest(msg='NEG', base_illion=base_illion):
                 self.assertEqual(period_name, nameperiod(base_illion))
                 
+    def test_good_monkey(self):
+        """
+        Function should (theoretically) handle any whole number >= -1.
+        """
+        for base_illion in random.sample(range(1, sys.maxsize), 1000) + [sys.maxsize, ]:
+            prefixes = (BASE_ILLION_PERIOD_PREFIXES[int(p)] for p in '{:,}'.format(base_illion).split(','))
+            period_name = 'illi'.join(prefixes) + 'illion'
+            with self.subTest(msg='POS', base_illion=base_illion, period_name=period_name):
+                self.assertEqual(period_name, nameperiod(base_illion))
+                
                 
 class ReadPeriodTests(TestCase):
     """
@@ -50,6 +64,15 @@ class ReadPeriodTests(TestCase):
         special_cases = (-1, ''), (0, 'thousand')
         for base_illion, period_name in special_cases:
             with self.subTest(msg='NEG', period_name=period_name):
+                self.assertEqual(base_illion, readperiod(period_name))
+                
+    def test_good_monkey(self):
+        """
+        """
+        for base_illion in random.sample(range(1, sys.maxsize), 1000) + [sys.maxsize, ]:
+            prefixes = (BASE_ILLION_PERIOD_PREFIXES[int(p)] for p in '{:,}'.format(base_illion).split(','))
+            period_name = 'illi'.join(prefixes) + 'illion'
+            with self.subTest(msg='POS', base_illion=base_illion, period_name=period_name):
                 self.assertEqual(base_illion, readperiod(period_name))
                 
                 
@@ -340,18 +363,24 @@ class InverseFunctions(TestCase):
     Verify that function pairs behave as inverses.
     """
     
+    def setUp(self):
+        self.maxDiff = None
+        
     def test_read_named_periods(self):
         """
         ``nameperiod`` and ``readperiod`` should be inverses.
         """
-        # check inverse on first thousand base-illion values...
-        for base_illion in range(-1, 1000):
+        samples = random.sample(range(1, sys.maxsize), 1000)
+        for base_illion in (s**random.randrange(1, 100) for s in samples):
             with self.subTest(msg='POS', base_illion=base_illion):
                 self.assertEqual(base_illion, readperiod(nameperiod(base_illion)))
                 
-    def test_number2text2number(self):
+    def test_read_spelled_numbers(self):
         """
         ``number2text`` and ``test2number`` should be inverses.
         """
-        # TODO: finish unit testing...
-        pass
+        samples = random.sample(range(1, sys.maxsize), 100)
+        for number in (str(s**random.randrange(1, 100)) for s in samples):
+            number = number[:1] + '.' + number[1:].rstrip('0') + 'e' + str(len(number[1:]))
+            with self.subTest(msg='POS', number=number):
+                self.assertEqual(number, text2number(number2text(number)))
