@@ -37,13 +37,20 @@ class NamePeriodTests(TestCase):
         """
         Function should (theoretically) handle any whole number >= -1.
         """
-        for base_illion in random.sample(range(1, sys.maxsize), 1000) + [sys.maxsize, ]:
+        samples = random.sample(range(1, sys.maxsize), 100)
+        for base_illion in (s ** random.randrange(1, 100) for s in samples):
             prefixes = (BASE_ILLION_PERIOD_PREFIXES[int(p)] for p in '{:,}'.format(base_illion).split(','))
             period_name = 'illi'.join(prefixes) + 'illion'
             with self.subTest(msg='POS', base_illion=base_illion, period_name=period_name):
                 self.assertEqual(period_name, nameperiod(base_illion))
                 
-                
+    def test_performance(self):
+        """
+        TODO: Write a reasonable performance test.
+        """
+        pass
+    
+    
 class ReadPeriodTests(TestCase):
     """
     Unit tests for ``readperiod`` function.
@@ -68,14 +75,22 @@ class ReadPeriodTests(TestCase):
                 
     def test_good_monkey(self):
         """
+        
         """
-        for base_illion in random.sample(range(1, sys.maxsize), 1000) + [sys.maxsize, ]:
+        samples = random.sample(range(1, sys.maxsize), 100)
+        for base_illion in (s ** random.randrange(1, 100) for s in samples):
             prefixes = (BASE_ILLION_PERIOD_PREFIXES[int(p)] for p in '{:,}'.format(base_illion).split(','))
             period_name = 'illi'.join(prefixes) + 'illion'
             with self.subTest(msg='POS', base_illion=base_illion, period_name=period_name):
                 self.assertEqual(base_illion, readperiod(period_name))
                 
-                
+    def test_performance(self):
+        """
+        TODO: Write a reasonable performance test.
+        """
+        pass
+    
+    
 class Number2TextTests(TestCase):
     """
     Unit Tests for ``number2text`` function.
@@ -85,6 +100,7 @@ class Number2TextTests(TestCase):
     
     def test_invalid_input_type(self):
         """
+        TODO: finish docstring...
         """
         for invalid_type in (None, {123, }, [123, ], (123,)):
             with self.subTest(invalid_type=invalid_type):
@@ -92,16 +108,20 @@ class Number2TextTests(TestCase):
                 
     def test_zero_input(self):
         """
+        TODO: finish docstring...
         """
         for number in 0, 0.0, 0e0, '0', '-0':
             with self.subTest(msg='POS', number=number):
                 self.assertMultiLineEqual('zero', number2text(number))
                 
     def test_units_period(self):
-        """"""
-        for number in range(1000):
+        """
+        TODO: finish docstring...
+        """
+        for number in range(1, 1000):
             with self.subTest(msg='POS', number=number):
-                pass
+                expected = spellnum.lexicon.NATURAL_NUMBERS_LT_1000[number]
+                self.assertMultiLineEqual(expected, number2text(number))
                 
     def test_string_dXXX(self):
         expected = 'one hundred twenty-three one thousandths'
@@ -346,6 +366,18 @@ class Number2TextTests(TestCase):
         actual = number2text('.30004')
         self.assertMultiLineEqual(expected, actual)
     
+    def test_good_monkey(self):
+        """
+        TODO: write monkey tests.
+        """
+        pass
+    
+    def test_performance(self):
+        """
+        TODO: Write a reasonable performance test.
+        """
+        pass
+    
     
 class Text2NumberTests(TestCase):
     """
@@ -354,7 +386,22 @@ class Text2NumberTests(TestCase):
     TODO: finish unit testing...
     """
     
-    def test_(self):
+    def test_special_cases(self):
+        """
+        TODO: write test for special cases.
+        """
+        pass
+    
+    def test_good_monkey(self):
+        """
+        TODO: write monkey tests.
+        """
+        pass
+    
+    def test_performance(self):
+        """
+        TODO: Write a reasonable performance test.
+        """
         pass
     
     
@@ -370,7 +417,7 @@ class InverseFunctions(TestCase):
         """
         ``nameperiod`` and ``readperiod`` should be inverses.
         """
-        samples = random.sample(range(1, sys.maxsize), 1000)
+        samples = random.sample(range(1, sys.maxsize), 100)
         for base_illion in (s**random.randrange(1, 100) for s in samples):
             with self.subTest(msg='POS', base_illion=base_illion):
                 self.assertEqual(base_illion, readperiod(nameperiod(base_illion)))
