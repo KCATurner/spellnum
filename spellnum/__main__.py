@@ -39,7 +39,7 @@ def __spell(number, copy=False):
         pyperclip.copy(result)
     
     message = list()
-    for word in result.split(sep=' '):
+    for word in result.split(' '):
         if word in ('hundred',) + NATURAL_NUMBERS_LT_100:
             message.append(Fore.LIGHTBLACK_EX + word)
         elif word in ('negative', 'and'):
