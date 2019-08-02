@@ -21,6 +21,7 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=['tests*', ]),
     install_requires=[
         'colorama',
+        'pyperclip'
     ],
     entry_points={
         'console_scripts': [
