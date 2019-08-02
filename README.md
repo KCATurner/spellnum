@@ -7,7 +7,7 @@ Read more about the package contents and structure [here](spellnum/README.md), o
 Spellnum also comes with an excruciatingly simple CLI. Run the help command after installing with pip for more insight.  
 ```
 $ pip install git+https://github.com/KCATurner/spellnum
-$ spn -h
+$ num -h
 ```
 
 # Developer's Note
