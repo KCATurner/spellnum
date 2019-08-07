@@ -82,7 +82,7 @@ def cli():
     arguments.add_argument('-c', '--copy', action='store_true', help='copy result to clipboard')
     
     parser = ArgumentParser()
-    command = parser.add_subparsers()
+    command = parser.add_subparsers(dest='command', required=True)
     
     read = command.add_parser('read', parents=[arguments], help='convert text to number')
     read.set_defaults(func=__read)
@@ -95,6 +95,7 @@ def cli():
     
     inputs = vars(parser.parse_args())
     func = inputs.pop('func')
+    inputs.pop('command')
     func(**inputs)
 
 
