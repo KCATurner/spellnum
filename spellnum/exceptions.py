@@ -53,11 +53,11 @@ What an insightful question! I'm so glad you asked...
         on raw strings to figure out how the code works, the code base
         probably has much larger readability issues (the irony that you
         just read that from a python docstring is not lost on me). See
-        my second point (directly above). The function should tell you
-        how it works, not how it doesn't. Leave that to the exception.
+        my second point (above). The function should tell you how it
+        works, not how it doesn't. Leave that to the exception.
         
     5)  In a similar vein of thought, intelligent use of custom
-        exceptions can help with Q&A. Simple exceptions look more like
+        exceptions can help with QA. Simple exceptions look more like
         half-a$$ed built-in exceptions which could already be hit or
         miss, but as a developer, the more distinctive your exceptions
         are the easier it is to debug. If you go this route, then
@@ -66,6 +66,8 @@ What an insightful question! I'm so glad you asked...
         force your code into raising the ones you've written; something
         that you can not only use to spot-check code as you write it,
         but that makes for some easy unit testing.
+        
+    6) I was bored...
         
 Sorry, I'm off my soapbox now. You probably didn't need half of that
 explanation, but there it is anyway. Thank you for coming to my TED
