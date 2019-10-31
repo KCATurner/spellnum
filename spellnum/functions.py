@@ -136,7 +136,7 @@ def text2number(text):
     if text == 'zero':
         return '0'
     # handle negative numbers recursively
-    elif text.startswith('negative'):
+    elif text.lstrip().startswith('negative'):
         return '-' + text2number(text.replace('negative', '', 1))
     
     # check for valid input format
