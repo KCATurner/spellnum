@@ -31,7 +31,7 @@ def nameperiod(base_illion):
         return '' if base_illion else 'thousand'
     
     # generates prefix for each period of the base-illion value
-    prefixes = (spellnum.lexicon.BASE_ILLION_PERIOD_PREFIXES[int(p)]
+    prefixes = (spellnum.lexicon.PERIOD_PREFIXES_LT_1000[int(p)]
                 for p in '{:,}'.format(base_illion).split(','))
     
     # combine prefixes and end with "illion"
@@ -60,9 +60,9 @@ def readperiod(period_name):
     base_illion = ''
     for prefix in period_prefixes:
         # iteration > list comprehension here (for more helpful exceptions)
-        if prefix not in spellnum.lexicon.BASE_ILLION_PERIOD_PREFIXES:
+        if prefix not in spellnum.lexicon.PERIOD_PREFIXES_LT_1000:
             raise spellnum.exceptions.InvalidTextForPeriodName(str(period_name), prefix)
-        base_illion += str(spellnum.lexicon.BASE_ILLION_PERIOD_PREFIXES.index(prefix)).zfill(3)
+        base_illion += str(spellnum.lexicon.PERIOD_PREFIXES_LT_1000.index(prefix)).zfill(3)
         
     # always return base_illion as int
     return int(base_illion)

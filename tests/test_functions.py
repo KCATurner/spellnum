@@ -8,7 +8,7 @@ from unittest import TestCase
 
 from spellnum.functions import *
 from spellnum.exceptions import *
-from spellnum.lexicon import BASE_ILLION_PERIOD_PREFIXES
+from spellnum.lexicon import PERIOD_PREFIXES_LT_1000
 
 
 class NamePeriodTests(TestCase):
@@ -39,7 +39,7 @@ class NamePeriodTests(TestCase):
         """
         samples = random.sample(range(1, sys.maxsize), 100)
         for base_illion in (s ** random.randrange(1, 100) for s in samples):
-            prefixes = (BASE_ILLION_PERIOD_PREFIXES[int(p)] for p in '{:,}'.format(base_illion).split(','))
+            prefixes = (PERIOD_PREFIXES_LT_1000[int(p)] for p in '{:,}'.format(base_illion).split(','))
             period_name = 'illi'.join(prefixes) + 'illion'
             with self.subTest(msg='POS', base_illion=base_illion, period_name=period_name):
                 self.assertEqual(period_name, nameperiod(base_illion))
@@ -79,7 +79,7 @@ class ReadPeriodTests(TestCase):
         """
         samples = random.sample(range(1, sys.maxsize), 100)
         for base_illion in (s ** random.randrange(1, 100) for s in samples):
-            prefixes = (BASE_ILLION_PERIOD_PREFIXES[int(p)] for p in '{:,}'.format(base_illion).split(','))
+            prefixes = (PERIOD_PREFIXES_LT_1000[int(p)] for p in '{:,}'.format(base_illion).split(','))
             period_name = 'illi'.join(prefixes) + 'illion'
             with self.subTest(msg='POS', base_illion=base_illion, period_name=period_name):
                 self.assertEqual(base_illion, readperiod(period_name))

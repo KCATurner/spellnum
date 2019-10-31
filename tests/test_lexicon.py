@@ -17,7 +17,7 @@ class LexiconStructure(TestCase):
         """
         for index in range(10):
             with self.subTest(msg='POS', number=index):
-                expected = lexicon._UNIQUE_NUMERIC_WORDS[index]
+                expected = lexicon.NATURAL_NUMBERS_LT_20[index]
                 actual = lexicon.NATURAL_NUMBERS_LT_1000[index]
                 self.assertMultiLineEqual(expected, actual)
                 
@@ -38,7 +38,7 @@ class LexiconStructure(TestCase):
         """
         for index in range(100, 1000):
             with self.subTest(msg='POS', number=index):
-                hundred = lexicon._UNIQUE_NUMERIC_WORDS[index // 100]
+                hundred = lexicon.NATURAL_NUMBERS_LT_20[index // 100]
                 tens = lexicon.NATURAL_NUMBERS_LT_100[index % 100]
                 expected = '{} hundred {}'.format(hundred, tens).strip()
                 actual = lexicon.NATURAL_NUMBERS_LT_1000[index]
@@ -51,10 +51,10 @@ class PeriodPrefixes(TestCase):
     """
     
     def setUp(self):
-        self.unit = lexicon._PREFIX_COMPONENTS_UNIT
-        self.tens = lexicon._PREFIX_COMPONENTS_TENS
-        self.hund = lexicon._PREFIX_COMPONENTS_HUND
-        self.prefixes = lexicon.BASE_ILLION_PERIOD_PREFIXES
+        self.unit = lexicon._UNIT_PREFIX_COMPONENTS
+        self.tens = lexicon._TENS_PREFIX_COMPONENTS
+        self.hund = lexicon._HUND_PREFIX_COMPONENTS
+        self.prefixes = lexicon.PERIOD_PREFIXES_LT_1000
         
     def test_known_similarities(self):
         """
@@ -72,9 +72,9 @@ class PeriodPrefixes(TestCase):
         """
         All prefixes must be unique.
         """
-        expected = len(lexicon.BASE_ILLION_PERIOD_PREFIXES)
+        expected = len(self.prefixes)
         with self.subTest(msg='POS', expected_length=expected):
-            actual = len(set(lexicon.BASE_ILLION_PERIOD_PREFIXES))
+            actual = len(set(self.prefixes))
             self.assertEqual(expected, actual)
         
     def test_m_exceptions(self):
@@ -105,7 +105,7 @@ class PeriodPrefixes(TestCase):
                 hund, tens, unit = (int(digit) for digit in str(base_illion).zfill(3))
                 expected = str(self.unit[unit] + 'n' + self.tens[tens] + self.hund[hund]).rstrip('ai')
                 self.assertMultiLineEqual(expected, self.prefixes[base_illion])
-
+                
     def test_s_exceptions(self):
         """
         Test when 's' is appended to the 'tre' or 'se' prefixes.
