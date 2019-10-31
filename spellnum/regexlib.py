@@ -4,10 +4,10 @@ Separate home for useful, pre-compiled regular expressions.
 TODO: give reasoning for using regular expressions for spellnum...
 """
 
-import re as __re
+import re
 
 
-NUMBER_LIKE_STRING = __re.compile(
+NUMBER_LIKE_STRING = re.compile(
     (r'^\s*(?# match, but exclude any leading whitespace)'
      r'(?P<bsign>[-+])?(?# capture base sign if it exists)'
      r'(?!\s*\.\s*(?:[eE]|$))(?# whole or fraction must match)'
@@ -48,7 +48,7 @@ optional ``esign`` group, excluding any leading zeros.
 """
 
 
-NUMBER_TEXT_FORMAT = __re.compile(
+NUMBER_TEXT_FORMAT = re.compile(
     (r'^(?!\s*$)(?# assert string not empty or only whitespace)'
      r'\s*(?# match but do not capture leading whitespace)'
      r'(?P<whole>.+\w)?(?# capture whole number text)'
@@ -93,7 +93,7 @@ allowed to match an empty or whitespace-only string.
 """
 
 
-PERIOD_TEXT_FORMAT = __re.compile(
+PERIOD_TEXT_FORMAT = re.compile(
     (r'(?:^|\s+)(?# period must follow whitespace or start of string)'
      r'\b(?P<value>.+?)(?# capture period value and leave the name)'
      r'(?:\s+(?# whitespace must separate period value and name)'
@@ -113,4 +113,35 @@ string or another period name.
 
 ``name`` (optional) - A single word following a period value that is
 exactly 'thousand' or ends with the 'illion' suffix.
+"""
+
+# prefix combination exception patterns
+PREFIX_COMBINATION_EXCEPTION_X = re.compile(r'(?<=^se)(?=[co])')
+"""
+Pattern for matching invalid combinations of period name prefix
+components resulting from base-illion periods: 86, 106, 806.
+"""
+
+
+PREFIX_COMBINATION_EXCEPTION_S = re.compile(r'(?<=^se)(?=[qtv])|(?<=^tre)(?=[coqtv])')
+"""
+Pattern for matching invalid combinations of period name prefix
+components resulting from base-illion periods: 23, 26, 33, 36, 43, 46,
+54, 56, 83, 103, 303, 306, 403, 406, 503, 506, 803.
+"""
+
+
+PREFIX_COMBINATION_EXCEPTION_M = re.compile(r'(?<=^septe)(?=[ov])|(?<=^nove)(?=[ov])')
+"""
+Pattern for matching invalid combinations of period name prefix
+components resulting from base-illion periods: 27, 29, 87, 89, 807, 809.
+"""
+
+
+PREFIX_COMBINATION_EXCEPTION_N = re.compile(r'(?<=^septe)(?=[cdqst])|(?<=^nove)(?=[cdqst])')
+"""
+Pattern for matching invalid combinations of period name prefix
+components resulting from base-illion periods: 17, 19, 37, 39, 47, 49,
+57, 59, 67, 69, 77, 79, 107, 109, 207, 209, 307, 309, 407, 409, 507,
+509, 607, 609, 707, 709.
 """

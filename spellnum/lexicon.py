@@ -2,7 +2,7 @@
 Separate home for lexical components used by spellnum functions.
 """
 
-import re as __re
+import spellnum.regexlib
 
 
 _UNIQUE_NUMERIC_WORDS = ('', 'one', 'two', 'three', 'four',
@@ -67,14 +67,7 @@ Period prefix components for base-illion hundreds.
 """
 
 
-# prefix combination exception patterns
-__X_LEXICAL_EXCEPTION = __re.compile(r'(?<=^se)(?=[co])')
-__S_LEXICAL_EXCEPTION = __re.compile(r'(?<=^se)(?=[qtv])|(?<=^tre)(?=[coqtv])')
-__M_LEXICAL_EXCEPTION = __re.compile(r'(?<=^septe)(?=[ov])|(?<=^nove)(?=[ov])')
-__N_LEXICAL_EXCEPTION = __re.compile(r'(?<=^septe)(?=[cdqst])|(?<=^nove)(?=[cdqst])')
-
-
-def __buildprefix(base_illion):
+def __build_base_illion_prefixes():
     """
     For internal use only! Inaccurate for base-illion outside [10, 1000).
     """
