@@ -15,7 +15,7 @@ setuptools.setup(
     author='Kevin Turner',
     author_email='kct0004@auburn.edu',
     description='A module for reading & writing numbers using the Conway-Wechsler naming system',
-    long_description=long_description,
+    long_description=long_description or 'Unable to access README.md during setup!',
     long_description_content_type='text/markdown',
     url='https://github.com/KCATurner/spellnum',
     packages=setuptools.find_packages(exclude=['tests*', ]),
