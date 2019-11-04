@@ -107,7 +107,7 @@ class UnexpectedNumberTextFormat(ValueError):
         """
         super(UnexpectedNumberTextFormat, self).__init__(
             '\n\n\t"{}" does not follow expected lexical pattern!'
-            '\n\t"<whole_number> and <decimal_numerator> <decimal_denominator>ths"'
+            '\n\t"<whole_number> [and <decimal_numerator> <decimal_denominator>ths]"'
             '\n\tSee module documentation for more details.'.format(text),
             *args
         )
