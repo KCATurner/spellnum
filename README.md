@@ -6,8 +6,8 @@ Read more about the package contents and structure [here](conwech/README.md), or
 ### Command-line Interface
 Conwech also comes with an excruciatingly simple CLI. Run the help command after installing with pip for more insight.  
 ```
-$ pip install git+https://github.com/KCATurner/spellnum
-$ num -h
+$ pip install git+https://github.com/KCATurner/conwech
+$ conwech --help
 ```
 
 # Developer's Note

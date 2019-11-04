@@ -17,7 +17,7 @@ setuptools.setup(
     description='A module for reading & writing numbers using the Conway-Wechsler naming system',
     long_description=long_description or 'Unable to access README.md during setup!',
     long_description_content_type='text/markdown',
-    url='https://github.com/KCATurner/spellnum',
+    url='https://github.com/KCATurner/conwech',
     packages=setuptools.find_packages(exclude=['tests*', ]),
     install_requires=[
         'colorama',
