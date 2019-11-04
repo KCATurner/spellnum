@@ -1,5 +1,5 @@
 """
-Separate home for custom exceptions raised by spellnum functions.
+Separate home for custom exceptions raised by conwech functions.
 
 What's that you ask? Why on earth would you subclass ValueError for so
 many specific cases when you can just raise one from the function call?

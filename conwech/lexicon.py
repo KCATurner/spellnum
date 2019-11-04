@@ -1,8 +1,8 @@
 """
-Separate home for lexical components used by spellnum functions.
+Separate home for lexical components used by conwech functions.
 """
 
-import spellnum.regexlib
+import conwech.regexlib
 
 
 NATURAL_NUMBERS_LT_20 = ('', 'one', 'two', 'three', 'four',
@@ -87,10 +87,10 @@ def __build_base_illion_prefixes():
         
         # catch and correct exceptions
         if int(base_illion[-1]) in (3, 6, 7, 9):
-            prefix = spellnum.regexlib.PREFIX_COMBINATION_EXCEPTION_X.sub('x', prefix)
-            prefix = spellnum.regexlib.PREFIX_COMBINATION_EXCEPTION_S.sub('s', prefix)
-            prefix = spellnum.regexlib.PREFIX_COMBINATION_EXCEPTION_M.sub('m', prefix)
-            prefix = spellnum.regexlib.PREFIX_COMBINATION_EXCEPTION_N.sub('n', prefix)
+            prefix = conwech.regexlib.PREFIX_COMBINATION_EXCEPTION_X.sub('x', prefix)
+            prefix = conwech.regexlib.PREFIX_COMBINATION_EXCEPTION_S.sub('s', prefix)
+            prefix = conwech.regexlib.PREFIX_COMBINATION_EXCEPTION_M.sub('m', prefix)
+            prefix = conwech.regexlib.PREFIX_COMBINATION_EXCEPTION_N.sub('n', prefix)
             
         # prefix shouldn't end in "a" or "i"
         result.append(prefix.rstrip('ai'))

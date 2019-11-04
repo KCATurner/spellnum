@@ -1,7 +1,7 @@
 """
 Separate home for useful, pre-compiled regular expressions.
 
-TODO: give reasoning for using regular expressions for spellnum...
+TODO: give reasoning for using regular expressions for conwech...
 """
 
 import re

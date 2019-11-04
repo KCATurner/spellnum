@@ -1,10 +1,10 @@
 """
-Functions of the spellnum module.
+Functions of the conwech module.
 """
 
-import spellnum.lexicon
-import spellnum.regexlib
-import spellnum.exceptions
+import conwech.lexicon
+import conwech.regexlib
+import conwech.exceptions
 
 
 def nameperiod(base_illion):
@@ -31,7 +31,7 @@ def nameperiod(base_illion):
         return '' if base_illion else 'thousand'
     
     # generates prefix for each period of the base-illion value
-    prefixes = (spellnum.lexicon.PERIOD_PREFIXES_LT_1000[int(p)]
+    prefixes = (conwech.lexicon.PERIOD_PREFIXES_LT_1000[int(p)]
                 for p in '{:,}'.format(base_illion).split(','))
     
     # combine prefixes and end with "illion"
@@ -60,9 +60,9 @@ def readperiod(period_name):
     base_illion = ''
     for prefix in period_prefixes:
         # iteration > list comprehension here (for more helpful exceptions)
-        if prefix not in spellnum.lexicon.PERIOD_PREFIXES_LT_1000:
-            raise spellnum.exceptions.InvalidTextForPeriodName(str(period_name), prefix)
-        base_illion += str(spellnum.lexicon.PERIOD_PREFIXES_LT_1000.index(prefix)).zfill(3)
+        if prefix not in conwech.lexicon.PERIOD_PREFIXES_LT_1000:
+            raise conwech.exceptions.InvalidTextForPeriodName(str(period_name), prefix)
+        base_illion += str(conwech.lexicon.PERIOD_PREFIXES_LT_1000.index(prefix)).zfill(3)
         
     # always return base_illion as int
     return int(base_illion)
@@ -80,9 +80,9 @@ def number2text(number):
         
     """
     # check for valid input format
-    match = spellnum.regexlib.NUMBER_LIKE_STRING.match(str(number))
+    match = conwech.regexlib.NUMBER_LIKE_STRING.match(str(number))
     if not match:
-        raise spellnum.exceptions.InvalidNumberLikeString(number)
+        raise conwech.exceptions.InvalidNumberLikeString(number)
     
     # capture and "normalize" components of input number
     bsign, bwhole, bfraction, esign, evalue = match.groups(default='')
@@ -105,7 +105,7 @@ def number2text(number):
     # spell each period value and name individually
     for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3)):
         if period > 0:
-            periods.append(' '.join([spellnum.lexicon.NATURAL_NUMBERS_LT_1000[period],
+            periods.append(' '.join([conwech.lexicon.NATURAL_NUMBERS_LT_1000[period],
                                      nameperiod(base_illion)]))
         base_illion -= 1
         
@@ -140,20 +140,20 @@ def text2number(text):
         return '-' + text2number(text.replace('negative', '', 1))
     
     # check for valid input format
-    match = spellnum.regexlib.NUMBER_TEXT_FORMAT.match(str(text))
+    match = conwech.regexlib.NUMBER_TEXT_FORMAT.match(str(text))
     if not match:
-        raise spellnum.exceptions.UnexpectedNumberTextFormat(text)
+        raise conwech.exceptions.UnexpectedNumberTextFormat(text)
     
     # reused iterative functionality
     def iterperiods(number_text):
-        for period_value, period_name in spellnum.regexlib.PERIOD_TEXT_FORMAT.findall(number_text):
+        for period_value, period_name in conwech.regexlib.PERIOD_TEXT_FORMAT.findall(number_text):
             
             # raise exception for invalid period values
-            if period_value not in spellnum.lexicon.NATURAL_NUMBERS_LT_1000:
-                raise spellnum.exceptions.UnrecognizedTextForPeriodValue(period_value, period_name)
+            if period_value not in conwech.lexicon.NATURAL_NUMBERS_LT_1000:
+                raise conwech.exceptions.UnrecognizedTextForPeriodValue(period_value, period_name)
             
             # yields pairs of (value, base-illion)
-            yield (spellnum.lexicon.NATURAL_NUMBERS_LT_1000.index(period_value),
+            yield (conwech.lexicon.NATURAL_NUMBERS_LT_1000.index(period_value),
                    3 * readperiod(period_name) + 3)
             
     # get period information for each portion of input text

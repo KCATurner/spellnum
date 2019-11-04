@@ -1,5 +1,5 @@
 """
-Setup script for spellnum package.
+Setup script for conwech package.
 """
 
 import setuptools
@@ -10,7 +10,7 @@ with open('README.md', 'r') as fh:
     
     
 setuptools.setup(
-    name='spellnum',
+    name='conwech',
     version='1.0.0',
     author='Kevin Turner',
     author_email='kct0004@auburn.edu',
@@ -25,10 +25,10 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'num = spellnum.__main__:cli'
+            'conwech = conwech.__main__:cli'
         ]
     },
-    classifiers=(
+    classifiers=[
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
@@ -38,5 +38,5 @@ setuptools.setup(
         'Programming Language :: Python :: 3.7',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-    ),
+    ],
 )

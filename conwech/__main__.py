@@ -1,5 +1,5 @@
 """
-Home to the entry point for spellnum's command line interface.
+Home to the entry point for conwech's command line interface.
 """
 
 from __future__ import print_function
@@ -8,12 +8,13 @@ import sys
 import pyperclip
 import colorama
 import argparse
-import spellnum
+
+import conwech
 
 
 def __read(text, copy=False):
     """ For internal use only! """
-    result = spellnum.text2number(text=text)
+    result = conwech.text2number(text=text)
     
     if copy:
         pyperclip.copy(result)
@@ -23,14 +24,14 @@ def __read(text, copy=False):
     
 def __spell(number, copy=False):
     """ For internal use only! """
-    result = spellnum.number2text(number=number)
+    result = conwech.number2text(number=number)
     
     if copy:
         pyperclip.copy(result)
         
     message = list()
     for word in result.split(' '):
-        if word in ('hundred',) + spellnum.NATURAL_NUMBERS_LT_100:
+        if word in ('hundred',) + conwech.NATURAL_NUMBERS_LT_100:
             message.append(colorama.Fore.LIGHTBLACK_EX + word)
         elif word in ('negative', 'and'):
             message.append(colorama.Fore.YELLOW + word)
@@ -46,7 +47,7 @@ def __four(number, copy=False):
     result = spelling = str()
     while spelling != 'four':
         try:
-            spelling = spellnum.number2text(number)
+            spelling = conwech.number2text(number)
             number = len(spelling.replace('-', '').replace(' ', ''))
             print('There are ', colorama.Fore.CYAN, str(number), colorama.Fore.RESET,
                   ' letters in ', colorama.Fore.LIGHTBLACK_EX, spelling, colorama.Fore.RESET, sep='')
@@ -60,7 +61,7 @@ def __four(number, copy=False):
         
 def cli():
     """
-    Entry point for spellnum's command line interface.
+    Entry point for conwech's command line interface.
     """
     
     # because Windows is just the wrong kind of special

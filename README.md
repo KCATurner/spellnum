@@ -1,10 +1,10 @@
-# Spellnum
-Spellnum is a Python package for spelling _really_ large numbers in english using a  couple functions and some cleverly built tuples. For more information on the large number names and period naming conventions used by this module see the wikipedia page [here](https://en.wikipedia.org/wiki/Names_of_large_numbers).  
+# Conwech
+Conwech is a Python package for spelling _really_ large numbers in english using a  couple functions and some cleverly built tuples. For more information on the large number names and period naming conventions used by this module see the wikipedia page [here](https://en.wikipedia.org/wiki/Names_of_large_numbers).  
 
-Read more about the package contents and structure [here](spellnum/README.md), or just run the d4mn thing. It's like... a few moderately robust functions.  
+Read more about the package contents and structure [here](conwech/README.md), or just run the d4mn thing. It's like... a few moderately robust functions.  
 
 ### Command-line Interface
-Spellnum also comes with an excruciatingly simple CLI. Run the help command after installing with pip for more insight.  
+Conwech also comes with an excruciatingly simple CLI. Run the help command after installing with pip for more insight.  
 ```
 $ pip install git+https://github.com/KCATurner/spellnum
 $ num -h

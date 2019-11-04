@@ -1,9 +1,9 @@
 """
-Unit tests for spellnum.regexlib module.
+Unit tests for conwech.regexlib module.
 """
 
 from unittest import TestCase
-from spellnum import regexlib
+from conwech import regexlib
 
 
 class NumberLikeString(TestCase):

@@ -1,9 +1,9 @@
 """
-Unit tests for spellnum.lexicon.
+Unit tests for conwech.lexicon.
 """
 
 from unittest import TestCase
-from spellnum import lexicon
+from conwech import lexicon
 
 
 class LexiconStructure(TestCase):

@@ -1,14 +1,14 @@
 """
-Unit tests for spellnum module.
+Unit tests for conwech module.
 """
 
 import sys
 import random
 from unittest import TestCase
 
-from spellnum.functions import *
-from spellnum.exceptions import *
-from spellnum.lexicon import PERIOD_PREFIXES_LT_1000
+from conwech.functions import *
+from conwech.exceptions import *
+from conwech.lexicon import PERIOD_PREFIXES_LT_1000
 
 
 class NamePeriodTests(TestCase):
@@ -120,7 +120,7 @@ class Number2TextTests(TestCase):
         """
         for number in range(1, 1000):
             with self.subTest(msg='POS', number=number):
-                expected = spellnum.lexicon.NATURAL_NUMBERS_LT_1000[number]
+                expected = conwech.lexicon.NATURAL_NUMBERS_LT_1000[number]
                 self.assertMultiLineEqual(expected, number2text(number))
                 
     def test_string_dXXX(self):
