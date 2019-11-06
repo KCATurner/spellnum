@@ -3,27 +3,27 @@ Separate home for custom exceptions raised by conwech functions.
 
 What's that you ask? Why on earth would you subclass ValueError for so
 many specific cases when you can just raise one from the function call?
-
 What an insightful question! I'm so glad you asked...
+    
     1)  The main reason is that when a function is designed to take
         input as a string that must conform to a particular format, it
         helps to have very informative exceptions to say not just, "Hey
         I want a string!" but also to whine about the format it needs
         that string to be in and having different types of exceptions
-        for different violations of that format can help.
+        for different violations of that format can help, especially if
+        said format is both multifaceted and highly specific.
         
     2)  In order to be more explicit about what exactly went wrong,
         some of these exceptions warrant fairly long/detailed messages,
         especially if the user doesn't know what a base-illion value is
-        for instance. You're README and published documentation is your
-        code's first impression; the metaphorical handshake, if you
-        will. The docstrings (where we are now) are the causal
-        conversation that ensues. Fortunately, we live in a perfect
-        world and every single user always reads every word of the
-        wonderful detailed documentation provided by every developer
-        ever... No, but really the problem is, most of the time, you
-        probably only shake someone's hand once (if ever). In that
-        sense, Exceptions are anything from a developer's subtle
+        for instance. You're README is your code's first impression; the
+        metaphorical handshake, if you will. The documentation (where we
+        are now) is the causal conversation that ensues. Fortunately, we
+        live in a perfect world and every single user always reads every
+        word of the wonderful detailed documentation provided by every
+        developer ever... No, but really the problem is, most of the
+        time, you probably only shake someone's hand once (if ever). In
+        that sense, Exceptions are anything from a developer's subtle
         clearing of the throat to the kindest god-smack to the user's
         face for passing up the aforementioned handshake.
         
@@ -45,9 +45,8 @@ What an insightful question! I'm so glad you asked...
         rather aggressively. However, it's been my experience, that
         developers often default to the later. There are many possible
         reasons for that, some of which might be reasonable in other
-        contexts, but not this one (in my humblest of opinions).
-        
-        One might argue that it's helpful to have exception strings in
+        contexts, but not this one (in my humblest of opinions). One
+        might argue that it's helpful to have exception strings in
         plain view and tucking it away in a custom class might be
         obfuscating the code. To that, I would say if you're relying
         on raw strings to figure out how the code works, the code base
@@ -65,10 +64,10 @@ What an insightful question! I'm so glad you asked...
         exception that isn't yours, and you should know exactly how to
         force your code into raising the ones you've written; something
         that you can not only use to spot-check code as you write it,
-        but that makes for some easy unit testing.
+        but that makes for some slick and easy unit testing.
         
     6)  I was bored...
-        
+    
 Sorry, I'm off my soapbox now. You probably didn't need half of that
 explanation, but there it is anyway. Thank you for coming to my TED
 talk.
@@ -130,8 +129,8 @@ class UnrecognizedTextForPeriodValue(ValueError):
             '\n\tDid not understand "{}"'.format(period or 'unit', value),
             *args
         )
-
-
+        
+        
 class InvalidTextForPeriodName(ValueError):
     """
     Custom exception for readperiod function.
