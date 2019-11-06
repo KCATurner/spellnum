@@ -1,5 +1,8 @@
 """
-Separate home for lexical components used by conwech functions.
+Home to a set of tuples containing number name and period suffix
+component strings. These tuples are defined in such a way that indexing
+them will return the appropriate text (all lowercase) for the index
+given.
 """
 
 import conwech.regexlib
@@ -28,7 +31,26 @@ NATURAL_NUMBERS_LT_100 = NATURAL_NUMBERS_LT_20 \
                                           ).strip('-') for __ in range(20, 100))
 """
 Tuple of 100 strings where each member is the english word for its
-index with the exception of an empty string for 0.
+index with one exception. For functional purposes, the first (zeroth)
+index of lexicon's `INTEGERS_LT_1000` tuple is an empty string as
+opposed to being the string literal 'zero'.
+
+Note:
+    It probably goes without saying, but the only real reason to use
+    `NATURAL_NUMBERS_LT_100` instead of `NATURAL_NUMBERS_LT_1000` is for
+    matters where efficiency is a heavy concern.
+    
+Examples:
+    >>> from conwech.lexicon import NATURAL_NUMBERS_LT_100
+    >>> NATURAL_NUMBERS_LT_100[7]
+    'seven'
+    >>> NATURAL_NUMBERS_LT_100[13]
+    'thirteen'
+    >>> NATURAL_NUMBERS_LT_100[99]
+    'ninety-nine'
+    >>> INTEGERS_LT_100[0:3]
+    ('', 'one', 'two')
+    
 """
 
 
@@ -38,7 +60,21 @@ NATURAL_NUMBERS_LT_1000 = NATURAL_NUMBERS_LT_100 \
                                                    ).strip() for __ in range(100, 1000))
 """
 Tuple of 1000 strings where each member is the english word for its
-index with the exception of an empty string for 0.
+index with one exception. For functional purposes, the first (zeroth)
+index of lexicon's `INTEGERS_LT_1000` tuple is an empty string as
+opposed to being the string literal 'zero'.
+
+Examples:
+    >>> from conwech.lexicon import NATURAL_NUMBERS_LT_1000
+    >>> NATURAL_NUMBERS_LT_1000[7]
+    'seven'
+    >>> NATURAL_NUMBERS_LT_1000[13]
+    'thirteen'
+    >>> NATURAL_NUMBERS_LT_1000[999]
+    'nine hundred ninety-nine'
+    >>> NATURAL_NUMBERS_LT_1000[0:3]
+    ('', 'one', 'two')
+    
 """
 
 
@@ -100,5 +136,33 @@ def __build_base_illion_prefixes():
 
 PERIOD_PREFIXES_LT_1000 = __build_base_illion_prefixes()
 """
-Prefixes for all base-illion period values.
+Prefixes for all base-illion period values. Indexing this tuple with a
+base-illion period value will return the appropriate Conway-Wechsler
+prefix (everything before the "illi"/"illion").
+
+All prefixes are constructed using the appropriate sub-prefix
+combinations and exception rules defined by the Conway-Wechsler naming
+system.
+
+The first prefix is 'n' (for building 'nilli' components) and the next
+nine prefixes are based on the standard number names adopted before the
+inception of the Conway-Wechsler system.
+
+Examples:
+    >>> from conwech.lexicon import PERIOD_PREFIXES_LT_1000
+    >>> PERIOD_PREFIXES_LT_1000[:10]
+    ('n', 'm', 'b', 'tr', 'quadr', 'quint', 'sext', 'sept', 'oct', 'non')
+    >>> tuple(prefix + 'illon' for prefix in PERIOD_PREFIXES_LT_1000[1:5])
+    ('million', 'billion', 'trillion', 'quadrillion', 'quintillion')
+    >>> PERIOD_PREFIXES_LT_1000[12]
+    'duodec'
+    >>> PERIOD_PREFIXES_LT_1000[345]
+    'quinquaquadragintatrecent'
+    >>> 'illi'.join(PERIOD_PREFIXES_LT_1000[int(p)] for p in '12,000,345'.split(','))) + 'illion'
+    'duodecillinilliquinquaquadragintatrecentillion'
+    >>> PERIOD_PREFIXES_LT_1000[106]
+    'sexcent'
+    >>> PERIOD_PREFIXES_LT_1000[600]
+    'sescent'
+    
 """

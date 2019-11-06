@@ -1,5 +1,11 @@
 """
-Functions of the conwech module.
+Home to all of the fun stuff, which consists of two main function pairs,
+`nameperiod`/`readperiod` and `number2text`/`text2number`. As their
+names hopefully suggest, for both pairs, each function is designed to be
+the other's inverse (to the extent possible). The intended promise is
+that calling one with the output of the other will return the input of
+the other, or at least something equivalent, which could be used the
+same way in the other direction.
 """
 
 import conwech.lexicon
@@ -11,8 +17,11 @@ def nameperiod(base_illion):
     """
     Names the period for the given base-illion value.
     
-    Constructs a period name from lexical prefix components using each
-    period in the given base-illion value. A base-illion value (b)
+    `nameperiod` returns the Conway-Wechsler name for a number with the
+    given base-illion value. The base-illion property of a number in the
+    short-scale system is equal to one less than the number of periods
+    in the number, where a period is a set of one to three consecutive
+    digits often separated by commas. I.e. A base-illion value (b)
     represents a period's exponent (x) where b = (x - 3) / 3.
     
     Args:
@@ -20,6 +29,18 @@ def nameperiod(base_illion):
         
     Returns:
         The name for the period with the given base-illion value.
+        
+    Raises:
+        TypeError: If `base_illion` is not an int.
+        
+    Examples:
+        >>> from conwech.functions import nameperiod
+        >>> nameperiod(4)
+        'quadrillion'
+        >>> nameperiod(789)
+        'novemoctogintaseptingentillion'
+        >>> nameperiod(123456789)
+        'tresviginticentillisesquinquagintaquadringentillinovemoctogintaseptingentillion'
         
     """
     # a base-illion must be an integer (see docstring)
@@ -40,14 +61,33 @@ def nameperiod(base_illion):
 
 def readperiod(period_name):
     """
-    Parses the given period name by indexing a tuple of valid period
-    prefix components with the given period name.
+    Convert `period_name` to its corresponding base-illion value.
+    
+    The inverse function of `nameperiod`, `readperiod` parses the given
+    period name by indexing a tuple of valid Conway-Wechsler period
+    prefix components with each separate component of period name.
+    
+    If `period_name` is an empty string, `readperiod` returns -1 for the
+    units period (first period).
     
     Args:
         period_name (str): The period name of any number period.
         
     Returns:
         The base-illion value for the period with the given name.
+        
+    Raises:
+        InvalidTextForPeriodName: If any sub-component of `period_name`
+            is not in conwech.lexicon.PERIOD_PREFIXES_LT_1000.
+            
+    Examples:
+        >>> from conwech.functions import readperiod
+        >>> readperiod('quadrillion')
+        4
+        >>> readperiod('novemoctogintaseptingentillion')
+        789
+        >>> readperiod('tresviginticentillisesquinquagintaquadringentillinovemoctogintaseptingentillion')
+        123456789
         
     """
     # handle special cases
@@ -70,13 +110,45 @@ def readperiod(period_name):
 
 def number2text(number):
     """
-    Constructs the English short-scale spelling of the given number.
+    Construct the English short-scale spelling of the given number.
     
+    `number2text` returns the english short-scale spelling for `number`
+    which can be any positive or negative number passed as an integer,
+    float, or string (as long as that string fits a valid numeric
+    pattern; see conwech.regexlib.NUMBER_LIKE_STRING).
+    
+    `number2text` can handle values that exceed traditional limitations
+    on numerical types. Pass `number` as a string for values requiring
+    more precision or values greater outside the minimum and maximum
+    int/float values.
+    
+    Note:
+        `number2text` will also (eventually) be able to interpret a
+        pseudo-sum-like string, the format sometimes returned by
+        `text2number`. Currently, this functionality is not yet in
+        place, but should be implemented soon...ish... Bite me.
+        
     Args:
         number (int, float, str): The number to spell.
         
     Returns:
         The spelling of the given number.
+        
+    Raises:
+        InvalidNumberLikeString: If `number` does not follow python's
+            conventional formatting for int and float types (see
+            conwech.regexlib.NUMBER_LIKE_STRING).
+            
+    Examples:
+        >>> from conwech.functions import number2text
+        >>> number2text(-123456)
+        'negative one hundred twenty-three thousand four hundred fifty-six'
+        >>> number2text(4.56e100)
+        'forty-five duotrigintillion six hundred untrigintillion'
+        >>> number2text('7.89e500')
+        'seven hundred eighty-nine quinquasexagintacentillion'
+        >>> number2text('-1.2e-9')
+        'negative twelve ten billionths'
         
     """
     # check for valid input format
@@ -122,14 +194,41 @@ def number2text(number):
 
 def text2number(text):
     """
-    Parses the given English short-scale spelling and returns the
-    appropriate numerical value as a string.
+    Convert an English short-scale spelling to it's numerical value.
+    
+    `text2number` attempts to parse `text` and return a numeric string
+    containing the corresponding value. The number(s) in the string will
+    be in scientific notation.
+    
+    `text2number` returns a pseudo-sum-like representation if any of the
+    periods in the given text would result in adding an unreasonable
+    amount of consecutive zeros.
+    
+    `text2number` will recognize fractions, but only those with a
+    base-ten denominator, i.e. those which can be represented with
+    decimal digits.
     
     Args:
         text (str): The spelling of a number as a string.
         
     Returns:
-        A numeric string representing the given spelling.
+        A numeric string representing the value of `text`.
+        
+    Raises:
+        UnexpectedNumberTextFormat: If `text` does not match the
+            required format (see conwech.regexlib.NUMBER_TEXT_FORMAT).
+        UnrecognizedTextForPeriodValue: If any period value in `text`
+            is not found in conwech.lexicon.NATURAL_NUMBERS_LT_1000.
+        InvalidTextForPeriodName: If any period name in `text` is not
+            derived from a valid combination of Conway-Wechsler period
+            prefixes (see conwech.functions.readperiod).
+            
+    Examples:
+        >>> from conwech.functions import text2number
+        >>> text2number('negative one hundred twenty-three one thousandths')
+        '-1.23456789e5'
+        >>> text2number('one millinillinillion and two one millinillinillionths')
+        '1e3000003 + 2e-3000003'
         
     """
     # handle special case(s)
