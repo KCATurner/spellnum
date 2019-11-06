@@ -39,6 +39,7 @@ extensions = [
     # 'sphinxcontrib.autoprogram',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
+    'sphinx.ext.githubpages',
     'sphinx_rtd_theme',
 ]
 
