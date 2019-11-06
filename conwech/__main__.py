@@ -2,17 +2,20 @@
 Home to the entry point for conwech's command line interface.
 """
 
+# future imports
 from __future__ import print_function
 
+# built-in modules
 import sys
 import pyperclip
 import colorama
 import argparse
 
+# project modules
 import conwech
 
 
-def __read(text, copy=False):
+def read(text, copy=False):
     """ For internal use only! """
     result = conwech.text2number(text=text)
     
@@ -22,7 +25,7 @@ def __read(text, copy=False):
     print(result)
     
     
-def __spell(number, copy=False):
+def spell(number, copy=False):
     """ For internal use only! """
     result = conwech.number2text(number=number)
     
@@ -42,9 +45,10 @@ def __spell(number, copy=False):
     print(message)
     
     
-def __four(number, copy=False):
+def four(number, copy=False):
     """ For internal use only! """
     result = spelling = str()
+    
     while spelling != 'four':
         try:
             spelling = conwech.number2text(number)
@@ -59,7 +63,7 @@ def __four(number, copy=False):
         pyperclip.copy(result)
         
         
-def cli():
+def main():
     """
     Entry point for conwech's command line interface.
     """
@@ -75,26 +79,26 @@ def cli():
         help='copy output to clipboard')
     
     parser = argparse.ArgumentParser()
-    command = parser.add_subparsers(metavar='SUBCOMMAND')
+    commands = parser.add_subparsers(metavar='SUBCOMMAND')
     
-    read = command.add_parser(
+    read_command = commands.add_parser(
         'read', parents=[copy_option],
         help='convert text to number')
-    read.add_argument(
+    read_command.add_argument(
         'text', type=str,
         help='text of a number to read')
-    read.set_defaults(func=__read)
+    read_command.set_defaults(func=read)
     
-    spell = command.add_parser(
+    spell_command = commands.add_parser(
         'spell', parents=[copy_option],
         help='convert number to text')
-    spell.add_argument(
+    spell_command.add_argument(
         'number', type=str,
         help='a number to be spelled')
-    spell.add_argument(
-        '-r', '--recursive', action='store_const', const=__four, dest='func',
+    spell_command.add_argument(
+        '-r', '--recursive', action='store_const', const=four, dest='func',
         help="spell recursively to 'four'")
-    spell.set_defaults(func=__spell)
+    spell_command.set_defaults(func=spell)
     
     # call func with parsed args
     inputs = vars(parser.parse_args())
@@ -102,4 +106,4 @@ def cli():
     
     
 if __name__ == '__main__':
-    cli()
+    main()
