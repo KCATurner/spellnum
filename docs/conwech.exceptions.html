@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>conwech.exceptions module &mdash; conwech 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="conwech.functions module" href="conwech.functions.html" />
+    <link rel="prev" title="conwech package" href="conwech.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> conwech
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="conwech.html">conwech package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="conwech.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">conwech.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conwech.functions.html">conwech.functions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conwech.lexicon.html">conwech.lexicon module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conwech.regexlib.html">conwech.regexlib module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">conwech</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="conwech.html">conwech package</a> &raquo;</li>
+        
+      <li>conwech.exceptions module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/conwech.exceptions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-conwech.exceptions">
+<span id="conwech-exceptions-module"></span><h1>conwech.exceptions module<a class="headerlink" href="#module-conwech.exceptions" title="Permalink to this headline">¶</a></h1>
+<p>Separate home for custom exceptions raised by conwech functions.</p>
+<p>What’s that you ask? Why on earth would you subclass ValueError for so
+many specific cases when you can just raise one from the function call?
+What an insightful question! I’m so glad you asked…</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The main reason is that when a function is designed to take
+input as a string that must conform to a particular format, it
+helps to have very informative exceptions to say not just, “Hey
+I want a string!” but also to whine about the format it needs
+that string to be in and having different types of exceptions
+for different violations of that format can help, especially if
+said format is both multifaceted and highly specific.</p></li>
+<li><p>In order to be more explicit about what exactly went wrong,
+some of these exceptions warrant fairly long/detailed messages,
+especially if the user doesn’t know what a base-illion value is
+for instance. You’re README is your code’s first impression; the
+metaphorical handshake, if you will. The documentation (where we
+are now) is the causal conversation that ensues. Fortunately, we
+live in a perfect world and every single user always reads every
+word of the wonderful detailed documentation provided by every
+developer ever… No, but really the problem is, most of the
+time, you probably only shake someone’s hand once (if ever). In
+that sense, Exceptions are anything from a developer’s subtle
+clearing of the throat to the kindest god-smack to the user’s
+face for passing up the aforementioned handshake.</p></li>
+<li><p>The exception type is the very first thing a user sees. That
+being the case, the more experienced a developer gets, the more
+information they tend to glean directly from the name of the
+exception with little need to read further. In keeping with the
+“no such thing as too much information” theme, you might notice
+that most of these exceptions have very verbose names. This is
+by design. Now, let’s shift paradigms.</p></li>
+<li><p>Readability… Not necessarily the exceptions per se (although
+there’s a good case there too), but the functions tasked with
+calling them. Usually, when raising exceptions, the programmer
+is left with an ultimatum. Do I lay everything out and explain
+why this exception is being raised, or do I keep it short and
+sweet by raising quite possibly the most condensed, cryptic
+exception possible? Clearly, this module leans into the former
+rather aggressively. However, it’s been my experience, that
+developers often default to the later. There are many possible
+reasons for that, some of which might be reasonable in other
+contexts, but not this one (in my humblest of opinions). One
+might argue that it’s helpful to have exception strings in
+plain view and tucking it away in a custom class might be
+obfuscating the code. To that, I would say if you’re relying
+on raw strings to figure out how the code works, the code base
+probably has much larger readability issues (the irony that you
+just read that from a python docstring is not lost on me). See
+my second point (above). The function should tell you how it
+works, not how it doesn’t. Leave that to the exception.</p></li>
+<li><p>In a similar vein of thought, intelligent use of custom
+exceptions can help with QA. Simple exceptions look more like
+half-a$$ed built-in exceptions which could already be hit or
+miss, but as a developer, the more distinctive your exceptions
+are the easier it is to debug. If you go this route, then
+ideally, nothing in your codebase should never raise an
+exception that isn’t yours, and you should know exactly how to
+force your code into raising the ones you’ve written; something
+that you can not only use to spot-check code as you write it,
+but that makes for some slick and easy unit testing.</p></li>
+<li><p>I was bored…</p></li>
+</ol>
+</div></blockquote>
+<p>Sorry, I’m off my soapbox now. You probably didn’t need half of that
+explanation, but there it is anyway. Thank you for coming to my TED
+talk.</p>
+<dl class="exception">
+<dt id="conwech.exceptions.InvalidNumberLikeString">
+<em class="property">exception </em><code class="sig-prename descclassname">conwech.exceptions.</code><code class="sig-name descname">InvalidNumberLikeString</code><span class="sig-paren">(</span><em class="sig-param">number</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conwech/exceptions.html#InvalidNumberLikeString"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.exceptions.InvalidNumberLikeString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Custom exception for number2text function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> (<em>str</em>) – Invalid number-like string input.</p></li>
+<li><p><strong>*args</strong> – Additional ValueError positional arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="conwech.exceptions.UnexpectedNumberTextFormat">
+<em class="property">exception </em><code class="sig-prename descclassname">conwech.exceptions.</code><code class="sig-name descname">UnexpectedNumberTextFormat</code><span class="sig-paren">(</span><em class="sig-param">text</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conwech/exceptions.html#UnexpectedNumberTextFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.exceptions.UnexpectedNumberTextFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Custom exception for text2number function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Invalid number text.</p></li>
+<li><p><strong>*args</strong> – Additional ValueError positional arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="conwech.exceptions.UnrecognizedTextForPeriodValue">
+<em class="property">exception </em><code class="sig-prename descclassname">conwech.exceptions.</code><code class="sig-name descname">UnrecognizedTextForPeriodValue</code><span class="sig-paren">(</span><em class="sig-param">value</em>, <em class="sig-param">period</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conwech/exceptions.html#UnrecognizedTextForPeriodValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.exceptions.UnrecognizedTextForPeriodValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Custom exception for text2number function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>str</em>) – Invalid period value text.</p></li>
+<li><p><strong>period</strong> (<em>str</em>) – Name of the period.</p></li>
+<li><p><strong>*args</strong> – Additional ValueError positional arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="conwech.exceptions.InvalidTextForPeriodName">
+<em class="property">exception </em><code class="sig-prename descclassname">conwech.exceptions.</code><code class="sig-name descname">InvalidTextForPeriodName</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">prefix</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conwech/exceptions.html#InvalidTextForPeriodName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.exceptions.InvalidTextForPeriodName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Custom exception for readperiod function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Full invalid period name</p></li>
+<li><p><strong>prefix</strong> (<em>str</em>) – Invalid prefix in period name</p></li>
+<li><p><strong>*args</strong> – Additional ValueError positional arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="conwech.functions.html" class="btn btn-neutral float-right" title="conwech.functions module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="conwech.html" class="btn btn-neutral float-left" title="conwech package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Kevin Turner
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
