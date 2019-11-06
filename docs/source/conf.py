@@ -13,7 +13,7 @@
 import os
 import sys
 import sphinx_rtd_theme
-sys.path.insert(0, os.path.abspath('../conwech'))
+sys.path.insert(0, os.path.abspath(os.path.join('..', 'conwech')))
 
 
 # -- Project information -----------------------------------------------------
@@ -35,8 +35,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
-    # 'sphinx.ext.linkcode',
-    # 'sphinxcontrib.autoprogram',
+    'sphinxcontrib.autoprogram',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.githubpages',
@@ -51,20 +50,22 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# List module members based on source code.
+autodoc_member_order = 'bysource'
+
+# Use both class and __init__ docstrings.
+autoclass_content = 'both'
+
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
+
+# Use read the docs theme.
 html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-
-# for my sanity...
-autodoc_member_order = 'bysource'
-autoclass_content = 'both'
