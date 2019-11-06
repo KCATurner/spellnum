@@ -25,7 +25,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'conwech = conwech.__main__:cli'
+            'conwech = conwech.__main__:main'
         ]
     },
     classifiers=[
