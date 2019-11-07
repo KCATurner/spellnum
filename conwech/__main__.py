@@ -96,7 +96,11 @@ spell_command.add_argument(
 spell_command.set_defaults(func=spell)
 
 
-if __name__ == '__main__':
+def main():
     # call func with parsed args
     inputs = vars(parser.parse_args())
     inputs.pop('func', parser.print_help)(**inputs)
+    
+    
+if __name__ == '__main__':
+    main()
