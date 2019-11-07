@@ -1,16 +1,10 @@
-.. conwech documentation master file, created by
-   sphinx-quickstart on Wed Nov  6 15:19:58 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. include:: conwech.rst
 
-Welcome to conwech's documentation!
-===================================
+Command line interface
+======================
 
-.. toctree::
-   :maxdepth: 4
-   :caption: Contents:
-
-   conwech
+.. autoprogram:: conwech.__main__:parser
+   :prog: conwech
 
 Indices and tables
 ==================

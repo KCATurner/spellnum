@@ -35,10 +35,8 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
-    'sphinxcontrib.autoprogram',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
     'sphinx.ext.githubpages',
+    'sphinxcontrib.autoprogram',
     'sphinx_rtd_theme',
 ]
 
@@ -49,6 +47,11 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
+
+# Ignore conwech when sorting module index.
+modindex_common_prefix = [
+    'conwech.',
+]
 
 # List module members based on source code.
 autodoc_member_order = 'bysource'

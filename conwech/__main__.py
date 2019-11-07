@@ -63,47 +63,40 @@ def four(number, copy=False):
         pyperclip.copy(result)
         
         
-def main():
-    """
-    Entry point for conwech's command line interface.
-    """
+# because Windows is just the wrong kind of special
+if sys.platform == 'win32':
+    colorama.init()
     
-    # because Windows is just the wrong kind of special
-    if sys.platform == 'win32':
-        colorama.init()
-        
-    # reusable copy option
-    copy_option = argparse.ArgumentParser(add_help=False)
-    copy_option.add_argument(
-        '-c', '--copy', action='store_true',
-        help='copy output to clipboard')
-    
-    parser = argparse.ArgumentParser()
-    commands = parser.add_subparsers(metavar='SUBCOMMAND')
-    
-    read_command = commands.add_parser(
-        'read', parents=[copy_option],
-        help='convert text to number')
-    read_command.add_argument(
-        'text', type=str,
-        help='text of a number to read')
-    read_command.set_defaults(func=read)
-    
-    spell_command = commands.add_parser(
-        'spell', parents=[copy_option],
-        help='convert number to text')
-    spell_command.add_argument(
-        'number', type=str,
-        help='a number to be spelled')
-    spell_command.add_argument(
-        '-r', '--recursive', action='store_const', const=four, dest='func',
-        help="spell recursively to 'four'")
-    spell_command.set_defaults(func=spell)
-    
+# reusable copy option
+copy_option = argparse.ArgumentParser(add_help=False)
+copy_option.add_argument(
+    '-c', '--copy', action='store_true',
+    help='copy output to clipboard')
+
+parser = argparse.ArgumentParser()
+commands = parser.add_subparsers(metavar='SUBCOMMAND')
+
+read_command = commands.add_parser(
+    'read', parents=[copy_option],
+    help='convert text to number')
+read_command.add_argument(
+    'text', type=str,
+    help='text of a number to read')
+read_command.set_defaults(func=read)
+
+spell_command = commands.add_parser(
+    'spell', parents=[copy_option],
+    help='convert number to text')
+spell_command.add_argument(
+    'number', type=str,
+    help='a number to be spelled')
+spell_command.add_argument(
+    '-r', '--recursive', action='store_const', const=four, dest='func',
+    help="spell recursively to 'four'")
+spell_command.set_defaults(func=spell)
+
+
+if __name__ == '__main__':
     # call func with parsed args
     inputs = vars(parser.parse_args())
     inputs.pop('func', parser.print_help)(**inputs)
-    
-    
-if __name__ == '__main__':
-    main()
