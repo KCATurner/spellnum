@@ -1,7 +1,0 @@
-conwech
-=======
-
-.. toctree::
-   :maxdepth: 5
-
-   conwech

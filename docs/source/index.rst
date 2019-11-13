@@ -1,12 +1,12 @@
 .. include:: conwech.rst
 
-Command line interface
+Command Line Interface
 ======================
 
 .. autoprogram:: conwech.__main__:parser
    :prog: conwech
 
-Indices and tables
+Indices & Tables
 ==================
 
 * :ref:`genindex`

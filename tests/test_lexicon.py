@@ -81,55 +81,55 @@ class PeriodPrefixes(TestCase):
         """
         Test when 'm' is appended to the 'septe' or 'nove' prefixes.
         
-        Base-illion exceptions:
+        Billion Exceptions:
             - septe(m):  27,  87, 807
             -  nove(m):  29,  89, 809
         """
-        for base_illion in (27, 87, 807, 29, 89, 809):
-            with self.subTest(msg='POS', base_illion=base_illion):
-                hund, tens, unit = (int(digit) for digit in str(base_illion).zfill(3))
+        for zillion in (27, 87, 807, 29, 89, 809):
+            with self.subTest(msg='POS', zillion=zillion):
+                hund, tens, unit = (int(digit) for digit in str(zillion).zfill(3))
                 expected = str(self.unit[unit] + 'm' + self.tens[tens] + self.hund[hund]).rstrip('ai')
-                self.assertMultiLineEqual(expected, self.prefixes[base_illion])
+                self.assertMultiLineEqual(expected, self.prefixes[zillion])
                 
     def test_n_exceptions(self):
         """
         Test when 'n' is appended to the 'septe' or 'nove' prefixes.
         
-        Base-illion exceptions:
+        Billion Exceptions:
             - septe(n):  17,  37,  47,  57,  67,  77, 107, 207, 307, 407, 507, 607, 707
             -  nove(n):  19,  39,  49,  59,  69,  79, 109, 209, 309, 409, 509, 609, 709
         """
-        for base_illion in (17, 37, 47, 57, 67, 77, 107, 207, 307, 407, 507, 607, 707,
+        for zillion in (17, 37, 47, 57, 67, 77, 107, 207, 307, 407, 507, 607, 707,
                             19, 39, 49, 59, 69, 79, 109, 209, 309, 409, 509, 609, 709):
-            with self.subTest(msg='POS', base_illion=base_illion):
-                hund, tens, unit = (int(digit) for digit in str(base_illion).zfill(3))
+            with self.subTest(msg='POS', zillion=zillion):
+                hund, tens, unit = (int(digit) for digit in str(zillion).zfill(3))
                 expected = str(self.unit[unit] + 'n' + self.tens[tens] + self.hund[hund]).rstrip('ai')
-                self.assertMultiLineEqual(expected, self.prefixes[base_illion])
+                self.assertMultiLineEqual(expected, self.prefixes[zillion])
                 
     def test_s_exceptions(self):
         """
         Test when 's' is appended to the 'tre' or 'se' prefixes.
         
-        Base-illion exceptions:
+        Billion Exceptions:
             - tre(s):  23,  33,  43,  53,  83, 103, 303, 403, 503, 803
             -  se(s):  26,  36,  46,  56, 306, 406, 506
         """
-        for base_illion in (23, 33, 43, 53, 83, 103, 303, 403, 503, 803,
+        for zillion in (23, 33, 43, 53, 83, 103, 303, 403, 503, 803,
                             26, 36, 46, 56, 306, 406, 506):
-            with self.subTest(msg='POS', base_illion=base_illion):
-                hund, tens, unit = (int(digit) for digit in str(base_illion).zfill(3))
+            with self.subTest(msg='POS', zillion=zillion):
+                hund, tens, unit = (int(digit) for digit in str(zillion).zfill(3))
                 expected = str(self.unit[unit] + 's' + self.tens[tens] + self.hund[hund]).rstrip('ai')
-                self.assertMultiLineEqual(expected, self.prefixes[base_illion])
+                self.assertMultiLineEqual(expected, self.prefixes[zillion])
                 
     def test_x_exceptions(self):
         """
         Test when 'x' is added to the 'se' prefix.
         
-        Base-illion exceptions:
+        Billion Exceptions:
             - se(x):  86, 106, 806
         """
-        for base_illion in (86, 106, 806):
-            with self.subTest(msg='POS', base_illion=base_illion):
-                hund, tens, unit = (int(digit) for digit in str(base_illion).zfill(3))
+        for zillion in (86, 106, 806):
+            with self.subTest(msg='POS', zillion=zillion):
+                hund, tens, unit = (int(digit) for digit in str(zillion).zfill(3))
                 expected = str(self.unit[unit] + 'x' + self.tens[tens] + self.hund[hund]).rstrip('ai')
-                self.assertMultiLineEqual(expected, self.prefixes[base_illion])
+                self.assertMultiLineEqual(expected, self.prefixes[zillion])

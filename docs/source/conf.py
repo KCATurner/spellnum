@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath(os.path.join('..', 'conwech')))
 
 # -- Project information -----------------------------------------------------
 
-project = 'conwech'
+project = 'ConWech'
 copyright = '2019, Kevin Turner'
 author = 'Kevin Turner'
 
@@ -53,8 +53,12 @@ modindex_common_prefix = [
     'conwech.',
 ]
 
-# List module members based on source code.
-autodoc_member_order = 'bysource'
+autodoc_default_options = {
+    'members': True,
+    'member-order': 'bysource',
+    'undoc-members': True,
+    'inherited-members': True,
+}
 
 # Use both class and __init__ docstrings.
 autoclass_content = 'both'

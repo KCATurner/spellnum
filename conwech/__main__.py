@@ -1,5 +1,5 @@
 """
-Home to the entry point for conwech's command line interface.
+Home to the entry point for ConWech's command line interface.
 """
 
 # future imports

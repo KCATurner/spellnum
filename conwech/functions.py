@@ -13,25 +13,25 @@ import conwech.regexlib
 import conwech.exceptions
 
 
-def nameperiod(base_illion):
+def nameperiod(zillion):
     """
-    Names the period for the given base-illion value.
+    Names the period for the given zillion value.
     
     `nameperiod` returns the Conway-Wechsler name for a number with the
-    given base-illion value. The base-illion property of a number in the
+    given zillion value. The zillion property of a number in the
     short-scale system is equal to one less than the number of periods
     in the number, where a period is a set of one to three consecutive
-    digits often separated by commas. I.e. A base-illion value (b)
+    digits often separated by commas. I.e. A zillion value (b)
     represents a period's exponent (x) where b = (x - 3) / 3.
     
     Args:
-        base_illion (int): The base-illion value of the period name.
+        zillion (int): The zillion value of the period name.
         
     Returns:
-        The name for the period with the given base-illion value.
+        The name for the period with the given zillion value.
         
     Raises:
-        TypeError: If `base_illion` is not an int.
+        TypeError: If `zillion` is not an int.
         
     Examples:
         >>> from conwech.functions import nameperiod
@@ -43,25 +43,25 @@ def nameperiod(base_illion):
         'tresviginticentillisesquinquagintaquadringentillinovemoctogintaseptingentillion'
         
     """
-    # a base-illion must be an integer (see docstring)
-    if not isinstance(base_illion, int):
-        raise TypeError('base_illion argument must be an integer!')
+    # a zillion must be an integer (see docstring)
+    if not isinstance(zillion, int):
+        raise TypeError('zillion argument must be an integer!')
     
     # special cases
-    if base_illion <= 0:
-        return '' if base_illion else 'thousand'
+    if zillion <= 0:
+        return '' if zillion else 'thousand'
     
-    # generates prefix for each period of the base-illion value
+    # generates prefix for each period of the zillion value
     prefixes = (conwech.lexicon.PERIOD_PREFIXES_LT_1000[int(p)]
-                for p in '{:,}'.format(base_illion).split(','))
+                for p in '{:,}'.format(zillion).split(','))
     
     # combine prefixes and end with "illion"
     return 'illi'.join(prefixes) + 'illion'
 
 
-def readperiod(period_name):
+def readperiod(name):
     """
-    Convert `period_name` to its corresponding base-illion value.
+    Convert `period_name` to its corresponding zillion value.
     
     The inverse function of `nameperiod`, `readperiod` parses the given
     period name by indexing a tuple of valid Conway-Wechsler period
@@ -71,10 +71,10 @@ def readperiod(period_name):
     units period (first period).
     
     Args:
-        period_name (str): The period name of any number period.
+        name (str): The period name of any number period.
         
     Returns:
-        The base-illion value for the period with the given name.
+        The zillion value for the period with the given name.
         
     Raises:
         InvalidTextForPeriodName: If any sub-component of `period_name`
@@ -91,21 +91,21 @@ def readperiod(period_name):
         
     """
     # handle special cases
-    if period_name in ['', 'thousand']:
-        return -1 if not period_name else 0
+    if name in ['', 'thousand']:
+        return -1 if not name else 0
     
     # the name will be easier to parse in its composite parts
-    period_prefixes = str(period_name).replace('illion', '').split('illi')
+    period_prefixes = str(name).replace('illion', '').split('illi')
     
-    base_illion = ''
+    zillion = ''
     for prefix in period_prefixes:
         # iteration > list comprehension here (for more helpful exceptions)
         if prefix not in conwech.lexicon.PERIOD_PREFIXES_LT_1000:
-            raise conwech.exceptions.InvalidTextForPeriodName(str(period_name), prefix)
-        base_illion += str(conwech.lexicon.PERIOD_PREFIXES_LT_1000.index(prefix)).zfill(3)
+            raise conwech.exceptions.InvalidTextForPeriodName(str(name), prefix)
+        zillion += str(conwech.lexicon.PERIOD_PREFIXES_LT_1000.index(prefix)).zfill(3)
         
-    # always return base_illion as int
-    return int(base_illion)
+    # always return zillion as int
+    return int(zillion)
 
 
 def number2text(number):
@@ -173,13 +173,13 @@ def number2text(number):
     whole += '0'*(3 - (len(whole) % 3 or 3))
     
     periods = list()
-    base_illion = max(position - 1, 0) // 3 - 1
+    zillion = max(position - 1, 0) // 3 - 1
     # spell each period value and name individually
     for period in (int(whole[i:i+3]) for i in range(0, len(whole), 3)):
         if period > 0:
             periods.append(' '.join([conwech.lexicon.NATURAL_NUMBERS_LT_1000[period],
-                                     nameperiod(base_illion)]))
-        base_illion -= 1
+                                     nameperiod(zillion)]))
+        zillion -= 1
         
     # add whole spelling to output list
     text = [' '.join(periods).strip(), ]
@@ -251,7 +251,7 @@ def text2number(text):
             if period_value not in conwech.lexicon.NATURAL_NUMBERS_LT_1000:
                 raise conwech.exceptions.UnrecognizedTextForPeriodValue(period_value, period_name)
             
-            # yields pairs of (value, base-illion)
+            # yields pairs of (value, zillion)
             yield (conwech.lexicon.NATURAL_NUMBERS_LT_1000.index(period_value),
                    3 * readperiod(period_name) + 3)
             

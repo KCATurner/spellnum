@@ -1,10 +1,11 @@
-conwech package
+ConWech Package
 ===============
 
 .. automodule:: conwech
    :members:
    :undoc-members:
    :show-inheritance:
+   :noindex:
 
 Submodules
 ----------

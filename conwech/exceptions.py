@@ -1,5 +1,5 @@
 """
-Separate home for custom exceptions raised by conwech functions.
+Separate home for custom exceptions raised by ConWech functions.
 
 What's that you ask? Why on earth would you subclass ValueError for so
 many specific cases when you can just raise one from the function call?
@@ -15,8 +15,8 @@ What an insightful question! I'm so glad you asked...
         
     2)  In order to be more explicit about what exactly went wrong,
         some of these exceptions warrant fairly long/detailed messages,
-        especially if the user doesn't know what a base-illion value is
-        for instance. You're README is your code's first impression; the
+        especially if the user doesn't know what a zillion value is for
+        instance. You're README is your code's first impression; the
         metaphorical handshake, if you will. The documentation (where we
         are now) is the causal conversation that ensues. Fortunately, we
         live in a perfect world and every single user always reads every

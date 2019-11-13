@@ -1,5 +1,5 @@
 """
-Unit tests for conwech module.
+Unit tests for ConWech module.
 """
 
 import sys
@@ -29,20 +29,20 @@ class NamePeriodTests(TestCase):
         0 should return 'thousand' and -1 should return an empty string.
         """
         special_cases = (-1, ''), (0, 'thousand')
-        for base_illion, period_name in special_cases:
-            with self.subTest(msg='NEG', base_illion=base_illion):
-                self.assertEqual(period_name, nameperiod(base_illion))
+        for zillion, period_name in special_cases:
+            with self.subTest(msg='NEG', zillion=zillion):
+                self.assertEqual(period_name, nameperiod(zillion))
                 
     def test_good_monkey(self):
         """
         Function should (theoretically) handle any whole number >= -1.
         """
         samples = random.sample(range(1, sys.maxsize), 100)
-        for base_illion in (s ** random.randrange(1, 100) for s in samples):
-            prefixes = (PERIOD_PREFIXES_LT_1000[int(p)] for p in '{:,}'.format(base_illion).split(','))
+        for zillion in (s ** random.randrange(1, 100) for s in samples):
+            prefixes = (PERIOD_PREFIXES_LT_1000[int(p)] for p in '{:,}'.format(zillion).split(','))
             period_name = 'illi'.join(prefixes) + 'illion'
-            with self.subTest(msg='POS', base_illion=base_illion, period_name=period_name):
-                self.assertEqual(period_name, nameperiod(base_illion))
+            with self.subTest(msg='POS', zillion=zillion, period_name=period_name):
+                self.assertEqual(period_name, nameperiod(zillion))
                 
     def test_performance(self):
         """
@@ -69,20 +69,20 @@ class ReadPeriodTests(TestCase):
         Empty strings should return -1 and 'thousand' should return 0.
         """
         special_cases = (-1, ''), (0, 'thousand')
-        for base_illion, period_name in special_cases:
+        for zillion, period_name in special_cases:
             with self.subTest(msg='NEG', period_name=period_name):
-                self.assertEqual(base_illion, readperiod(period_name))
+                self.assertEqual(zillion, readperiod(period_name))
                 
     def test_good_monkey(self):
         """
         
         """
         samples = random.sample(range(1, sys.maxsize), 100)
-        for base_illion in (s ** random.randrange(1, 100) for s in samples):
-            prefixes = (PERIOD_PREFIXES_LT_1000[int(p)] for p in '{:,}'.format(base_illion).split(','))
+        for zillion in (s ** random.randrange(1, 100) for s in samples):
+            prefixes = (PERIOD_PREFIXES_LT_1000[int(p)] for p in '{:,}'.format(zillion).split(','))
             period_name = 'illi'.join(prefixes) + 'illion'
-            with self.subTest(msg='POS', base_illion=base_illion, period_name=period_name):
-                self.assertEqual(base_illion, readperiod(period_name))
+            with self.subTest(msg='POS', zillion=zillion, period_name=period_name):
+                self.assertEqual(zillion, readperiod(period_name))
                 
     def test_performance(self):
         """
@@ -418,9 +418,9 @@ class InverseFunctions(TestCase):
         ``nameperiod`` and ``readperiod`` should be inverses.
         """
         samples = random.sample(range(1, sys.maxsize), 100)
-        for base_illion in (s**random.randrange(1, 100) for s in samples):
-            with self.subTest(msg='POS', base_illion=base_illion):
-                self.assertEqual(base_illion, readperiod(nameperiod(base_illion)))
+        for zillion in (s**random.randrange(1, 100) for s in samples):
+            with self.subTest(msg='POS', zillion=zillion):
+                self.assertEqual(zillion, readperiod(nameperiod(zillion)))
                 
     def test_read_spelled_numbers(self):
         """

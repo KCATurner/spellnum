@@ -1,10 +1,10 @@
-# Conwech
-Conwech is a Python package for spelling _really_ large numbers in english using a  couple functions and some cleverly built tuples. For more information on the large number names and period naming conventions used by this module see the wikipedia page [here](https://en.wikipedia.org/wiki/Names_of_large_numbers).  
+# ConWech
+ConWech is a Python package for spelling _really_ large numbers in english using a couple functions and some cleverly built tuples. For more information on the large number names and period naming conventions used by this module see the wikipedia page [here](https://en.wikipedia.org/wiki/Names_of_large_numbers).  
 
 Read more about the package contents and structure [here](https://kcaturner.github.io/conwech/).  
 
 ### Command-line Interface
-Conwech also comes with an excruciatingly simple CLI. Run the help command after installing with pip for more insight.  
+ConWech also comes with an excruciatingly simple CLI. Run the help command after installing with pip for more insight.  
 ```
 $ pip install git+https://github.com/KCATurner/conwech
 $ conwech --help

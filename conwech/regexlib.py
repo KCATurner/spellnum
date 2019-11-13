@@ -118,9 +118,9 @@ PREFIX_COMBINATION_EXCEPTION_X = re.compile(
     r'(?=[co])(?# ...and be followed by "c" or "o")')
 """
 Pattern for matching invalid combinations of period name prefix
-components resulting from base-illion periods: 86, 106, 806. The
-expression will match the position in the string where an "x" needs
-to be inserted to correct the exception.
+components resulting from zillion periods: 86, 106, 806. The expression
+will match the position in the string where an "x" needs to be inserted
+to correct the exception.
 """
 
 
@@ -131,8 +131,8 @@ PREFIX_COMBINATION_EXCEPTION_S = re.compile(
  r'(?=[coqtv])(?# ...and be followed by "c", "o", "q", "t", or "v")')
 """
 Pattern for matching invalid combinations of period name prefix
-components resulting from base-illion periods: 23, 26, 33, 36, 43, 46,
-54, 56, 83, 103, 303, 306, 403, 406, 503, 506, 803. The expression will
+components resulting from zillion periods: 23, 26, 33, 36, 43, 46, 54,
+56, 83, 103, 303, 306, 403, 406, 503, 506, 803. The expression will
 match the position in the string where an "s" needs to be inserted to
 correct the exception.
 """
@@ -145,7 +145,7 @@ PREFIX_COMBINATION_EXCEPTION_M = re.compile(
     r'(?=[ov])(?# ...and be followed by "o" or "v")')
 """
 Pattern for matching invalid combinations of period name prefix
-components resulting from base-illion periods: 27, 29, 87, 89, 807, 809.
+components resulting from zillion periods: 27, 29, 87, 89, 807, 809.
 The expression will match the position in the string where an "m" needs
 to be inserted to correct the exception.
 """
@@ -158,8 +158,8 @@ PREFIX_COMBINATION_EXCEPTION_N = re.compile(
     r'(?=[cdqst])(?# ...and be followed by "c", "d", "q", "s", or "t")')
 """
 Pattern for matching invalid combinations of period name prefix
-components resulting from base-illion periods: 17, 19, 37, 39, 47, 49,
-57, 59, 67, 69, 77, 79, 107, 109, 207, 209, 307, 309, 407, 409, 507,
-509, 607, 609, 707, 709. The expression will match the position in the
-string where an "n" needs to be inserted to correct the exception.
+components resulting from zillion periods: 17, 19, 37, 39, 47, 49, 57,
+59, 67, 69, 77, 79, 107, 109, 207, 209, 307, 309, 407, 409, 507, 509,
+607, 609, 707, 709. The expression will match the position in the string
+where an "n" needs to be inserted to correct the exception.
 """

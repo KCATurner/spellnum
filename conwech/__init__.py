@@ -1,5 +1,5 @@
 """
-The conwech package is comprised of two primary submodules: `lexicon`,
+The ConWech package is comprised of two primary submodules: `lexicon`,
 and `functions`. All of the members in `functions` along with a few
 select members of `lexicon` are imported into the top level of the
 package for easy access. Flat > nested, but organization = imperative.

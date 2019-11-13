@@ -81,14 +81,14 @@ Examples:
 _UNIQUE_PERIOD_PREFIXES = ('n', 'm', 'b', 'tr', 'quadr', 'quint',
                            'sext', 'sept', 'oct', 'non')
 """
-Unique period prefixes for single digit base-illion values.
+Unique period prefixes for single digit zillion values.
 """
 
 
 _UNIT_PREFIX_COMPONENTS = ('', 'un', 'duo', 'tre', 'quattuor',
                            'quinqua', 'se', 'septe', 'octo', 'nove')
 """
-Prefix components for the units digit of a base-illion period.
+Prefix components for the units digit of a zillion period.
 """
 
 
@@ -96,7 +96,7 @@ _TENS_PREFIX_COMPONENTS = ('', 'deci', 'viginti', 'triginta',
                            'quadraginta', 'quinquaginta', 'sexaginta',
                            'septuaginta', 'octoginta', 'nonaginta')
 """
-Prefix components for the tens digit of a base-illion period.
+Prefix components for the tens digit of a zillion period.
 """
 
 
@@ -104,25 +104,25 @@ _HUND_PREFIX_COMPONENTS = ('', 'centi', 'ducenti', 'trecenti',
                            'quadringenti', 'quingenti', 'sescenti',
                            'septingenti', 'octingenti', 'nongenti')
 """
-Prefix components for the hundreds digit of a base-illion period.
+Prefix components for the hundreds digit of a zillion period.
 """
 
 
-def __build_base_illion_prefixes():
+def __build_zillion_prefixes():
     """
-    Constructs prefixes for all base-illion periods from subcomponents.
+    Constructs prefixes for all zillion periods from subcomponents.
     """
     result = list(_UNIQUE_PERIOD_PREFIXES)
     
     for period in range(10, 1000):
         # build prefix from lexical components
-        base_illion = str(period).zfill(3)
-        prefix = str(_UNIT_PREFIX_COMPONENTS[int(base_illion[-1])]
-                     + _TENS_PREFIX_COMPONENTS[int(base_illion[-2])]
-                     + _HUND_PREFIX_COMPONENTS[int(base_illion[-3])])
+        zillion = str(period).zfill(3)
+        prefix = str(_UNIT_PREFIX_COMPONENTS[int(zillion[-1])]
+                     + _TENS_PREFIX_COMPONENTS[int(zillion[-2])]
+                     + _HUND_PREFIX_COMPONENTS[int(zillion[-3])])
         
         # catch and correct exceptions
-        if int(base_illion[-1]) in (3, 6, 7, 9):
+        if int(zillion[-1]) in (3, 6, 7, 9):
             prefix = conwech.regexlib.PREFIX_COMBINATION_EXCEPTION_X.sub('x', prefix)
             prefix = conwech.regexlib.PREFIX_COMBINATION_EXCEPTION_S.sub('s', prefix)
             prefix = conwech.regexlib.PREFIX_COMBINATION_EXCEPTION_M.sub('m', prefix)
@@ -134,10 +134,10 @@ def __build_base_illion_prefixes():
     return tuple(result)
 
 
-PERIOD_PREFIXES_LT_1000 = __build_base_illion_prefixes()
+PERIOD_PREFIXES_LT_1000 = __build_zillion_prefixes()
 """
-Prefixes for all base-illion period values. Indexing this tuple with a
-base-illion period value will return the appropriate Conway-Wechsler
+Prefixes for all zillion period values. Indexing this tuple with a
+zillion period value will return the appropriate Conway-Wechsler
 prefix (everything before the "illi"/"illion").
 
 All prefixes are constructed using the appropriate sub-prefix
