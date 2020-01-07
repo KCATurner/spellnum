@@ -6,7 +6,7 @@ from unittest import TestCase
 from conwech import lexicon
 
 
-class LexiconStructure(TestCase):
+class LexiconStructureTests(TestCase):
     """
     Verify that the lexicon number tuples are built properly.
     """
@@ -45,7 +45,7 @@ class LexiconStructure(TestCase):
                 self.assertMultiLineEqual(expected, actual)
                 
                 
-class PeriodPrefixes(TestCase):
+class ZillionPrefixTests(TestCase):
     """
     Verify that the lexicon period prefixes were built properly.
     """
@@ -100,7 +100,7 @@ class PeriodPrefixes(TestCase):
             -  nove(n):  19,  39,  49,  59,  69,  79, 109, 209, 309, 409, 509, 609, 709
         """
         for zillion in (17, 37, 47, 57, 67, 77, 107, 207, 307, 407, 507, 607, 707,
-                            19, 39, 49, 59, 69, 79, 109, 209, 309, 409, 509, 609, 709):
+                        19, 39, 49, 59, 69, 79, 109, 209, 309, 409, 509, 609, 709):
             with self.subTest(msg='POS', zillion=zillion):
                 hund, tens, unit = (int(digit) for digit in str(zillion).zfill(3))
                 expected = str(self.unit[unit] + 'n' + self.tens[tens] + self.hund[hund]).rstrip('ai')
@@ -115,7 +115,7 @@ class PeriodPrefixes(TestCase):
             -  se(s):  26,  36,  46,  56, 306, 406, 506
         """
         for zillion in (23, 33, 43, 53, 83, 103, 303, 403, 503, 803,
-                            26, 36, 46, 56, 306, 406, 506):
+                        26, 36, 46, 56, 306, 406, 506):
             with self.subTest(msg='POS', zillion=zillion):
                 hund, tens, unit = (int(digit) for digit in str(zillion).zfill(3))
                 expected = str(self.unit[unit] + 's' + self.tens[tens] + self.hund[hund]).rstrip('ai')

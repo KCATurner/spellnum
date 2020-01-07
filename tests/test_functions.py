@@ -44,13 +44,7 @@ class NamePeriodTests(TestCase):
             with self.subTest(msg='POS', zillion=zillion, period_name=period_name):
                 self.assertEqual(period_name, nameperiod(zillion))
                 
-    def test_performance(self):
-        """
-        TODO: Write a reasonable performance test.
-        """
-        pass
-    
-    
+                
 class ReadPeriodTests(TestCase):
     """
     Unit tests for conwech's ``readperiod`` function.
@@ -87,13 +81,7 @@ class ReadPeriodTests(TestCase):
             with self.subTest(msg='POS', zillion=zillion, period_name=period_name):
                 self.assertEqual(zillion, readperiod(period_name))
                 
-    def test_performance(self):
-        """
-        TODO: Write a reasonable performance test.
-        """
-        pass
-    
-    
+                
 class Number2TextTests(TestCase):
     """
     Unit Tests for ``number2text`` function.
@@ -375,12 +363,6 @@ class Number2TextTests(TestCase):
         """
         pass
     
-    def test_performance(self):
-        """
-        TODO: Write a reasonable performance test.
-        """
-        pass
-    
     
 class Text2NumberTests(TestCase):
     """
@@ -398,12 +380,6 @@ class Text2NumberTests(TestCase):
     def test_good_monkey(self):
         """
         TODO: write monkey tests.
-        """
-        pass
-    
-    def test_performance(self):
-        """
-        TODO: Write a reasonable performance test.
         """
         pass
     

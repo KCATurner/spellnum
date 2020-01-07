@@ -6,7 +6,7 @@ from unittest import TestCase
 from conwech import regexlib
 
 
-class NumberLikeString(TestCase):
+class NumericStringTests(TestCase):
     """
     Unit tests for the NUMERIC_STRING regular expresion.
     """
@@ -112,7 +112,7 @@ class NumberLikeString(TestCase):
                         self.assertDictEqual(self.expected, actual)
                         
                         
-class NumberTextFormat(TestCase):
+class NumberTextTests(TestCase):
     """
     Unit tests for the NUMBER_TEXT regular expresion.
     """
@@ -140,7 +140,7 @@ class NumberTextFormat(TestCase):
         pass
     
     
-class PeriodTextFormat(TestCase):
+class PeriodTextTests(TestCase):
     """
     Unit tests for the PERIOD_TEXT regular expresion.
     """
