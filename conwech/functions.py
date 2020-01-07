@@ -21,8 +21,8 @@ def nameperiod(zillion):
     given zillion value. The zillion property of a number in the
     short-scale system is equal to one less than the number of periods
     in the number, where a period is a set of one to three consecutive
-    digits often separated by commas. I.e. A zillion value (b)
-    represents a period's exponent (x) where b = (x - 3) / 3.
+    digits often separated by commas. I.e. A zillion value (z)
+    represents a period's exponent (x) where z = (x - 3) / 3.
     
     Args:
         zillion (int): The zillion value of the period name.
@@ -52,7 +52,7 @@ def nameperiod(zillion):
         return '' if zillion else 'thousand'
     
     # generates prefix for each period of the zillion value
-    prefixes = (conwech.lexicon.PERIOD_PREFIXES_LT_1000[int(p)]
+    prefixes = (conwech.lexicon.ZILLION_PERIOD_PREFIXES[int(p)]
                 for p in '{:,}'.format(zillion).split(','))
     
     # combine prefixes and end with "illion"
@@ -61,7 +61,7 @@ def nameperiod(zillion):
 
 def readperiod(name):
     """
-    Convert `period_name` to its corresponding zillion value.
+    Convert `name` to its corresponding zillion value.
     
     The inverse function of `nameperiod`, `readperiod` parses the given
     period name by indexing a tuple of valid Conway-Wechsler period
@@ -77,8 +77,8 @@ def readperiod(name):
         The zillion value for the period with the given name.
         
     Raises:
-        InvalidTextForPeriodName: If any sub-component of `period_name`
-            is not in conwech.lexicon.PERIOD_PREFIXES_LT_1000.
+        InvalidPeriodNameText: If any sub-component of `period_name`
+            is not in conwech.lexicon.ZILLION_PERIOD_PREFIXES.
             
     Examples:
         >>> from conwech.functions import readperiod
@@ -100,9 +100,9 @@ def readperiod(name):
     zillion = ''
     for prefix in period_prefixes:
         # iteration > list comprehension here (for more helpful exceptions)
-        if prefix not in conwech.lexicon.PERIOD_PREFIXES_LT_1000:
-            raise conwech.exceptions.InvalidTextForPeriodName(str(name), prefix)
-        zillion += str(conwech.lexicon.PERIOD_PREFIXES_LT_1000.index(prefix)).zfill(3)
+        if prefix not in conwech.lexicon.ZILLION_PERIOD_PREFIXES:
+            raise conwech.exceptions.InvalidPeriodNameText(str(name), prefix)
+        zillion += str(conwech.lexicon.ZILLION_PERIOD_PREFIXES.index(prefix)).zfill(3)
         
     # always return zillion as int
     return int(zillion)
@@ -115,7 +115,7 @@ def number2text(number):
     `number2text` returns the english short-scale spelling for `number`
     which can be any positive or negative number passed as an integer,
     float, or string (as long as that string fits a valid numeric
-    pattern; see conwech.regexlib.NUMBER_LIKE_STRING).
+    pattern; see conwech.regexlib.NUMERIC_STRING).
     
     `number2text` can handle values that exceed traditional limitations
     on numerical types. Pass `number` as a string for values requiring
@@ -135,9 +135,9 @@ def number2text(number):
         The spelling of the given number.
         
     Raises:
-        InvalidNumberLikeString: If `number` does not follow python's
+        InvalidNumericString: If `number` does not follow python's
             conventional formatting for int and float types (see
-            conwech.regexlib.NUMBER_LIKE_STRING).
+            conwech.regexlib.NUMERIC_STRING).
             
     Examples:
         >>> from conwech.functions import number2text
@@ -152,9 +152,9 @@ def number2text(number):
         
     """
     # check for valid input format
-    match = conwech.regexlib.NUMBER_LIKE_STRING.match(str(number))
+    match = conwech.regexlib.NUMERIC_STRING.match(str(number))
     if not match:
-        raise conwech.exceptions.InvalidNumberLikeString(number)
+        raise conwech.exceptions.InvalidNumericString(number)
     
     # capture and "normalize" components of input number
     bsign, bwhole, bfraction, esign, evalue = match.groups(default='')
@@ -215,11 +215,11 @@ def text2number(text):
         A numeric string representing the value of `text`.
         
     Raises:
-        UnexpectedNumberTextFormat: If `text` does not match the
-            required format (see conwech.regexlib.NUMBER_TEXT_FORMAT).
-        UnrecognizedTextForPeriodValue: If any period value in `text`
+        InvalidNumberText: If `text` does not match the
+            required format (see conwech.regexlib.NUMBER_TEXT).
+        InvalidPeriodValueText: If any period value in `text`
             is not found in conwech.lexicon.NATURAL_NUMBERS_LT_1000.
-        InvalidTextForPeriodName: If any period name in `text` is not
+        InvalidPeriodNameText: If any period name in `text` is not
             derived from a valid combination of Conway-Wechsler period
             prefixes (see conwech.functions.readperiod).
             
@@ -239,17 +239,17 @@ def text2number(text):
         return '-' + text2number(text.replace('negative', '', 1))
     
     # check for valid input format
-    match = conwech.regexlib.NUMBER_TEXT_FORMAT.match(str(text))
+    match = conwech.regexlib.NUMBER_TEXT.match(str(text))
     if not match:
-        raise conwech.exceptions.UnexpectedNumberTextFormat(text)
+        raise conwech.exceptions.InvalidNumberText(text)
     
     # reused iterative functionality
     def iterperiods(number_text):
-        for period_value, period_name in conwech.regexlib.PERIOD_TEXT_FORMAT.findall(number_text):
+        for period_value, period_name in conwech.regexlib.PERIOD_TEXT.findall(number_text):
             
             # raise exception for invalid period values
             if period_value not in conwech.lexicon.NATURAL_NUMBERS_LT_1000:
-                raise conwech.exceptions.UnrecognizedTextForPeriodValue(period_value, period_name)
+                raise conwech.exceptions.InvalidPeriodValueText(period_value, period_name)
             
             # yields pairs of (value, zillion)
             yield (conwech.lexicon.NATURAL_NUMBERS_LT_1000.index(period_value),

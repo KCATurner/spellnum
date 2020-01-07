@@ -8,14 +8,14 @@ from conwech import regexlib
 
 class NumberLikeString(TestCase):
     """
-    Unit tests for the NUMBER_LIKE_STRING regular expresion.
+    Unit tests for the NUMERIC_STRING regular expresion.
     """
     
     def setUp(self):
         self.valid_flags = 'e', 'E'
         self.valid_signs = '', '-', '+'
         self.valid_digits = '0123456789'
-        self.pattern = regexlib.NUMBER_LIKE_STRING
+        self.pattern = regexlib.NUMERIC_STRING
         self.expected = dict.fromkeys(self.pattern.groupindex.keys())
         # assert names of capture groups because most tests will likely rely on them
         self.assertTupleEqual(('bsign', 'bwhole', 'bfraction', 'esign', 'evalue'),
@@ -114,11 +114,11 @@ class NumberLikeString(TestCase):
                         
 class NumberTextFormat(TestCase):
     """
-    Unit tests for the NUMBER_TEXT_FORMAT regular expresion.
+    Unit tests for the NUMBER_TEXT regular expresion.
     """
     
     def setUp(self):
-        self.pattern = regexlib.NUMBER_TEXT_FORMAT
+        self.pattern = regexlib.NUMBER_TEXT
         self.expected = dict.fromkeys(self.pattern.groupindex.keys())
         # assert names of capture groups because most tests will likely rely on them
         self.assertTupleEqual(('whole', 'numerator', 'denominator'),
@@ -142,11 +142,11 @@ class NumberTextFormat(TestCase):
     
 class PeriodTextFormat(TestCase):
     """
-    Unit tests for the PERIOD_TEXT_FORMAT regular expresion.
+    Unit tests for the PERIOD_TEXT regular expresion.
     """
     
     def setUp(self):
-        self.pattern = regexlib.PERIOD_TEXT_FORMAT
+        self.pattern = regexlib.PERIOD_TEXT
         self.expected = dict.fromkeys(self.pattern.groupindex.keys())
         # assert names of capture groups because most tests will likely rely on them
         self.assertTupleEqual(('value', 'name'), tuple(self.pattern.groupindex.keys()))

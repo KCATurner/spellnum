@@ -8,7 +8,7 @@ from unittest import TestCase
 
 from conwech.functions import *
 from conwech.exceptions import *
-from conwech.lexicon import PERIOD_PREFIXES_LT_1000
+from conwech.lexicon import ZILLION_PERIOD_PREFIXES
 
 
 class NamePeriodTests(TestCase):
@@ -39,7 +39,7 @@ class NamePeriodTests(TestCase):
         """
         samples = random.sample(range(1, sys.maxsize), 100)
         for zillion in (s ** random.randrange(1, 100) for s in samples):
-            prefixes = (PERIOD_PREFIXES_LT_1000[int(p)] for p in '{:,}'.format(zillion).split(','))
+            prefixes = (ZILLION_PERIOD_PREFIXES[int(p)] for p in '{:,}'.format(zillion).split(','))
             period_name = 'illi'.join(prefixes) + 'illion'
             with self.subTest(msg='POS', zillion=zillion, period_name=period_name):
                 self.assertEqual(period_name, nameperiod(zillion))
@@ -53,20 +53,23 @@ class NamePeriodTests(TestCase):
     
 class ReadPeriodTests(TestCase):
     """
-    Unit tests for ``readperiod`` function.
+    Unit tests for conwech's ``readperiod`` function.
     """
     
     def test_invalid_input(self):
         """
-        Function should raise ``ValueError`` when input is unrecognized.
+        The ``readperiod`` function should raise conwech's custom
+        ``InvalidPeriodNameText`` when the input is an unrecognized
+        period name.
         """
         for invalid_name in (' ', 'not-a-illion'):
             with self.subTest(msg='NEG', invalid_name=invalid_name):
-                self.assertRaises(InvalidTextForPeriodName, readperiod, invalid_name)
+                self.assertRaises(InvalidPeriodNameText, readperiod, invalid_name)
                 
     def test_special_cases(self):
         """
-        Empty strings should return -1 and 'thousand' should return 0.
+        The ``readperiod`` function should return -1 when `period_name`
+        is an empty string and 0 when `period_name` is 'thousand'.
         """
         special_cases = (-1, ''), (0, 'thousand')
         for zillion, period_name in special_cases:
@@ -79,7 +82,7 @@ class ReadPeriodTests(TestCase):
         """
         samples = random.sample(range(1, sys.maxsize), 100)
         for zillion in (s ** random.randrange(1, 100) for s in samples):
-            prefixes = (PERIOD_PREFIXES_LT_1000[int(p)] for p in '{:,}'.format(zillion).split(','))
+            prefixes = (ZILLION_PERIOD_PREFIXES[int(p)] for p in '{:,}'.format(zillion).split(','))
             period_name = 'illi'.join(prefixes) + 'illion'
             with self.subTest(msg='POS', zillion=zillion, period_name=period_name):
                 self.assertEqual(zillion, readperiod(period_name))
@@ -100,15 +103,15 @@ class Number2TextTests(TestCase):
     
     def test_invalid_input_type(self):
         """
-        TODO: finish docstring...
+        Test correct exception is raised when given invalid input.
         """
         for invalid_type in (None, {123, }, [123, ], (123,)):
             with self.subTest(invalid_type=invalid_type):
-                self.assertRaises(InvalidNumberLikeString, number2text, invalid_type)
+                self.assertRaises(InvalidNumericString, number2text, invalid_type)
                 
     def test_zero_input(self):
         """
-        TODO: finish docstring...
+        Test some valid forms of zero input.
         """
         for number in 0, 0.0, 0e0, '0', '-0':
             with self.subTest(msg='POS', number=number):
@@ -116,7 +119,7 @@ class Number2TextTests(TestCase):
                 
     def test_units_period(self):
         """
-        TODO: finish docstring...
+        Test first 999 natural numbers (numbers without a period name).
         """
         for number in range(1, 1000):
             with self.subTest(msg='POS', number=number):

@@ -69,13 +69,12 @@ What an insightful question! I'm so glad you asked...
     6)  I was bored...
     
 Sorry, I'm off my soapbox now. You probably didn't need half of that
-explanation, but there it is anyway. Thank you for coming to my TED
-talk.
-
+explanation and you might still disagree, but there it is anyway. Thank
+you for coming to my TED talk.
 """
 
 
-class InvalidNumberLikeString(ValueError):
+class InvalidNumericString(ValueError):
     """
     Custom exception for number2text function.
     """
@@ -86,14 +85,14 @@ class InvalidNumberLikeString(ValueError):
             number (str): Invalid number-like string input.
             *args: Additional ValueError positional arguments.
         """
-        super(InvalidNumberLikeString, self).__init__(
+        super(InvalidNumericString, self).__init__(
             '\n\n\tInput is not a valid number-like format!'
             '\n\tDid not understand "{}"'.format(number),
             *args
         )
         
         
-class UnexpectedNumberTextFormat(ValueError):
+class InvalidNumberText(ValueError):
     """
     Custom exception for text2number function.
     """
@@ -104,7 +103,7 @@ class UnexpectedNumberTextFormat(ValueError):
             text (str): Invalid number text.
             *args: Additional ValueError positional arguments.
         """
-        super(UnexpectedNumberTextFormat, self).__init__(
+        super(InvalidNumberText, self).__init__(
             '\n\n\t"{}" does not follow expected lexical pattern!'
             '\n\t"<whole_number> [and <decimal_numerator> <decimal_denominator>ths]"'
             '\n\tSee module documentation for more details.'.format(text),
@@ -112,7 +111,7 @@ class UnexpectedNumberTextFormat(ValueError):
         )
         
         
-class UnrecognizedTextForPeriodValue(ValueError):
+class InvalidPeriodValueText(ValueError):
     """
     Custom exception for text2number function.
     """
@@ -124,14 +123,14 @@ class UnrecognizedTextForPeriodValue(ValueError):
             period (str): Name of the period.
             *args: Additional ValueError positional arguments.
         """
-        super(UnrecognizedTextForPeriodValue, self).__init__(
+        super(InvalidPeriodValueText, self).__init__(
             '\n\n\tCould not determine value for the {}s!'
             '\n\tDid not understand "{}"'.format(period or 'unit', value),
             *args
         )
         
         
-class InvalidTextForPeriodName(ValueError):
+class InvalidPeriodNameText(ValueError):
     """
     Custom exception for readperiod function.
     """
@@ -143,7 +142,7 @@ class InvalidTextForPeriodName(ValueError):
             prefix (str): Invalid prefix in period name
             *args: Additional ValueError positional arguments.
         """
-        super(InvalidTextForPeriodName, self).__init__(
+        super(InvalidPeriodNameText, self).__init__(
             '"{}" is not a valid Conway-Wechsler period name; '
             'specifically, prefix "{}" not found'.format(name, prefix),
             *args

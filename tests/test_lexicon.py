@@ -54,7 +54,7 @@ class PeriodPrefixes(TestCase):
         self.unit = lexicon._UNIT_PREFIX_COMPONENTS
         self.tens = lexicon._TENS_PREFIX_COMPONENTS
         self.hund = lexicon._HUND_PREFIX_COMPONENTS
-        self.prefixes = lexicon.PERIOD_PREFIXES_LT_1000
+        self.prefixes = lexicon.ZILLION_PERIOD_PREFIXES
         
     def test_known_similarities(self):
         """
