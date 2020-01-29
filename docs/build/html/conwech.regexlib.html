@@ -159,8 +159,8 @@ maintain without breaking them should the need arise. I.e. they can be
 quite brittle. However, this can be somewhat mitigated through good
 design and decent documentation, both of which hopefully exist herein.</p>
 <p>In this module there are two main groups of pre-compiled regular
-expressions. The first three: <cite>NUMERIC_STRING</cite>, <cite>NUMBER_TEXT</cite>, and
-<cite>PERIOD_TEXT</cite> all help with processing <cite>conwech.functions.number2text</cite>
+expressions. The first three: <cite>NUMERIC_STRING</cite>, <cite>NUMERAL_STRING</cite>, and
+<cite>PERIOD_STRING</cite> all help with processing <cite>conwech.functions.number2text</cite>
 and <cite>conwech.functions.text2number</cite> input. The last four expressions:
 <cite>PREFIX_EXCEPTION_X</cite>, <cite>PREFIX_EXCEPTION_S</cite>, <cite>PREFIX_EXCEPTION_M</cite>, and
 <cite>PREFIX_EXCEPTION_N</cite> are all used to catch and adjust invalid prefix
@@ -217,8 +217,8 @@ group, excluding any leading zeros.</p>
 </dd></dl>
 
 <dl class="data">
-<dt id="conwech.regexlib.NUMBER_TEXT">
-<code class="sig-prename descclassname">conwech.regexlib.</code><code class="sig-name descname">NUMBER_TEXT</code><em class="property"> = re.compile(&quot;^(?!\\s*$)(?# assert string not empty or only whitespace)\\s*(?# match but do not capture leading whitespace)(?P&lt;whole&gt;.+\\w)?(?# capture whole number text)(?&lt;!th)(?&lt;!ths)(?# whole portion cannot end)</em><a class="headerlink" href="#conwech.regexlib.NUMBER_TEXT" title="Permalink to this definition">¶</a></dt>
+<dt id="conwech.regexlib.NUMERAL_STRING">
+<code class="sig-prename descclassname">conwech.regexlib.</code><code class="sig-name descname">NUMERAL_STRING</code><em class="property"> = re.compile(&quot;^(?!\\s*$)(?# assert string not empty or only whitespace)\\s*(?# match but do not capture leading whitespace)(?P&lt;sign&gt;negative\\s|positive\\s)?(?# capture sign)(?P&lt;whole&gt;.+\\w)?(?# capture whole numb)</em><a class="headerlink" href="#conwech.regexlib.NUMERAL_STRING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching strings of number text.</p>
 <p>This compiled regular expression captures the lexical elements
 corresponding to the components of the number that the text represents
@@ -250,22 +250,22 @@ will match and the <strong>whole</strong> will consume the entire string. While,
 technically, all groups are optional (lazy) the expression is not
 allowed to match an empty or whitespace-only string.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.regexlib</span> <span class="k">import</span> <span class="n">NUMBER_TEXT</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">NUMBER_TEXT</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;three hundred twenty-one&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.regexlib</span> <span class="k">import</span> <span class="n">NUMERAL_STRING</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">NUMERAL_STRING</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;three hundred twenty-one&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
 <span class="go">{&#39;whole&#39;: &#39;three hundred twenty-one&#39;, &#39;numerator&#39;: None, &#39;denominator&#39;: None}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">NUMBER_TEXT</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;thirty-two and one tenth&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">NUMERAL_STRING</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;thirty-two and one tenth&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
 <span class="go">{&#39;whole&#39;: &#39;thirty-two&#39;, &#39;numerator&#39;: &#39;one&#39;, &#39;denominator&#39;: &#39;ten&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">NUMBER_TEXT</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;three and twenty-one one hundredths&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">NUMERAL_STRING</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;three and twenty-one one hundredths&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
 <span class="go">{&#39;whole&#39;: &#39;three&#39;, &#39;numerator&#39;: &#39;twenty-one&#39;, &#39;denominator&#39;: &#39;one hundred&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">NUMBER_TEXT</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;three hundred twenty-one one thousandths&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">NUMERAL_STRING</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;three hundred twenty-one one thousandths&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
 <span class="go">{&#39;whole&#39;: None, &#39;numerator&#39;: &#39;three hundred twenty-one&#39;, &#39;denominator&#39;: &#39;one thousand&#39;}</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="data">
-<dt id="conwech.regexlib.PERIOD_TEXT">
-<code class="sig-prename descclassname">conwech.regexlib.</code><code class="sig-name descname">PERIOD_TEXT</code><em class="property"> = re.compile('(?:^|\\s+)(?# period must follow whitespace or start of string)\\b(?P&lt;value&gt;.+?)(?# capture period value and leave the name)(?:\\s+(?# whitespace must separate period value and name)(?P&lt;name&gt;\\w+illi)</em><a class="headerlink" href="#conwech.regexlib.PERIOD_TEXT" title="Permalink to this definition">¶</a></dt>
+<dt id="conwech.regexlib.PERIOD_STRING">
+<code class="sig-prename descclassname">conwech.regexlib.</code><code class="sig-name descname">PERIOD_STRING</code><em class="property"> = re.compile('(?:^|\\s+)(?# period must follow whitespace or start of string)\\b(?P&lt;value&gt;.+?)(?# capture period value and leave the name)(?:\\s+(?# whitespace must separate period value and name)(?P&lt;name&gt;\\w+illi)</em><a class="headerlink" href="#conwech.regexlib.PERIOD_STRING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching individual period substrings in number text.</p>
 <p>This compiled regular expression captures the lexical elements
 corresponding to the components of a period in a string of number text
@@ -282,10 +282,10 @@ string or another period name.</p>
 ends with the “illion” suffix.</p>
 </div></blockquote>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.regexlib</span> <span class="k">import</span> <span class="n">PERIOD_TEXT</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">PERIOD_TEXT</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;one million two hundred thirty-four thousand five hundred sixty-seven&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.regexlib</span> <span class="k">import</span> <span class="n">PERIOD_STRING</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">PERIOD_STRING</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;one million two hundred thirty-four thousand five hundred sixty-seven&quot;</span><span class="p">)</span>
 <span class="go">[(&#39;one&#39;, &#39;million&#39;), (&#39;two hundred thirty-four&#39;, &#39;thousand&#39;), (&#39;five hundred sixty-seven&#39;, &#39;&#39;)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">PERIOD_TEXT</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s2">&quot;nine unnonagintaducentillion five tresquadragintacentillion&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">PERIOD_STRING</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s2">&quot;nine unnonagintaducentillion five tresquadragintacentillion&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
 <span class="go">{&#39;value&#39;: &#39;nine&#39;, &#39;name&#39;: &#39;unnonagintaducentillion&#39;}</span>
 </pre></div>
 </div>

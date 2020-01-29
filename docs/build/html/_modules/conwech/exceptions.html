@@ -240,7 +240,7 @@
         <span class="p">)</span></div>
         
         
-<div class="viewcode-block" id="InvalidNumberText"><a class="viewcode-back" href="../../conwech.exceptions.html#conwech.exceptions.InvalidNumberText">[docs]</a><span class="k">class</span> <span class="nc">InvalidNumberText</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<div class="viewcode-block" id="InvalidNumeralString"><a class="viewcode-back" href="../../conwech.exceptions.html#conwech.exceptions.InvalidNumeralString">[docs]</a><span class="k">class</span> <span class="nc">InvalidNumeralString</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Custom exception for text2number function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -251,7 +251,7 @@
 <span class="sd">            text (str): Invalid number text.</span>
 <span class="sd">            *args: Additional ValueError positional arguments.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">InvalidNumberText</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">InvalidNumeralString</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="s1">&#39;</span><span class="se">\n\n\t</span><span class="s1">&quot;</span><span class="si">{}</span><span class="s1">&quot; does not follow expected lexical pattern!&#39;</span>
             <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&quot;&lt;whole_number&gt; [and &lt;decimal_numerator&gt; &lt;decimal_denominator&gt;ths]&quot;&#39;</span>
             <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">See module documentation for more details.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">),</span>

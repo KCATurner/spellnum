@@ -160,14 +160,18 @@ the other, or at least something equivalent, which could be used the
 same way in the other direction.</p>
 <dl class="function">
 <dt id="conwech.functions.nameperiod">
-<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">nameperiod</code><span class="sig-paren">(</span><em class="sig-param">zillion</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conwech/functions.html#nameperiod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.nameperiod" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">nameperiod</code><span class="sig-paren">(</span><em class="sig-param">zillion: int</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#nameperiod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.nameperiod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Names the period for the given zillion value.</p>
 <p><cite>nameperiod</cite> returns the Conway-Wechsler name for a number with the
 given zillion value. The zillion property of a number in the
 short-scale system is equal to one less than the number of periods
 in the number, where a period is a set of one to three consecutive
-digits often separated by commas. I.e. A zillion value (z)
-represents a period’s exponent (x) where z = (x - 3) / 3.</p>
+digits often separated by commas.</p>
+<p>More formally, the zillion value z<sub>n</sub> for any real number n
+can be obtained by the function Z(n):</p>
+<blockquote>
+<div><p>Z(n) = ⌊log<sub>1000</sub>(n)⌋ - 1</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>zillion</strong> (<em>int</em>) – The zillion value of the period name.</p>
@@ -181,6 +185,10 @@ represents a period’s exponent (x) where z = (x - 3) / 3.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">nameperiod</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameperiod</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameperiod</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&#39;thousand&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nameperiod</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="go">&#39;quadrillion&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nameperiod</span><span class="p">(</span><span class="mi">789</span><span class="p">)</span>
@@ -193,7 +201,7 @@ represents a period’s exponent (x) where z = (x - 3) / 3.</p>
 
 <dl class="function">
 <dt id="conwech.functions.readperiod">
-<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">readperiod</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conwech/functions.html#readperiod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.readperiod" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">readperiod</code><span class="sig-paren">(</span><em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/conwech/functions.html#readperiod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.readperiod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert <cite>name</cite> to its corresponding zillion value.</p>
 <p>The inverse function of <cite>nameperiod</cite>, <cite>readperiod</cite> parses the given
 period name by indexing a tuple of valid Conway-Wechsler period
@@ -214,6 +222,10 @@ units period (first period).</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">readperiod</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">readperiod</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="go">-1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">readperiod</span><span class="p">(</span><span class="s1">&#39;thousand&#39;</span><span class="p">)</span>
+<span class="go">0</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">readperiod</span><span class="p">(</span><span class="s1">&#39;quadrillion&#39;</span><span class="p">)</span>
 <span class="go">4</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">readperiod</span><span class="p">(</span><span class="s1">&#39;novemoctogintaseptingentillion&#39;</span><span class="p">)</span>
@@ -226,7 +238,7 @@ units period (first period).</p>
 
 <dl class="function">
 <dt id="conwech.functions.number2text">
-<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">number2text</code><span class="sig-paren">(</span><em class="sig-param">number</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conwech/functions.html#number2text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.number2text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">number2text</code><span class="sig-paren">(</span><em class="sig-param">number: Union[int, float, str]</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#number2text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.number2text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the English short-scale spelling of the given number.</p>
 <p><cite>number2text</cite> returns the english short-scale spelling for <cite>number</cite>
 which can be any positive or negative number passed as an integer,
@@ -272,7 +284,7 @@ place, but should be implemented soon…ish… Bite me.</p>
 
 <dl class="function">
 <dt id="conwech.functions.text2number">
-<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">text2number</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/conwech/functions.html#text2number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.text2number" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">text2number</code><span class="sig-paren">(</span><em class="sig-param">text: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#text2number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.text2number" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert an English short-scale spelling to it’s numerical value.</p>
 <p><cite>text2number</cite> attempts to parse <cite>text</cite> and return a numeric string
 containing the corresponding value. The number(s) in the string will
@@ -292,8 +304,8 @@ decimal digits.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidNumberText" title="conwech.exceptions.InvalidNumberText"><strong>InvalidNumberText</strong></a> – If <cite>text</cite> does not match the
-    required format (see conwech.regexlib.NUMBER_TEXT).</p></li>
+<li><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidNumeralString" title="conwech.exceptions.InvalidNumeralString"><strong>InvalidNumeralString</strong></a> – If <cite>text</cite> does not match the
+    required format (see conwech.regexlib.NUMERAL_STRING).</p></li>
 <li><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidPeriodValueText" title="conwech.exceptions.InvalidPeriodValueText"><strong>InvalidPeriodValueText</strong></a> – If any period value in <cite>text</cite>
     is not found in conwech.lexicon.NATURAL_NUMBERS_LT_1000.</p></li>
 <li><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidPeriodNameText" title="conwech.exceptions.InvalidPeriodNameText"><strong>InvalidPeriodNameText</strong></a> – If any period name in <cite>text</cite> is not

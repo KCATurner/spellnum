@@ -156,12 +156,13 @@
 <span class="sd">same way in the other direction.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">typing</span>
 <span class="kn">import</span> <span class="nn">conwech.lexicon</span>
 <span class="kn">import</span> <span class="nn">conwech.regexlib</span>
 <span class="kn">import</span> <span class="nn">conwech.exceptions</span>
 
 
-<div class="viewcode-block" id="nameperiod"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.nameperiod">[docs]</a><span class="k">def</span> <span class="nf">nameperiod</span><span class="p">(</span><span class="n">zillion</span><span class="p">):</span>
+<div class="viewcode-block" id="nameperiod"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.nameperiod">[docs]</a><span class="k">def</span> <span class="nf">nameperiod</span><span class="p">(</span><span class="n">zillion</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Names the period for the given zillion value.</span>
 <span class="sd">    </span>
@@ -169,8 +170,12 @@
 <span class="sd">    given zillion value. The zillion property of a number in the</span>
 <span class="sd">    short-scale system is equal to one less than the number of periods</span>
 <span class="sd">    in the number, where a period is a set of one to three consecutive</span>
-<span class="sd">    digits often separated by commas. I.e. A zillion value (z)</span>
-<span class="sd">    represents a period&#39;s exponent (x) where z = (x - 3) / 3.</span>
+<span class="sd">    digits often separated by commas.</span>
+<span class="sd">    </span>
+<span class="sd">    More formally, the zillion value z\\ :sub:`n` for any real number n</span>
+<span class="sd">    can be obtained by the function Z(n):</span>
+<span class="sd">        </span>
+<span class="sd">        Z(n) = ⌊log\\ :sub:`1000`\\ (n)⌋ - 1</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
 <span class="sd">        zillion (int): The zillion value of the period name.</span>
@@ -183,6 +188,10 @@
 <span class="sd">        </span>
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from conwech.functions import nameperiod</span>
+<span class="sd">        &gt;&gt;&gt; nameperiod(-1)</span>
+<span class="sd">        &#39;&#39;</span>
+<span class="sd">        &gt;&gt;&gt; nameperiod(0)</span>
+<span class="sd">        &#39;thousand&#39;</span>
 <span class="sd">        &gt;&gt;&gt; nameperiod(4)</span>
 <span class="sd">        &#39;quadrillion&#39;</span>
 <span class="sd">        &gt;&gt;&gt; nameperiod(789)</span>
@@ -191,9 +200,10 @@
 <span class="sd">        &#39;tresviginticentillisesquinquagintaquadringentillinovemoctogintaseptingentillion&#39;</span>
 <span class="sd">        </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># a zillion must be an integer (see docstring)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">zillion</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;zillion argument must be an integer!&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s1">&#39;zillion argument should be </span><span class="si">{}</span><span class="s1">; got </span><span class="si">{}</span><span class="s1">!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">int</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">zillion</span><span class="p">)))</span>
     
     <span class="c1"># special cases</span>
     <span class="k">if</span> <span class="n">zillion</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
@@ -207,7 +217,7 @@
     <span class="k">return</span> <span class="s1">&#39;illi&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;illion&#39;</span></div>
 
 
-<div class="viewcode-block" id="readperiod"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.readperiod">[docs]</a><span class="k">def</span> <span class="nf">readperiod</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="readperiod"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.readperiod">[docs]</a><span class="k">def</span> <span class="nf">readperiod</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert `name` to its corresponding zillion value.</span>
 <span class="sd">    </span>
@@ -230,6 +240,10 @@
 <span class="sd">            </span>
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from conwech.functions import readperiod</span>
+<span class="sd">        &gt;&gt;&gt; readperiod(&#39;&#39;)</span>
+<span class="sd">        -1</span>
+<span class="sd">        &gt;&gt;&gt; readperiod(&#39;thousand&#39;)</span>
+<span class="sd">        0</span>
 <span class="sd">        &gt;&gt;&gt; readperiod(&#39;quadrillion&#39;)</span>
 <span class="sd">        4</span>
 <span class="sd">        &gt;&gt;&gt; readperiod(&#39;novemoctogintaseptingentillion&#39;)</span>
@@ -238,6 +252,11 @@
 <span class="sd">        123456789</span>
 <span class="sd">        </span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s1">&#39;name argument should be </span><span class="si">{}</span><span class="s1">; got </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    
     <span class="c1"># handle special cases</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;thousand&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span> <span class="k">else</span> <span class="mi">0</span>
@@ -256,7 +275,7 @@
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">zillion</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="number2text"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.number2text">[docs]</a><span class="k">def</span> <span class="nf">number2text</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+<div class="viewcode-block" id="number2text"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.number2text">[docs]</a><span class="k">def</span> <span class="nf">number2text</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct the English short-scale spelling of the given number.</span>
 <span class="sd">    </span>
@@ -299,6 +318,11 @@
 <span class="sd">        &#39;negative twelve ten billionths&#39;</span>
 <span class="sd">        </span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s1">&#39;number argument should be </span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">, or </span><span class="si">{}</span><span class="s1">; got </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">number</span><span class="p">)))</span>
+    
     <span class="c1"># check for valid input format</span>
     <span class="n">match</span> <span class="o">=</span> <span class="n">conwech</span><span class="o">.</span><span class="n">regexlib</span><span class="o">.</span><span class="n">NUMERIC_STRING</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">))</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
@@ -306,15 +330,12 @@
     
     <span class="c1"># capture and &quot;normalize&quot; components of input number</span>
     <span class="n">bsign</span><span class="p">,</span> <span class="n">bwhole</span><span class="p">,</span> <span class="n">bfraction</span><span class="p">,</span> <span class="n">esign</span><span class="p">,</span> <span class="n">evalue</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">bsign</span> <span class="o">=</span> <span class="n">bsign</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;negative &#39;</span><span class="p">)</span>
     <span class="n">exponent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">esign</span> <span class="o">+</span> <span class="p">(</span><span class="n">evalue</span> <span class="ow">or</span> <span class="s1">&#39;0&#39;</span><span class="p">))</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">bfraction</span><span class="p">)</span>
     <span class="n">digits</span> <span class="o">=</span> <span class="n">bwhole</span> <span class="o">+</span> <span class="n">bfraction</span>
     <span class="n">position</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">+</span> <span class="n">exponent</span>
     <span class="n">whole</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[:</span><span class="nb">max</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
     <span class="n">numerator</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">0</span><span class="p">):]</span>
-    
-    <span class="c1"># handle negative numbers recursively</span>
-    <span class="k">if</span> <span class="n">bsign</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">digits</span><span class="p">:</span> <span class="c1"># checking digits prevents &quot;negative zero&quot;</span>
-        <span class="k">return</span> <span class="s1">&#39;negative &#39;</span> <span class="o">+</span> <span class="n">number2text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">))</span>
     
     <span class="c1"># pad whole to align periods</span>
     <span class="n">whole</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="ow">or</span> <span class="mi">3</span><span class="p">))</span> <span class="o">+</span> <span class="n">whole</span>
@@ -333,14 +354,15 @@
     <span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">periods</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="p">]</span>
     <span class="k">if</span> <span class="n">numerator</span><span class="p">:</span> <span class="c1"># handle fractions recursively</span>
         <span class="n">denominator</span> <span class="o">=</span> <span class="n">number2text</span><span class="p">(</span><span class="s1">&#39;1e&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">exponent</span><span class="p">)))</span> <span class="o">+</span> <span class="s1">&#39;th&#39;</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">denominator</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;one &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
         <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">number2text</span><span class="p">(</span><span class="n">numerator</span><span class="p">),</span> <span class="n">denominator</span><span class="p">])</span>
                     <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;s&#39;</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">numerator</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="c1"># plurality</span>
         
-    <span class="c1"># return &quot;&lt;whole&gt; and &lt;fraction&gt;&quot; or &quot;zero&quot; if nothing was spelled</span>
-    <span class="k">return</span> <span class="s1">&#39; and &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">t</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;zero&#39;</span></div>
+    <span class="c1"># return &quot;&lt;sign&gt; &lt;whole&gt; and &lt;fraction&gt;&quot; or &quot;zero&quot; if nothing was spelled</span>
+    <span class="k">return</span> <span class="n">bsign</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39; and &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">t</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;zero&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="text2number"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.text2number">[docs]</a><span class="k">def</span> <span class="nf">text2number</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<div class="viewcode-block" id="text2number"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.text2number">[docs]</a><span class="k">def</span> <span class="nf">text2number</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert an English short-scale spelling to it&#39;s numerical value.</span>
 <span class="sd">    </span>
@@ -363,8 +385,8 @@
 <span class="sd">        A numeric string representing the value of `text`.</span>
 <span class="sd">        </span>
 <span class="sd">    Raises:</span>
-<span class="sd">        InvalidNumberText: If `text` does not match the</span>
-<span class="sd">            required format (see conwech.regexlib.NUMBER_TEXT).</span>
+<span class="sd">        InvalidNumeralString: If `text` does not match the</span>
+<span class="sd">            required format (see conwech.regexlib.NUMERAL_STRING).</span>
 <span class="sd">        InvalidPeriodValueText: If any period value in `text`</span>
 <span class="sd">            is not found in conwech.lexicon.NATURAL_NUMBERS_LT_1000.</span>
 <span class="sd">        InvalidPeriodNameText: If any period name in `text` is not</span>
@@ -379,21 +401,20 @@
 <span class="sd">        &#39;1e3000003 + 2e-3000003&#39;</span>
 <span class="sd">        </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># handle special case(s)</span>
-    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;0&#39;</span>
-    <span class="c1"># handle negative numbers recursively</span>
-    <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;negative&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">text2number</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s1">&#39;text argument should be </span><span class="si">{}</span><span class="s1">; got </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
     
     <span class="c1"># check for valid input format</span>
-    <span class="n">match</span> <span class="o">=</span> <span class="n">conwech</span><span class="o">.</span><span class="n">regexlib</span><span class="o">.</span><span class="n">NUMBER_TEXT</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">conwech</span><span class="o">.</span><span class="n">regexlib</span><span class="o">.</span><span class="n">NUMERAL_STRING</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">conwech</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">InvalidNumberText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">conwech</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">InvalidNumeralString</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     
     <span class="c1"># reused iterative functionality</span>
     <span class="k">def</span> <span class="nf">iterperiods</span><span class="p">(</span><span class="n">number_text</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">period_value</span><span class="p">,</span> <span class="n">period_name</span> <span class="ow">in</span> <span class="n">conwech</span><span class="o">.</span><span class="n">regexlib</span><span class="o">.</span><span class="n">PERIOD_TEXT</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">number_text</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">period_value</span><span class="p">,</span> <span class="n">period_name</span> <span class="ow">in</span> <span class="n">conwech</span><span class="o">.</span><span class="n">regexlib</span><span class="o">.</span><span class="n">PERIOD_STRING</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">number_text</span><span class="p">):</span>
+            <span class="n">period_value</span> <span class="o">=</span> <span class="n">period_value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
             
             <span class="c1"># raise exception for invalid period values</span>
             <span class="k">if</span> <span class="n">period_value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">conwech</span><span class="o">.</span><span class="n">lexicon</span><span class="o">.</span><span class="n">NATURAL_NUMBERS_LT_1000</span><span class="p">:</span>
@@ -404,8 +425,11 @@
                    <span class="mi">3</span> <span class="o">*</span> <span class="n">readperiod</span><span class="p">(</span><span class="n">period_name</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
             
     <span class="c1"># get period information for each portion of input text</span>
-    <span class="n">whole</span><span class="p">,</span> <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">iterperiods</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)]</span>
+    <span class="n">sign</span><span class="p">,</span> <span class="n">whole</span><span class="p">,</span> <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="n">sign</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;positive &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;negative &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="c1"># correct numerator exponents (this line assumes denominator is a multiple of ten)</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;one &#39;</span> <span class="o">+</span> <span class="n">denominator</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;one ten&#39;</span><span class="p">,</span> <span class="s1">&#39;ten&#39;</span><span class="p">)</span>
+    <span class="n">whole</span><span class="p">,</span> <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">iterperiods</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">(</span><span class="n">whole</span><span class="p">,</span> <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)]</span>
     <span class="n">fraction</span> <span class="o">=</span> <span class="p">[(</span><span class="n">v</span><span class="p">,</span> <span class="n">e</span> <span class="o">-</span> <span class="p">(</span><span class="n">denominator</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">denominator</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)))</span>
                 <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">numerator</span><span class="p">]</span>
     
@@ -415,7 +439,7 @@
         <span class="n">periods</span><span class="p">[</span><span class="n">exponent</span> <span class="o">+</span> <span class="mi">3</span><span class="p">],</span> <span class="n">periods</span><span class="p">[</span><span class="n">exponent</span><span class="p">]</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">periods</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">exponent</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
         
     <span class="n">periods</span> <span class="o">=</span> <span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">periods</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span><span class="p">)</span>
-    <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="p">]</span>
+    <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="p">]</span>
     <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">exponent</span> <span class="ow">in</span> <span class="n">periods</span><span class="p">:</span>
         <span class="n">digits</span><span class="p">,</span> <span class="n">previous</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">difference</span> <span class="o">=</span> <span class="n">previous</span> <span class="o">-</span> <span class="n">exponent</span>
@@ -425,8 +449,9 @@
             <span class="n">numbers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">digits</span> <span class="o">+</span> <span class="n">value</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">difference</span><span class="p">),</span> <span class="n">exponent</span>
             
     <span class="c1"># return string representing the sum of numbers in normalized scientific notation</span>
-    <span class="k">return</span> <span class="s1">&#39; + &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">v</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.0&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;e&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
-                      <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">sign</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">{}</span><span class="s1"> &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sign</span> <span class="ow">or</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">v</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.0&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;e&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

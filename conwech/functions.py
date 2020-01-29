@@ -22,8 +22,12 @@ def nameperiod(zillion: int) -> str:
     given zillion value. The zillion property of a number in the
     short-scale system is equal to one less than the number of periods
     in the number, where a period is a set of one to three consecutive
-    digits often separated by commas. I.e. A zillion value (z)
-    represents a period's exponent (x) where z = (x - 3) / 3.
+    digits often separated by commas.
+    
+    More formally, the zillion value z\\ :sub:`n` for any real number n
+    can be obtained by the function Z(n):
+        
+        Z(n) = ⌊log\\ :sub:`1000`\\ (n)⌋ - 1
     
     Args:
         zillion (int): The zillion value of the period name.
@@ -36,6 +40,10 @@ def nameperiod(zillion: int) -> str:
         
     Examples:
         >>> from conwech.functions import nameperiod
+        >>> nameperiod(-1)
+        ''
+        >>> nameperiod(0)
+        'thousand'
         >>> nameperiod(4)
         'quadrillion'
         >>> nameperiod(789)
@@ -84,6 +92,10 @@ def readperiod(name: str) -> int:
             
     Examples:
         >>> from conwech.functions import readperiod
+        >>> readperiod('')
+        -1
+        >>> readperiod('thousand')
+        0
         >>> readperiod('quadrillion')
         4
         >>> readperiod('novemoctogintaseptingentillion')
