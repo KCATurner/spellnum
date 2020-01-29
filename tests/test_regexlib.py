@@ -47,22 +47,20 @@ class NumericStringTests(TestCase):
         """
         Strings should mirror built-in float syntax.
         """
-        for bs in self.valid_signs:
-            for bw in '', '0', '1':
-                for dec in '', '.':
-                    for bf in '', '0', '1':
-                        for flag in '', 'e', 'E':
-                            for es in self.valid_signs:
-                                for ev in '', '0', '1':
-                                    test_string = (bs + bw + dec + bf + flag + es + ev)
-                                    try: # pattern should match if float cast doesn't fail
-                                        float(test_string)
-                                        with self.subTest(msg='POS', test_string=test_string):
-                                            self.assertRegex(test_string, self.pattern)
-                                    except ValueError:
-                                        with self.subTest(msg='NEG', test_string=test_string):
-                                            self.assertNotRegex(test_string, self.pattern)
-                                            
+        digits = '', '0', '1'
+        product = itertools.product(
+            self.valid_signs, digits, ['', '.'], digits,
+            ['', 'e', 'E'], self.valid_signs, digits)
+        for bs, bw, dec, bf, flag, es, ev in product:
+            test_string = (bs + bw + dec + bf + flag + es + ev)
+            try:  # pattern should match if float cast doesn't fail
+                float(test_string)
+                with self.subTest(msg='POS', test_string=test_string):
+                    self.assertRegex(test_string, self.pattern)
+            except ValueError:
+                with self.subTest(msg='NEG', test_string=test_string):
+                    self.assertNotRegex(test_string, self.pattern)
+                    
     def test_int_format(self):
         """
         Strings like integers should match.
