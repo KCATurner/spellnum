@@ -170,15 +170,12 @@ def number2text(number: typing.Union[int, float, str]) -> str:
     
     # capture and "normalize" components of input number
     bsign, bwhole, bfraction, esign, evalue = match.groups(default='')
+    bsign = bsign.replace('+', '').replace('--', '').replace('-', 'negative ')
     exponent = int(esign + (evalue or '0')) - len(bfraction)
     digits = bwhole + bfraction
     position = len(digits) + exponent
     whole = digits[:max(position, 0)]
     numerator = digits[max(position, 0):]
-    
-    # handle negative numbers recursively
-    if bsign == '-' and digits: # checking digits prevents "negative zero"
-        return 'negative ' + number2text(str(number).lstrip('-'))
     
     # pad whole to align periods
     whole = '0'*(3 - (max(position, 0) % 3 or 3)) + whole
@@ -197,11 +194,12 @@ def number2text(number: typing.Union[int, float, str]) -> str:
     text = [' '.join(periods).strip(), ]
     if numerator: # handle fractions recursively
         denominator = number2text('1e' + str(abs(exponent))) + 'th'
+        denominator = denominator.replace('one ', '').replace(' ', '-')
         text.append(' '.join([number2text(numerator), denominator])
                     + ('s' if int(numerator) > 1 else '')) # plurality
         
-    # return "<whole> and <fraction>" or "zero" if nothing was spelled
-    return ' and '.join(t for t in text if t) or 'zero'
+    # return "<sign> <whole> and <fraction>" or "zero" if nothing was spelled
+    return bsign + (' and '.join(t for t in text if t) or 'zero')
 
 
 def text2number(text: str) -> str:
@@ -267,8 +265,11 @@ def text2number(text: str) -> str:
                    3 * readperiod(period_name) + 3)
             
     # get period information for each portion of input text
-    whole, numerator, denominator = [list(iterperiods(t)) for t in match.groups(default='')]
+    sign, whole, numerator, denominator = match.groups(default='')
+    sign = sign.replace('positive ', '').replace('negative ', '-').replace('--', '')
     # correct numerator exponents (this line assumes denominator is a multiple of ten)
+    denominator = ('one ' + denominator.replace('-', ' ')).replace('one ten', 'ten')
+    whole, numerator, denominator = [list(iterperiods(t)) for t in (whole, numerator, denominator)]
     fraction = [(v, e - (denominator[0][1] + str(denominator[0][0]).count('0')))
                 for v, e in numerator]
     
@@ -278,7 +279,7 @@ def text2number(text: str) -> str:
         periods[exponent + 3], periods[exponent] = divmod(periods.get(exponent, 0) + value, 1000)
         
     periods = ((str(v), e) for e, v in sorted(periods.items(), reverse=True) if v)
-    numbers = [next(periods, ('', 0)), ]
+    numbers = [next(periods, ('0', 0)), ]
     for value, exponent in periods:
         digits, previous = numbers[-1]
         difference = previous - exponent
@@ -288,5 +289,6 @@ def text2number(text: str) -> str:
             numbers[-1] = digits + value.zfill(difference), exponent
             
     # return string representing the sum of numbers in normalized scientific notation
-    return ' + '.join(v[:1] + ('.' + v[1:]).rstrip('.0') + ('e' + str(e + len(v[1:]))).rstrip('e')
-                      for v, e in numbers)
+    return sign + ' {} '.format(sign or '+').join(
+        v[:1] + ('.' + v[1:]).rstrip('.0') + ('e' + str(e + len(v[1:]))).rstrip('e')
+        for v, e in numbers)

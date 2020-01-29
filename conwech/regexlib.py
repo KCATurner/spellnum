@@ -91,6 +91,7 @@ Examples:
 NUMERAL_STRING = re.compile(
     r"^(?!\s*$)(?# assert string not empty or only whitespace)"
     r"\s*(?# match but do not capture leading whitespace)"
+    r"(?P<sign>negative\s|positive\s)?(?# capture sign)"
     r"(?P<whole>.+\w)?(?# capture whole number text)"
     r"(?<!th)(?<!ths)(?# whole portion cannot end in th/ths)"
     r"(?(whole)(?# if any whole portion is captured...)"
@@ -100,8 +101,8 @@ NUMERAL_STRING = re.compile(
     r"(?:(?P<numerator>.+\w)(?# capture fraction numerator text)"
     r"\s+(?# whitespace must separate numerator and denominator)"
     r"(?P<denominator>(?# capture fraction denominator text)"
-    r"(?:\bone\s+hundred|\bten|\bone\b)(?# denominator period value)"
-    r"\s*\w*)ths?)?(?# to capture fraction, must end in th/ths)"
+    r"(?:\bhundred-|\bten-)?(?# denominator period value)"
+    r"\w+)ths?)?(?# to capture fraction, must end in th/ths)"
     r"\s*$(?# match but do not capture trailing whitespace)")
 """
 Pattern for matching strings of number text.

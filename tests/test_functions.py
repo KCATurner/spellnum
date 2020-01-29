@@ -101,7 +101,7 @@ class Number2TextTests(TestCase):
         """
         Test some valid forms of zero input.
         """
-        for number in 0, 0.0, 0e0, '0', '-0':
+        for number in 0, 0.0, 0e-0, 0.0e0, '0', '0.0', '0e-0', '0.0e0':
             with self.subTest(msg='POS', number=number):
                 self.assertMultiLineEqual('zero', number2text(number))
                 
@@ -115,12 +115,12 @@ class Number2TextTests(TestCase):
                 self.assertMultiLineEqual(expected, number2text(number))
                 
     def test_string_dXXX(self):
-        expected = 'one hundred twenty-three one thousandths'
+        expected = 'one hundred twenty-three thousandths'
         self.assertMultiLineEqual(expected, number2text('.123'))
         self.assertMultiLineEqual('negative ' + expected, number2text('-.123'))
 
     def test_string_ndXXX(self):
-        expected = 'one hundred twenty-three one thousandths'
+        expected = 'one hundred twenty-three thousandths'
         self.assertMultiLineEqual(expected, number2text('.123'))
         self.assertMultiLineEqual('negative ' + expected, number2text('-.123'))
 
@@ -146,7 +146,7 @@ class Number2TextTests(TestCase):
         self.assertMultiLineEqual('negative ' + expected, number2text('-1.2e9'))
 
     def test_ValidFormat_XdXenX(self):
-        expected = 'twelve ten billionths'
+        expected = 'twelve ten-billionths'
         self.assertMultiLineEqual(expected, number2text(1.2e-9))
         self.assertMultiLineEqual(expected, number2text('1.2e-9'))
         self.assertMultiLineEqual('negative ' + expected, number2text(-1.2e-9))
@@ -278,12 +278,12 @@ class Number2TextTests(TestCase):
         self.assertMultiLineEqual(expected, actual)
 
     def test_float_0d1enXX(self):
-        expected = 'one one vigintillionth'
+        expected = 'one vigintillionth'
         actual = number2text(0.1e-62)
         self.assertMultiLineEqual(expected, actual)
 
     def test_float_1d0enXX(self):
-        expected = 'one one vigintillionth'
+        expected = 'one vigintillionth'
         actual = number2text(1.0e-63)
         self.assertMultiLineEqual(expected, actual)
 
@@ -298,12 +298,12 @@ class Number2TextTests(TestCase):
         self.assertMultiLineEqual(expected, actual)
 
     def test_string_0d1enXX(self):
-        expected = 'one one vigintillionth'
+        expected = 'one vigintillionth'
         actual = number2text('0.1e-62')
         self.assertMultiLineEqual(expected, actual)
 
     def test_string_1d0enXX(self):
-        expected = 'one one vigintillionth'
+        expected = 'one vigintillionth'
         actual = number2text('1.0e-63')
         self.assertMultiLineEqual(expected, actual)
 
@@ -313,22 +313,22 @@ class Number2TextTests(TestCase):
         self.assertMultiLineEqual(expected, actual)
 
     def test_float_X0XdXX(self):
-        expected = 'one hundred two and thirty-four one hundredths'
+        expected = 'one hundred two and thirty-four hundredths'
         actual = number2text(102.34)
         self.assertMultiLineEqual(expected, actual)
 
     def test_float_XXdX0X(self):
-        expected = 'twelve and three hundred four one thousandths'
+        expected = 'twelve and three hundred four thousandths'
         actual = number2text(12.304)
         self.assertMultiLineEqual(expected, actual)
 
     def test_float_XdX00X(self):
-        expected = 'two and three thousand four ten thousandths'
+        expected = 'two and three thousand four ten-thousandths'
         actual = number2text(2.3004)
         self.assertMultiLineEqual(expected, actual)
 
     def test_float_dX000X(self):
-        expected = 'thirty thousand four one hundred thousandths'
+        expected = 'thirty thousand four hundred-thousandths'
         actual = number2text(.30004)
         self.assertMultiLineEqual(expected, actual)
 
@@ -338,22 +338,22 @@ class Number2TextTests(TestCase):
         self.assertMultiLineEqual(expected, actual)
 
     def test_string_X0XdXX(self):
-        expected = 'one hundred two and thirty-four one hundredths'
+        expected = 'one hundred two and thirty-four hundredths'
         actual = number2text('102.34')
         self.assertMultiLineEqual(expected, actual)
 
     def test_string_XXdX0X(self):
-        expected = 'twelve and three hundred four one thousandths'
+        expected = 'twelve and three hundred four thousandths'
         actual = number2text('12.304')
         self.assertMultiLineEqual(expected, actual)
 
     def test_string_XdX00X(self):
-        expected = 'two and three thousand four ten thousandths'
+        expected = 'two and three thousand four ten-thousandths'
         actual = number2text('2.3004')
         self.assertMultiLineEqual(expected, actual)
 
     def test_string_dX000X(self):
-        expected = 'thirty thousand four one hundred thousandths'
+        expected = 'thirty thousand four hundred-thousandths'
         actual = number2text('.30004')
         self.assertMultiLineEqual(expected, actual)
 
