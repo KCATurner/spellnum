@@ -215,8 +215,8 @@ def text2number(text):
         A numeric string representing the value of `text`.
         
     Raises:
-        InvalidNumberText: If `text` does not match the
-            required format (see conwech.regexlib.NUMBER_TEXT).
+        InvalidNumeralString: If `text` does not match the
+            required format (see conwech.regexlib.NUMERAL_STRING).
         InvalidPeriodValueText: If any period value in `text`
             is not found in conwech.lexicon.NATURAL_NUMBERS_LT_1000.
         InvalidPeriodNameText: If any period name in `text` is not
@@ -239,9 +239,9 @@ def text2number(text):
         return '-' + text2number(text.replace('negative', '', 1))
     
     # check for valid input format
-    match = conwech.regexlib.NUMBER_TEXT.match(str(text))
+    match = conwech.regexlib.NUMERAL_STRING.match(text)
     if not match:
-        raise conwech.exceptions.InvalidNumberText(text)
+        raise conwech.exceptions.InvalidNumeralString(text)
     
     # reused iterative functionality
     def iterperiods(number_text):

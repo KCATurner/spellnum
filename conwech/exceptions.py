@@ -92,7 +92,7 @@ class InvalidNumericString(ValueError):
         )
         
         
-class InvalidNumberText(ValueError):
+class InvalidNumeralString(ValueError):
     """
     Custom exception for text2number function.
     """
@@ -103,7 +103,7 @@ class InvalidNumberText(ValueError):
             text (str): Invalid number text.
             *args: Additional ValueError positional arguments.
         """
-        super(InvalidNumberText, self).__init__(
+        super(InvalidNumeralString, self).__init__(
             '\n\n\t"{}" does not follow expected lexical pattern!'
             '\n\t"<whole_number> [and <decimal_numerator> <decimal_denominator>ths]"'
             '\n\tSee module documentation for more details.'.format(text),

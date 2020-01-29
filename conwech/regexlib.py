@@ -10,8 +10,8 @@ quite brittle. However, this can be somewhat mitigated through good
 design and decent documentation, both of which hopefully exist herein.
 
 In this module there are two main groups of pre-compiled regular
-expressions. The first three: `NUMERIC_STRING`, `NUMBER_TEXT`, and
-`PERIOD_TEXT` all help with processing `conwech.functions.number2text`
+expressions. The first three: `NUMERIC_STRING`, `NUMERAL_STRING`, and
+`PERIOD_STRING` all help with processing `conwech.functions.number2text`
 and `conwech.functions.text2number` input. The last four expressions:
 `PREFIX_EXCEPTION_X`, `PREFIX_EXCEPTION_S`, `PREFIX_EXCEPTION_M`, and
 `PREFIX_EXCEPTION_N` are all used to catch and adjust invalid prefix
@@ -88,7 +88,7 @@ Examples:
 """
 
 
-NUMBER_TEXT = re.compile(
+NUMERAL_STRING = re.compile(
     r"^(?!\s*$)(?# assert string not empty or only whitespace)"
     r"\s*(?# match but do not capture leading whitespace)"
     r"(?P<whole>.+\w)?(?# capture whole number text)"
@@ -138,20 +138,20 @@ technically, all groups are optional (lazy) the expression is not
 allowed to match an empty or whitespace-only string.
 
 Examples:
-    >>> from conwech.regexlib import NUMBER_TEXT
-    >>> NUMBER_TEXT.match("three hundred twenty-one").groupdict()
+    >>> from conwech.regexlib import NUMERAL_STRING
+    >>> NUMERAL_STRING.match("three hundred twenty-one").groupdict()
     {'whole': 'three hundred twenty-one', 'numerator': None, 'denominator': None}
-    >>> NUMBER_TEXT.match("thirty-two and one tenth").groupdict()
+    >>> NUMERAL_STRING.match("thirty-two and one tenth").groupdict()
     {'whole': 'thirty-two', 'numerator': 'one', 'denominator': 'ten'}
-    >>> NUMBER_TEXT.match("three and twenty-one one hundredths").groupdict()
+    >>> NUMERAL_STRING.match("three and twenty-one one hundredths").groupdict()
     {'whole': 'three', 'numerator': 'twenty-one', 'denominator': 'one hundred'}
-    >>> NUMBER_TEXT.match("three hundred twenty-one one thousandths").groupdict()
+    >>> NUMERAL_STRING.match("three hundred twenty-one one thousandths").groupdict()
     {'whole': None, 'numerator': 'three hundred twenty-one', 'denominator': 'one thousand'}
     
 """
 
 
-PERIOD_TEXT = re.compile(
+PERIOD_STRING = re.compile(
     r"(?:^|\s+)(?# period must follow whitespace or start of string)"
     r"\b(?P<value>.+?)(?# capture period value and leave the name)"
     r"(?:\s+(?# whitespace must separate period value and name)"
@@ -176,10 +176,10 @@ in the value and name capture groups:
     ends with the "illion" suffix.
     
 Examples:
-    >>> from conwech.regexlib import PERIOD_TEXT
-    >>> PERIOD_TEXT.findall("one million two hundred thirty-four thousand five hundred sixty-seven")
+    >>> from conwech.regexlib import PERIOD_STRING
+    >>> PERIOD_STRING.findall("one million two hundred thirty-four thousand five hundred sixty-seven")
     [('one', 'million'), ('two hundred thirty-four', 'thousand'), ('five hundred sixty-seven', '')]
-    >>> next(PERIOD_TEXT.finditer("nine unnonagintaducentillion five tresquadragintacentillion")).groupdict()
+    >>> next(PERIOD_STRING.finditer("nine unnonagintaducentillion five tresquadragintacentillion")).groupdict()
     {'value': 'nine', 'name': 'unnonagintaducentillion'}
     
 """

@@ -13,12 +13,12 @@ from conwech.lexicon import ZILLION_PERIOD_PREFIXES
 
 class NamePeriodTests(TestCase):
     """
-    Unit tests for ``nameperiod`` function.
+    Unit tests for `nameperiod` function.
     """
     
     def test_invalid_input(self):
         """
-        Function should raise ``TypeError`` when input is not an int.
+        Function should raise `TypeError` when input is not an int.
         """
         for invalid_type in (None, 1.23, '1.23', set(), list(), tuple()):
             with self.subTest(msg='NEG', invalid_type=invalid_type):
@@ -30,7 +30,7 @@ class NamePeriodTests(TestCase):
         """
         special_cases = (-1, ''), (0, 'thousand')
         for zillion, period_name in special_cases:
-            with self.subTest(msg='NEG', zillion=zillion):
+            with self.subTest(msg='POS', zillion=zillion):
                 self.assertEqual(period_name, nameperiod(zillion))
                 
     def test_good_monkey(self):
@@ -47,13 +47,13 @@ class NamePeriodTests(TestCase):
                 
 class ReadPeriodTests(TestCase):
     """
-    Unit tests for conwech's ``readperiod`` function.
+    Unit tests for conwech's `readperiod` function.
     """
     
     def test_invalid_input(self):
         """
-        The ``readperiod`` function should raise conwech's custom
-        ``InvalidPeriodNameText`` when the input is an unrecognized
+        The `readperiod` function should raise conwech's custom
+        `InvalidPeriodNameText` when the input is an unrecognized
         period name.
         """
         for invalid_name in (' ', 'not-a-illion'):
@@ -62,17 +62,17 @@ class ReadPeriodTests(TestCase):
                 
     def test_special_cases(self):
         """
-        The ``readperiod`` function should return -1 when `period_name`
+        The `readperiod` function should return -1 when `period_name`
         is an empty string and 0 when `period_name` is 'thousand'.
         """
         special_cases = (-1, ''), (0, 'thousand')
         for zillion, period_name in special_cases:
-            with self.subTest(msg='NEG', period_name=period_name):
+            with self.subTest(msg='POS', period_name=period_name):
                 self.assertEqual(zillion, readperiod(period_name))
                 
     def test_good_monkey(self):
         """
-        
+        Function should handle any period with a whole number zillion.
         """
         samples = random.sample(range(1, sys.maxsize), 100)
         for zillion in (s ** random.randrange(1, 100) for s in samples):
@@ -84,9 +84,9 @@ class ReadPeriodTests(TestCase):
                 
 class Number2TextTests(TestCase):
     """
-    Unit Tests for ``number2text`` function.
+    Unit Tests for `number2text` function.
     
-    TODO: refactor existing unit tests...
+    TODO: refactor old unit tests...
     """
     
     def test_invalid_input_type(self):
@@ -95,7 +95,7 @@ class Number2TextTests(TestCase):
         """
         for invalid_type in (None, {123, }, [123, ], (123,)):
             with self.subTest(invalid_type=invalid_type):
-                self.assertRaises(InvalidNumericString, number2text, invalid_type)
+                self.assertRaises(TypeError, number2text, invalid_type)
                 
     def test_zero_input(self):
         """
@@ -356,7 +356,7 @@ class Number2TextTests(TestCase):
         expected = 'thirty thousand four one hundred thousandths'
         actual = number2text('.30004')
         self.assertMultiLineEqual(expected, actual)
-    
+
     def test_good_monkey(self):
         """
         TODO: write monkey tests.
@@ -394,7 +394,7 @@ class InverseFunctions(TestCase):
         
     def test_read_named_periods(self):
         """
-        ``nameperiod`` and ``readperiod`` should be inverses.
+        `nameperiod` and `readperiod` should be inverses.
         """
         samples = random.sample(range(1, sys.maxsize), 100)
         for zillion in (s**random.randrange(1, 100) for s in samples):
@@ -403,7 +403,7 @@ class InverseFunctions(TestCase):
                 
     def test_read_spelled_numbers(self):
         """
-        ``number2text`` and ``test2number`` should be inverses.
+        `number2text` and `test2number` should be inverses.
         """
         samples = random.sample(range(1, sys.maxsize), 100)
         for number in (str(s**random.randrange(1, 100)) for s in samples):

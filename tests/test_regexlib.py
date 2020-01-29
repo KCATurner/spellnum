@@ -2,6 +2,7 @@
 Unit tests for conwech.regexlib module.
 """
 
+import itertools
 from unittest import TestCase
 from conwech import regexlib
 
@@ -112,16 +113,16 @@ class NumericStringTests(TestCase):
                         self.assertDictEqual(self.expected, actual)
                         
                         
-class NumberTextTests(TestCase):
+class NumeralStringTests(TestCase):
     """
-    Unit tests for the NUMBER_TEXT regular expresion.
+    Unit tests for the NUMERAL_STRING regular expresion.
     """
     
     def setUp(self):
-        self.pattern = regexlib.NUMBER_TEXT
+        self.pattern = regexlib.NUMERAL_STRING
         self.expected = dict.fromkeys(self.pattern.groupindex.keys())
         # assert names of capture groups because most tests will likely rely on them
-        self.assertTupleEqual(('whole', 'numerator', 'denominator'),
+        self.assertTupleEqual(('sign', 'whole', 'numerator', 'denominator'),
                               tuple(self.pattern.groupindex.keys()))
         
     def test_null_strings(self):
@@ -142,11 +143,11 @@ class NumberTextTests(TestCase):
     
 class PeriodTextTests(TestCase):
     """
-    Unit tests for the PERIOD_TEXT regular expresion.
+    Unit tests for the PERIOD_STRING regular expresion.
     """
     
     def setUp(self):
-        self.pattern = regexlib.PERIOD_TEXT
+        self.pattern = regexlib.PERIOD_STRING
         self.expected = dict.fromkeys(self.pattern.groupindex.keys())
         # assert names of capture groups because most tests will likely rely on them
         self.assertTupleEqual(('value', 'name'), tuple(self.pattern.groupindex.keys()))
