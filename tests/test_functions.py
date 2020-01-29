@@ -366,17 +366,34 @@ class Number2TextTests(TestCase):
     
 class Text2NumberTests(TestCase):
     """
-    Unit Tests for ``text2number`` function.
-    
-    TODO: finish unit testing...
+    Unit Tests for `text2number` function.
     """
     
-    def test_special_cases(self):
+    def test_invalid_input_type(self):
         """
-        TODO: write test for special cases.
+        Test correct exception is raised when given invalid input.
         """
-        pass
-    
+        for invalid_type in (None, {123, }, [123, ], (123,)):
+            with self.subTest(invalid_type=invalid_type):
+                self.assertRaises(TypeError, text2number, invalid_type)
+                
+    def test_zero_input(self):
+        """
+        Test some valid forms of zero input.
+        """
+        for text in 'zero', 'negative zero', 'zero and zero tenths':
+            with self.subTest(msg='POS', text=text):
+                self.assertEqual(0, int(float(text2number(text))))
+                
+    def test_units_period(self):
+        """
+        Test first 999 natural numbers (numbers without a period name).
+        """
+        for text in conwech.lexicon.NATURAL_NUMBERS_LT_1000[1:]:
+            with self.subTest(msg='POS', number=text):
+                expected = conwech.lexicon.NATURAL_NUMBERS_LT_1000.index(text)
+                self.assertEqual(expected, int(float(text2number(text))))
+                
     def test_good_monkey(self):
         """
         TODO: write monkey tests.
