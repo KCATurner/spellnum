@@ -8,12 +8,13 @@ the other, or at least something equivalent, which could be used the
 same way in the other direction.
 """
 
+import typing
 import conwech.lexicon
 import conwech.regexlib
 import conwech.exceptions
 
 
-def nameperiod(zillion):
+def nameperiod(zillion: int) -> str:
     """
     Names the period for the given zillion value.
     
@@ -43,9 +44,10 @@ def nameperiod(zillion):
         'tresviginticentillisesquinquagintaquadringentillinovemoctogintaseptingentillion'
         
     """
-    # a zillion must be an integer (see docstring)
     if not isinstance(zillion, int):
-        raise TypeError('zillion argument must be an integer!')
+        raise TypeError(
+            'zillion argument should be {}; got {}!'.format(
+                int, type(zillion)))
     
     # special cases
     if zillion <= 0:
@@ -59,7 +61,7 @@ def nameperiod(zillion):
     return 'illi'.join(prefixes) + 'illion'
 
 
-def readperiod(name):
+def readperiod(name: str) -> int:
     """
     Convert `name` to its corresponding zillion value.
     
@@ -90,6 +92,11 @@ def readperiod(name):
         123456789
         
     """
+    if not isinstance(name, str):
+        raise TypeError(
+            'name argument should be {}; got {}'.format(
+                str, type(name)))
+    
     # handle special cases
     if name in ['', 'thousand']:
         return -1 if not name else 0
@@ -108,7 +115,7 @@ def readperiod(name):
     return int(zillion)
 
 
-def number2text(number):
+def number2text(number: typing.Union[int, float, str]) -> str:
     """
     Construct the English short-scale spelling of the given number.
     
@@ -151,6 +158,11 @@ def number2text(number):
         'negative twelve ten billionths'
         
     """
+    if not isinstance(number, (int, float, str)):
+        raise TypeError(
+            'number argument should be {}, {}, or {}; got {}'.format(
+                int, float, str, type(number)))
+    
     # check for valid input format
     match = conwech.regexlib.NUMERIC_STRING.match(str(number))
     if not match:
@@ -192,7 +204,7 @@ def number2text(number):
     return ' and '.join(t for t in text if t) or 'zero'
 
 
-def text2number(text):
+def text2number(text: str) -> str:
     """
     Convert an English short-scale spelling to it's numerical value.
     
@@ -231,12 +243,10 @@ def text2number(text):
         '1e3000003 + 2e-3000003'
         
     """
-    # handle special case(s)
-    if text == 'zero':
-        return '0'
-    # handle negative numbers recursively
-    elif text.lstrip().startswith('negative'):
-        return '-' + text2number(text.replace('negative', '', 1))
+    if not isinstance(text, str):
+        raise TypeError(
+            'text argument should be {}; got {}'.format(
+                str, type(text)))
     
     # check for valid input format
     match = conwech.regexlib.NUMERAL_STRING.match(text)
@@ -245,7 +255,8 @@ def text2number(text):
     
     # reused iterative functionality
     def iterperiods(number_text):
-        for period_value, period_name in conwech.regexlib.PERIOD_TEXT.findall(number_text):
+        for period_value, period_name in conwech.regexlib.PERIOD_STRING.findall(number_text):
+            period_value = period_value.replace('zero', '')
             
             # raise exception for invalid period values
             if period_value not in conwech.lexicon.NATURAL_NUMBERS_LT_1000:
