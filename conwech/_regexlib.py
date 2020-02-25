@@ -10,13 +10,13 @@ quite brittle. However, this can be somewhat mitigated through good
 design and decent documentation, both of which hopefully exist herein.
 
 In this module there are two main groups of pre-compiled regular
-expressions. The first three: `NUMERIC_STRING`, `NUMERAL_STRING`, and
-`PERIOD_STRING` all help with processing `conwech.functions.number2text`
-and `conwech.functions.text2number` input. The last four expressions:
-`PREFIX_EXCEPTION_X`, `PREFIX_EXCEPTION_S`, `PREFIX_EXCEPTION_M`, and
-`PREFIX_EXCEPTION_N` are all used to catch and adjust invalid prefix
-combinations when `conwech.lexicon.ZILLION_PERIOD_PREFIXES` is
-initialized.
+expressions. The first three: :data:`.NUMERIC_STRING`,
+:data:`.NUMERAL_STRING`, and :data:`.PERIOD_STRING` all help with
+processing :func:`.number2text` and :func:`.text2number` input. The last
+four: :data:`.PREFIX_EXCEPTION_X`, :data:`.PREFIX_EXCEPTION_S`,
+:data:`.PREFIX_EXCEPTION_M`, and :data:`.PREFIX_EXCEPTION_N` are all
+used to catch and adjust invalid prefix combinations when
+:data:`.ZILLION_PERIOD_PREFIXES` is initialized.
 """
 
 import re
@@ -48,32 +48,32 @@ the :abbr:`bsign ((base sign))`, :abbr:`bwhole ((base whole))`,
 :abbr:`evalue ((exponent value))` capture groups:
 
 **bsign** - *optional*
-    
+
     A "+" or "-" the at the beginning of the string representing the
     sign of the base.
-    
+
 **bwhole** - *optional*
-    
+
     Any digits before the decimal following the **bsign** group or the
     beginning of the string, ignoring any leading zeros.
-    
+
 **bfraction** - *optional*
-    
+
     Any digits following the decimal and preceding the exponent
     indicator ("e" or "E"), ignoring any trailing zeros.
-    
+
 **esign** - *optional*
-    
+
     A "+" or "-" directly following the exponent indicator ("e" or "E")
     representing the sign of the exponent.
-    
+
 **evalue** - *optional*
-    
+
     Any digits following the exponent marker and the optional **esign**
     group, excluding any leading zeros.
-    
+
 Examples:
-    >>> from conwech.regexlib import NUMERIC_STRING
+    >>> from conwech._regexlib import NUMERIC_STRING
     >>> NUMERIC_STRING.match("010").groupdict()
     {'bsign': None, 'bwhole': '10', 'bfraction': None, 'esign': None, 'evalue': None}
     >>> NUMERIC_STRING.match("-010.020").groupdict()
@@ -84,7 +84,7 @@ Examples:
     {'bsign': None, 'bwhole': None, 'bfraction': '02', 'esign': '-', 'evalue': '30'}
     >>> NUMERIC_STRING.match("010.020e+030").groupdict()
     {'bsign': None, 'bwhole': '10', 'bfraction': '02', 'esign': '+', 'evalue': '30'}
-    
+
 """
 
 
@@ -113,25 +113,25 @@ according to an expected format in the whole, numerator, and denominator
 capture groups:
 
 **whole** - *optional*
-    
+
     Any text following the start of the string and preceding the end of
     the string or the "and" that separates the **whole** from the
     **numerator**. The **whole** cannot match the end of the string if
     it would match a literal "th" or "ths" which indicates there must be
     a **numerator** and **denominator** in the string.
-    
+
 **numerator** - *co-optional*
-    
+
     Any text following either the word "and" or the start of the string
     (in the absence of a matched **whole**) and preceding the
     **denominator** match, separated by whitespace.
-    
+
 **denominator** - *co-optional*
-    
+
     Any text that starts with one of "one hundred"/"ten"/"one" following
     the **numerator** match and (necessarily) ending in "th" or "ths"
     followed by the end of the string.
-    
+
 The **numerator** & **denominator** must both match as part of a
 non-capturing group representing all of the fraction text or neither
 will match and the **whole** will consume the entire string. While,
@@ -139,7 +139,7 @@ technically, all groups are optional (lazy) the expression is not
 allowed to match an empty or whitespace-only string.
 
 Examples:
-    >>> from conwech.regexlib import NUMERAL_STRING
+    >>> from conwech._regexlib import NUMERAL_STRING
     >>> NUMERAL_STRING.match("three hundred twenty-one").groupdict()
     {'whole': 'three hundred twenty-one', 'numerator': None, 'denominator': None}
     >>> NUMERAL_STRING.match("thirty-two and one tenth").groupdict()
@@ -148,7 +148,7 @@ Examples:
     {'whole': 'three', 'numerator': 'twenty-one', 'denominator': 'one hundred'}
     >>> NUMERAL_STRING.match("three hundred twenty-one one thousandths").groupdict()
     {'whole': None, 'numerator': 'three hundred twenty-one', 'denominator': 'one thousand'}
-    
+
 """
 
 
@@ -166,23 +166,23 @@ corresponding to the components of a period in a string of number text
 in the value and name capture groups:
 
 **value** - *required*
-    
+
     All characters following either the start of the string or a
     previously matched period name and preceding either the end of the
     string or another period name.
-    
+
 **name** - *optional*
-    
+
     A single word following a period value that is either "thousand" or
     ends with the "illion" suffix.
-    
+
 Examples:
-    >>> from conwech.regexlib import PERIOD_STRING
+    >>> from conwech._regexlib import PERIOD_STRING
     >>> PERIOD_STRING.findall("one million two hundred thirty-four thousand five hundred sixty-seven")
     [('one', 'million'), ('two hundred thirty-four', 'thousand'), ('five hundred sixty-seven', '')]
     >>> next(PERIOD_STRING.finditer("nine unnonagintaducentillion five tresquadragintacentillion")).groupdict()
     {'value': 'nine', 'name': 'unnonagintaducentillion'}
-    
+
 """
 
 # prefix combination exception patterns
@@ -196,12 +196,12 @@ will match the position in the string where "x" needs to be inserted to
 correct the exception.
 
 Examples:
-    >>> from conwech.regexlib import PREFIX_EXCEPTION_X
+    >>> from conwech._regexlib import PREFIX_EXCEPTION_X
     >>> PREFIX_EXCEPTION_X.sub('x', 'seoctogintillion')
     'sexoctogintillion'
     >>> PREFIX_EXCEPTION_X.sub('x', 'secentillion')
     'sexcentillion'
-    
+
 """
 
 
@@ -218,12 +218,12 @@ match the position in the string where "s" needs to be inserted to
 correct the exception.
 
 Examples:
-    >>> from conwech.regexlib import PREFIX_EXCEPTION_S
+    >>> from conwech._regexlib import PREFIX_EXCEPTION_S
     >>> PREFIX_EXCEPTION_S.sub('s', 'trevignitillion')
     'tresvignitillion'
     >>> PREFIX_EXCEPTION_S.sub('s', 'sevignitillion')
     'sesvignitillion'
-    
+
 """
 
 
@@ -239,12 +239,12 @@ The expression will match the position in the string where "m" needs to
 be inserted to correct the exception.
 
 Examples:
-    >>> from conwech.regexlib import PREFIX_EXCEPTION_M
+    >>> from conwech._regexlib import PREFIX_EXCEPTION_M
     >>> PREFIX_EXCEPTION_M.sub('m', 'septevignitillion')
     'septemvignitillion'
     >>> PREFIX_EXCEPTION_M.sub('m', 'novevignitillion')
     'novemvignitillion'
-    
+
 """
 
 
@@ -261,10 +261,10 @@ components resulting from zillion periods: 17, 19, 37, 39, 47, 49, 57,
 where "n" needs to be inserted to correct the exception.
 
 Examples:
-    >>> from conwech.regexlib import PREFIX_EXCEPTION_N
+    >>> from conwech._regexlib import PREFIX_EXCEPTION_N
     >>> PREFIX_EXCEPTION_N.sub('n', 'septedecillion')
     'septendecillion'
     >>> PREFIX_EXCEPTION_N.sub('n', 'novedecillion')
     'novendecillion'
-    
+
 """

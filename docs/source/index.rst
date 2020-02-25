@@ -1,4 +1,7 @@
-.. include:: conwech.rst
+The ConWech Package
+===================
+
+.. automodule:: conwech
 
 Command Line Interface
 ======================
@@ -7,7 +10,7 @@ Command Line Interface
    :prog: conwech
 
 Indices & Tables
-==================
+================
 
 * :ref:`genindex`
 * :ref:`modindex`

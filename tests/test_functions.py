@@ -7,7 +7,7 @@ import random
 from unittest import TestCase
 
 from conwech.functions import *
-from conwech.exceptions import *
+from conwech._exceptions import *
 from conwech.lexicon import ZILLION_PERIOD_PREFIXES
 
 
@@ -15,7 +15,7 @@ class NamePeriodTests(TestCase):
     """
     Unit tests for `nameperiod` function.
     """
-    
+
     def test_invalid_input(self):
         """
         Function should raise `TypeError` when input is not an int.
@@ -23,7 +23,7 @@ class NamePeriodTests(TestCase):
         for invalid_type in (None, 1.23, '1.23', set(), list(), tuple()):
             with self.subTest(msg='NEG', invalid_type=invalid_type):
                 self.assertRaises(TypeError, nameperiod, invalid_type)
-                
+
     def test_special_cases(self):
         """
         0 should return 'thousand' and -1 should return an empty string.
@@ -32,7 +32,7 @@ class NamePeriodTests(TestCase):
         for zillion, period_name in special_cases:
             with self.subTest(msg='POS', zillion=zillion):
                 self.assertEqual(period_name, nameperiod(zillion))
-                
+
     def test_good_monkey(self):
         """
         Function should (theoretically) handle any whole number >= -1.
@@ -43,13 +43,13 @@ class NamePeriodTests(TestCase):
             period_name = 'illi'.join(prefixes) + 'illion'
             with self.subTest(msg='POS', zillion=zillion, period_name=period_name):
                 self.assertEqual(period_name, nameperiod(zillion))
-                
-                
+
+
 class ReadPeriodTests(TestCase):
     """
     Unit tests for conwech's `readperiod` function.
     """
-    
+
     def test_invalid_input(self):
         """
         The `readperiod` function should raise conwech's custom
@@ -59,7 +59,7 @@ class ReadPeriodTests(TestCase):
         for invalid_name in (' ', 'not-a-illion'):
             with self.subTest(msg='NEG', invalid_name=invalid_name):
                 self.assertRaises(InvalidPeriodNameText, readperiod, invalid_name)
-                
+
     def test_special_cases(self):
         """
         The `readperiod` function should return -1 when `period_name`
@@ -69,7 +69,7 @@ class ReadPeriodTests(TestCase):
         for zillion, period_name in special_cases:
             with self.subTest(msg='POS', period_name=period_name):
                 self.assertEqual(zillion, readperiod(period_name))
-                
+
     def test_good_monkey(self):
         """
         Function should handle any period with a whole number zillion.
@@ -80,15 +80,15 @@ class ReadPeriodTests(TestCase):
             period_name = 'illi'.join(prefixes) + 'illion'
             with self.subTest(msg='POS', zillion=zillion, period_name=period_name):
                 self.assertEqual(zillion, readperiod(period_name))
-                
-                
+
+
 class Number2TextTests(TestCase):
     """
     Unit Tests for `number2text` function.
-    
+
     TODO: refactor old unit tests...
     """
-    
+
     def test_invalid_input_type(self):
         """
         Test correct exception is raised when given invalid input.
@@ -96,7 +96,7 @@ class Number2TextTests(TestCase):
         for invalid_type in (None, {123, }, [123, ], (123,)):
             with self.subTest(invalid_type=invalid_type):
                 self.assertRaises(TypeError, number2text, invalid_type)
-                
+
     def test_zero_input(self):
         """
         Test some valid forms of zero input.
@@ -104,7 +104,7 @@ class Number2TextTests(TestCase):
         for number in 0, 0.0, 0e-0, 0.0e0, '0', '0.0', '0e-0', '0.0e0':
             with self.subTest(msg='POS', number=number):
                 self.assertMultiLineEqual('zero', number2text(number))
-                
+
     def test_units_period(self):
         """
         Test first 999 natural numbers (numbers without a period name).
@@ -113,7 +113,7 @@ class Number2TextTests(TestCase):
             with self.subTest(msg='POS', number=number):
                 expected = conwech.lexicon.NATURAL_NUMBERS_LT_1000[number]
                 self.assertMultiLineEqual(expected, number2text(number))
-                
+
     def test_string_dXXX(self):
         expected = 'one hundred twenty-three thousandths'
         self.assertMultiLineEqual(expected, number2text('.123'))
@@ -362,13 +362,13 @@ class Number2TextTests(TestCase):
         TODO: write monkey tests.
         """
         pass
-    
-    
+
+
 class Text2NumberTests(TestCase):
     """
     Unit Tests for `text2number` function.
     """
-    
+
     def test_invalid_input_type(self):
         """
         Test correct exception is raised when given invalid input.
@@ -376,7 +376,7 @@ class Text2NumberTests(TestCase):
         for invalid_type in (None, {123, }, [123, ], (123,)):
             with self.subTest(invalid_type=invalid_type):
                 self.assertRaises(TypeError, text2number, invalid_type)
-                
+
     def test_zero_input(self):
         """
         Test some valid forms of zero input.
@@ -384,7 +384,7 @@ class Text2NumberTests(TestCase):
         for text in 'zero', 'negative zero', 'zero and zero tenths':
             with self.subTest(msg='POS', text=text):
                 self.assertEqual(0, int(float(text2number(text))))
-                
+
     def test_units_period(self):
         """
         Test first 999 natural numbers (numbers without a period name).
@@ -393,22 +393,22 @@ class Text2NumberTests(TestCase):
             with self.subTest(msg='POS', number=text):
                 expected = conwech.lexicon.NATURAL_NUMBERS_LT_1000.index(text)
                 self.assertEqual(expected, int(float(text2number(text))))
-                
+
     def test_good_monkey(self):
         """
         TODO: write monkey tests.
         """
         pass
-    
-    
+
+
 class InverseFunctions(TestCase):
     """
     Verify that function pairs behave as inverses.
     """
-    
+
     def setUp(self):
         self.maxDiff = None
-        
+
     def test_read_named_periods(self):
         """
         `nameperiod` and `readperiod` should be inverses.
@@ -417,7 +417,7 @@ class InverseFunctions(TestCase):
         for zillion in (s**random.randrange(1, 100) for s in samples):
             with self.subTest(msg='POS', zillion=zillion):
                 self.assertEqual(zillion, readperiod(nameperiod(zillion)))
-                
+
     def test_read_spelled_numbers(self):
         """
         `number2text` and `test2number` should be inverses.

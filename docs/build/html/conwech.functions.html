@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>conwech.functions module &mdash; ConWech 1.0.0 documentation</title>
+  <title>conwech.functions &mdash; ConWech 0.0.0 documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,10 +33,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="conwech.lexicon module" href="conwech.lexicon.html" />
-    <link rel="prev" title="conwech.exceptions module" href="conwech.exceptions.html" /> 
+    <link rel="next" title="conwech.lexicon" href="conwech.lexicon.html" />
+    <link rel="prev" title="The ConWech Package" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -58,6 +59,10 @@
 
           
             
+            
+              <div class="version">
+                0.0.0
+              </div>
             
           
 
@@ -81,10 +86,12 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="conwech.exceptions.html">conwech.exceptions module</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">conwech.functions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conwech.lexicon.html">conwech.lexicon module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conwech.regexlib.html">conwech.regexlib module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">conwech.functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conwech.lexicon.html">conwech.lexicon</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conwech._regexlib.html">conwech._regexlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conwech._exceptions.html">conwech._exceptions</a></li>
 </ul>
 
             
@@ -130,13 +137,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>conwech.functions module</li>
+      <li>conwech.functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/conwech.functions.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/conwech.functions.rst" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -144,26 +151,56 @@
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="conwech.lexicon.html" class="btn btn-neutral float-right" title="conwech.lexicon" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="The ConWech Package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="section" id="module-conwech.functions">
-<span id="conwech-functions-module"></span><h1>conwech.functions module<a class="headerlink" href="#module-conwech.functions" title="Permalink to this headline">¶</a></h1>
+<span id="conwech-functions"></span><h1>conwech.functions<a class="headerlink" href="#module-conwech.functions" title="Permalink to this headline">¶</a></h1>
 <p>Home to all of the fun stuff, which consists of two main function pairs,
-<cite>nameperiod</cite>/<cite>readperiod</cite> and <cite>number2text</cite>/<cite>text2number</cite>. As their
-names hopefully suggest, for both pairs, each function is designed to be
-the other’s inverse (to the extent possible). The intended promise is
-that calling one with the output of the other will return the input of
-the other, or at least something equivalent, which could be used the
-same way in the other direction.</p>
+<a class="reference internal" href="#conwech.functions.nameperiod" title="conwech.functions.nameperiod"><code class="xref py py-func docutils literal notranslate"><span class="pre">nameperiod()</span></code></a> / <a class="reference internal" href="#conwech.functions.readperiod" title="conwech.functions.readperiod"><code class="xref py py-func docutils literal notranslate"><span class="pre">readperiod()</span></code></a> and <a class="reference internal" href="#conwech.functions.number2text" title="conwech.functions.number2text"><code class="xref py py-func docutils literal notranslate"><span class="pre">number2text()</span></code></a> /
+<a class="reference internal" href="#conwech.functions.text2number" title="conwech.functions.text2number"><code class="xref py py-func docutils literal notranslate"><span class="pre">text2number()</span></code></a>. As their names hopefully suggest, for both pairs,
+each function is designed to be the other’s inverse (to the extent
+possible). The intended promise is that calling one with the output of
+the other will return the input of the other, or at least something
+equivalent, which could be used the same way in the other direction.</p>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#conwech.functions.nameperiod" title="conwech.functions.nameperiod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nameperiod</span></code></a>(zillion)</p></td>
+<td><p>Names the period for the given <strong>zillion</strong> value.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#conwech.functions.number2text" title="conwech.functions.number2text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number2text</span></code></a>(number)</p></td>
+<td><p>Construct the English short-scale spelling of <strong>number</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#conwech.functions.readperiod" title="conwech.functions.readperiod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">readperiod</span></code></a>(name)</p></td>
+<td><p>Convert <strong>name</strong> to its corresponding zillion value.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#conwech.functions.text2number" title="conwech.functions.text2number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">text2number</span></code></a>(text)</p></td>
+<td><p>Convert an English short-scale <strong>text</strong> to it’s numerical value.</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="function">
 <dt id="conwech.functions.nameperiod">
-<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">nameperiod</code><span class="sig-paren">(</span><em class="sig-param">zillion: int</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#nameperiod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.nameperiod" title="Permalink to this definition">¶</a></dt>
-<dd><p>Names the period for the given zillion value.</p>
-<p><cite>nameperiod</cite> returns the Conway-Wechsler name for a number with the
-given zillion value. The zillion property of a number in the
+<code class="sig-name descname">nameperiod</code><span class="sig-paren">(</span><em class="sig-param">zillion: int</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#nameperiod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.nameperiod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Names the period for the given <strong>zillion</strong> value.</p>
+<p>The function returns the Conway-Wechsler name for a number with the
+given <strong>zillion</strong> value. The zillion property of a number in the
 short-scale system is equal to one less than the number of periods
 in the number, where a period is a set of one to three consecutive
 digits often separated by commas.</p>
@@ -179,12 +216,15 @@ can be obtained by the function Z(n):</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The name for the period with the given zillion value.</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>TypeError</strong> – If <cite>zillion</cite> is not an int.</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If <strong>zillion</strong> is not an int.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">nameperiod</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">nameperiod</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nameperiod</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">&#39;&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nameperiod</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -201,12 +241,13 @@ can be obtained by the function Z(n):</p>
 
 <dl class="function">
 <dt id="conwech.functions.readperiod">
-<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">readperiod</code><span class="sig-paren">(</span><em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/conwech/functions.html#readperiod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.readperiod" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert <cite>name</cite> to its corresponding zillion value.</p>
-<p>The inverse function of <cite>nameperiod</cite>, <cite>readperiod</cite> parses the given
-period name by indexing a tuple of valid Conway-Wechsler period
-prefix components with each separate component of period name.</p>
-<p>If <cite>period_name</cite> is an empty string, <cite>readperiod</cite> returns -1 for the
+<code class="sig-name descname">readperiod</code><span class="sig-paren">(</span><em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/conwech/functions.html#readperiod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.readperiod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert <strong>name</strong> to its corresponding zillion value.</p>
+<p>The inverse function of <a class="reference internal" href="#conwech.functions.nameperiod" title="conwech.functions.nameperiod"><code class="xref py py-func docutils literal notranslate"><span class="pre">nameperiod()</span></code></a>, this function parses
+the given period name by indexing a tuple of valid Conway-Wechsler
+period prefix components with each separate component of the period
+name.</p>
+<p>If <strong>name</strong> is an empty string, the function returns -1 for the
 units period (first period).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -216,12 +257,12 @@ units period (first period).</p>
 <dd class="field-even"><p>The zillion value for the period with the given name.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidPeriodNameText" title="conwech.exceptions.InvalidPeriodNameText"><strong>InvalidPeriodNameText</strong></a> – If any sub-component of <cite>period_name</cite>
-    is not in conwech.lexicon.ZILLION_PERIOD_PREFIXES.</p>
+<dd class="field-odd"><p><a class="reference internal" href="conwech._exceptions.html#conwech._exceptions.InvalidPeriodNameText" title="conwech._exceptions.InvalidPeriodNameText"><strong>InvalidPeriodNameText</strong></a> – If any sub-component of <strong>name</strong> is not
+    in <a class="reference internal" href="conwech.lexicon.html#conwech.lexicon.ZILLION_PERIOD_PREFIXES" title="conwech.lexicon.ZILLION_PERIOD_PREFIXES"><code class="xref py py-data docutils literal notranslate"><span class="pre">ZILLION_PERIOD_PREFIXES</span></code></a>.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">readperiod</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">readperiod</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">readperiod</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 <span class="go">-1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">readperiod</span><span class="p">(</span><span class="s1">&#39;thousand&#39;</span><span class="p">)</span>
@@ -238,38 +279,41 @@ units period (first period).</p>
 
 <dl class="function">
 <dt id="conwech.functions.number2text">
-<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">number2text</code><span class="sig-paren">(</span><em class="sig-param">number: Union[int, float, str]</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#number2text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.number2text" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct the English short-scale spelling of the given number.</p>
-<p><cite>number2text</cite> returns the english short-scale spelling for <cite>number</cite>
+<code class="sig-name descname">number2text</code><span class="sig-paren">(</span><em class="sig-param">number: Union[int, float, str]</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#number2text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.number2text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the English short-scale spelling of <strong>number</strong>.</p>
+<p>The function returns the english short-scale spelling for <strong>number</strong>
 which can be any positive or negative number passed as an integer,
 float, or string (as long as that string fits a valid numeric
-pattern; see conwech.regexlib.NUMERIC_STRING).</p>
-<p><cite>number2text</cite> can handle values that exceed traditional limitations
-on numerical types. Pass <cite>number</cite> as a string for values requiring
+pattern; see <a class="reference internal" href="conwech._regexlib.html#conwech._regexlib.NUMERIC_STRING" title="conwech._regexlib.NUMERIC_STRING"><code class="xref py py-data docutils literal notranslate"><span class="pre">NUMERIC_STRING</span></code></a>).</p>
+<p>The function can handle values that exceed traditional limitations
+on numerical types. Pass <strong>number</strong> as a string for values requiring
 more precision or values greater outside the minimum and maximum
 int/float values.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><cite>number2text</cite> will also (eventually) be able to interpret a
+<p>The function will also (eventually) be able to interpret a
 pseudo-sum-like string, the format sometimes returned by
-<cite>text2number</cite>. Currently, this functionality is not yet in
-place, but should be implemented soon…ish… Bite me.</p>
+<a class="reference internal" href="#conwech.functions.text2number" title="conwech.functions.text2number"><code class="xref py py-func docutils literal notranslate"><span class="pre">text2number()</span></code></a>. Currently, this functionality is not yet
+in place, but should be implemented soon…ish… Bite me.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>number</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>str</em>) – The number to spell.</p>
+<dd class="field-odd"><p><strong>number</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>, </em><em>str</em><em>]</em>) – The number to spell.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The spelling of the given number.</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidNumericString" title="conwech.exceptions.InvalidNumericString"><strong>InvalidNumericString</strong></a> – If <cite>number</cite> does not follow python’s
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="conwech._exceptions.html#conwech._exceptions.InvalidNumericString" title="conwech._exceptions.InvalidNumericString"><strong>InvalidNumericString</strong></a> – If <strong>number</strong> does not follow python’s
     conventional formatting for int and float types (see
-    conwech.regexlib.NUMERIC_STRING).</p>
+    <a class="reference internal" href="conwech._regexlib.html#conwech._regexlib.NUMERIC_STRING" title="conwech._regexlib.NUMERIC_STRING"><code class="xref py py-data docutils literal notranslate"><span class="pre">NUMERIC_STRING</span></code></a>).</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">number2text</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">number2text</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">number2text</span><span class="p">(</span><span class="o">-</span><span class="mi">123456</span><span class="p">)</span>
 <span class="go">&#39;negative one hundred twenty-three thousand four hundred fifty-six&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">number2text</span><span class="p">(</span><span class="mf">4.56e100</span><span class="p">)</span>
@@ -284,15 +328,15 @@ place, but should be implemented soon…ish… Bite me.</p>
 
 <dl class="function">
 <dt id="conwech.functions.text2number">
-<code class="sig-prename descclassname">conwech.functions.</code><code class="sig-name descname">text2number</code><span class="sig-paren">(</span><em class="sig-param">text: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#text2number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.text2number" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert an English short-scale spelling to it’s numerical value.</p>
-<p><cite>text2number</cite> attempts to parse <cite>text</cite> and return a numeric string
+<code class="sig-name descname">text2number</code><span class="sig-paren">(</span><em class="sig-param">text: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/conwech/functions.html#text2number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#conwech.functions.text2number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an English short-scale <strong>text</strong> to it’s numerical value.</p>
+<p>The function attempts to parse <strong>text</strong> and return a numeric string
 containing the corresponding value. The number(s) in the string will
 be in scientific notation.</p>
-<p><cite>text2number</cite> returns a pseudo-sum-like representation if any of the
+<p>The function returns a pseudo-sum-like representation if any of the
 periods in the given text would result in adding an unreasonable
 amount of consecutive zeros.</p>
-<p><cite>text2number</cite> will recognize fractions, but only those with a
+<p>The function will recognize fractions, but only those with a
 base-ten denominator, i.e. those which can be represented with
 decimal digits.</p>
 <dl class="field-list simple">
@@ -300,22 +344,22 @@ decimal digits.</p>
 <dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – The spelling of a number as a string.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A numeric string representing the value of <cite>text</cite>.</p>
+<dd class="field-even"><p>A numeric string representing the value of <strong>text</strong>.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidNumeralString" title="conwech.exceptions.InvalidNumeralString"><strong>InvalidNumeralString</strong></a> – If <cite>text</cite> does not match the
-    required format (see conwech.regexlib.NUMERAL_STRING).</p></li>
-<li><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidPeriodValueText" title="conwech.exceptions.InvalidPeriodValueText"><strong>InvalidPeriodValueText</strong></a> – If any period value in <cite>text</cite>
-    is not found in conwech.lexicon.NATURAL_NUMBERS_LT_1000.</p></li>
-<li><p><a class="reference internal" href="conwech.exceptions.html#conwech.exceptions.InvalidPeriodNameText" title="conwech.exceptions.InvalidPeriodNameText"><strong>InvalidPeriodNameText</strong></a> – If any period name in <cite>text</cite> is not
+<li><p><a class="reference internal" href="conwech._exceptions.html#conwech._exceptions.InvalidNumeralString" title="conwech._exceptions.InvalidNumeralString"><strong>InvalidNumeralString</strong></a> – If <strong>text</strong> does not match the required
+    format (see <a class="reference internal" href="conwech._regexlib.html#conwech._regexlib.NUMERAL_STRING" title="conwech._regexlib.NUMERAL_STRING"><code class="xref py py-data docutils literal notranslate"><span class="pre">NUMERAL_STRING</span></code></a>).</p></li>
+<li><p><a class="reference internal" href="conwech._exceptions.html#conwech._exceptions.InvalidPeriodValueText" title="conwech._exceptions.InvalidPeriodValueText"><strong>InvalidPeriodValueText</strong></a> – If any period value in <strong>text</strong> is not
+    found in <a class="reference internal" href="conwech.lexicon.html#conwech.lexicon.NATURAL_NUMBERS_LT_1000" title="conwech.lexicon.NATURAL_NUMBERS_LT_1000"><code class="xref py py-data docutils literal notranslate"><span class="pre">NATURAL_NUMBERS_LT_1000</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="conwech._exceptions.html#conwech._exceptions.InvalidPeriodNameText" title="conwech._exceptions.InvalidPeriodNameText"><strong>InvalidPeriodNameText</strong></a> – If any period name in <strong>text</strong> is not
     derived from a valid combination of Conway-Wechsler period
-    prefixes (see conwech.functions.readperiod).</p></li>
+    prefixes (see <a class="reference internal" href="#conwech.functions.readperiod" title="conwech.functions.readperiod"><code class="xref py py-func docutils literal notranslate"><span class="pre">readperiod()</span></code></a>).</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">text2number</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">conwech.functions</span> <span class="k">import</span> <span class="n">text2number</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">text2number</span><span class="p">(</span><span class="s1">&#39;negative one hundred twenty-three one thousandths&#39;</span><span class="p">)</span>
 <span class="go">&#39;-1.23456789e5&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">text2number</span><span class="p">(</span><span class="s1">&#39;one millinillinillion and two one millinillinillionths&#39;</span><span class="p">)</span>
@@ -334,10 +378,10 @@ decimal digits.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="conwech.lexicon.html" class="btn btn-neutral float-right" title="conwech.lexicon module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="conwech.lexicon.html" class="btn btn-neutral float-right" title="conwech.lexicon" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="conwech.exceptions.html" class="btn btn-neutral float-left" title="conwech.exceptions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="The ConWech Package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -346,7 +390,10 @@ decimal digits.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Kevin Turner
+        &copy; Copyright 2020, Kevin Turner
+      <span class="lastupdated">
+        Last updated on Feb 25, 2020.
+      </span>
 
     </p>
   </div>

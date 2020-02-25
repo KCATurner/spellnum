@@ -4,7 +4,7 @@ Separate home for custom exceptions raised by ConWech functions.
 What's that you ask? Why on earth would you subclass ValueError for so
 many specific cases when you can just raise one from the function call?
 What an insightful question! I'm so glad you asked...
-    
+
     1)  The main reason is that when a function is designed to take
         input as a string that must conform to a particular format, it
         helps to have very informative exceptions to say not just, "Hey
@@ -12,7 +12,7 @@ What an insightful question! I'm so glad you asked...
         that string to be in and having different types of exceptions
         for different violations of that format can help, especially if
         said format is both multifaceted and highly specific.
-        
+
     2)  In order to be more explicit about what exactly went wrong,
         some of these exceptions warrant fairly long/detailed messages,
         especially if the user doesn't know what a zillion value is for
@@ -26,7 +26,7 @@ What an insightful question! I'm so glad you asked...
         that sense, Exceptions are anything from a developer's subtle
         clearing of the throat to the kindest god-smack to the user's
         face for passing up the aforementioned handshake.
-        
+
     3)  The exception type is the very first thing a user sees. That
         being the case, the more experienced a developer gets, the more
         information they tend to glean directly from the name of the
@@ -34,7 +34,7 @@ What an insightful question! I'm so glad you asked...
         "no such thing as too much information" theme, you might notice
         that most of these exceptions have very verbose names. This is
         by design. Now, let's shift paradigms.
-        
+
     4)  Readability... Not necessarily the exceptions per se (although
         there's a good case there too), but the functions tasked with
         calling them. Usually, when raising exceptions, the programmer
@@ -54,7 +54,7 @@ What an insightful question! I'm so glad you asked...
         just read that from a python docstring is not lost on me). See
         my second point (above). The function should tell you how it
         works, not how it doesn't. Leave that to the exception.
-        
+
     5)  In a similar vein of thought, intelligent use of custom
         exceptions can help with QA. Simple exceptions look more like
         half-a$$ed built-in exceptions which could already be hit or
@@ -65,9 +65,9 @@ What an insightful question! I'm so glad you asked...
         force your code into raising the ones you've written; something
         that you can not only use to spot-check code as you write it,
         but that makes for some slick and easy unit testing.
-        
+
     6)  I was bored...
-    
+
 Sorry, I'm off my soapbox now. You probably didn't need half of that
 explanation and you might still disagree, but there it is anyway. Thank
 you for coming to my TED talk.
@@ -76,9 +76,9 @@ you for coming to my TED talk.
 
 class InvalidNumericString(ValueError):
     """
-    Custom exception for number2text function.
+    Custom exception for :func:`.number2text`.
     """
-    
+
     def __init__(self, number, *args):
         """
         Args:
@@ -90,13 +90,13 @@ class InvalidNumericString(ValueError):
             '\n\tDid not understand "{}"'.format(number),
             *args
         )
-        
-        
+
+
 class InvalidNumeralString(ValueError):
     """
-    Custom exception for text2number function.
+    Custom exception for :func:`.text2number`.
     """
-    
+
     def __init__(self, text, *args):
         """
         Args:
@@ -109,13 +109,13 @@ class InvalidNumeralString(ValueError):
             '\n\tSee module documentation for more details.'.format(text),
             *args
         )
-        
-        
+
+
 class InvalidPeriodValueText(ValueError):
     """
-    Custom exception for text2number function.
+    Custom exception for :func:`.text2number`.
     """
-    
+
     def __init__(self, value, period, *args):
         """
         Args:
@@ -128,13 +128,13 @@ class InvalidPeriodValueText(ValueError):
             '\n\tDid not understand "{}"'.format(period or 'unit', value),
             *args
         )
-        
-        
+
+
 class InvalidPeriodNameText(ValueError):
     """
-    Custom exception for readperiod function.
+    Custom exception for :func:`.readperiod`.
     """
-    
+
     def __init__(self, name, prefix, *args):
         """
         Args:

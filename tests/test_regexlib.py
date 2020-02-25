@@ -4,7 +4,7 @@ Unit tests for conwech.regexlib module.
 
 import itertools
 from unittest import TestCase
-from conwech import regexlib
+from conwech import _regexlib
 
 
 class NumericStringTests(TestCase):
@@ -16,7 +16,7 @@ class NumericStringTests(TestCase):
         self.valid_flags = 'e', 'E'
         self.valid_signs = '', '-', '+'
         self.valid_digits = '0123456789'
-        self.pattern = regexlib.NUMERIC_STRING
+        self.pattern = _regexlib.NUMERIC_STRING
         self.expected = dict.fromkeys(self.pattern.groupindex.keys())
         # assert names of capture groups because most tests will likely rely on them
         self.assertTupleEqual(('bsign', 'bwhole', 'bfraction', 'esign', 'evalue'),
@@ -117,7 +117,7 @@ class NumeralStringTests(TestCase):
     """
     
     def setUp(self):
-        self.pattern = regexlib.NUMERAL_STRING
+        self.pattern = _regexlib.NUMERAL_STRING
         self.expected = dict.fromkeys(self.pattern.groupindex.keys())
         # assert names of capture groups because most tests will likely rely on them
         self.assertTupleEqual(('sign', 'whole', 'numerator', 'denominator'),
@@ -145,7 +145,7 @@ class PeriodTextTests(TestCase):
     """
     
     def setUp(self):
-        self.pattern = regexlib.PERIOD_STRING
+        self.pattern = _regexlib.PERIOD_STRING
         self.expected = dict.fromkeys(self.pattern.groupindex.keys())
         # assert names of capture groups because most tests will likely rely on them
         self.assertTupleEqual(('value', 'name'), tuple(self.pattern.groupindex.keys()))

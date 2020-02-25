@@ -5,7 +5,7 @@ them will return the appropriate text (all lowercase) for the index
 given.
 """
 
-import conwech.regexlib
+import conwech._regexlib
 
 
 NATURAL_NUMBERS_LT_20 = (
@@ -35,14 +35,15 @@ NATURAL_NUMBERS_LT_100 = tuple(
 """
 Tuple of 100 strings where each member is the english word for its
 index with one exception. For functional purposes, the first (zeroth)
-index of lexicon's `INTEGERS_LT_1000` tuple is an empty string as
-opposed to being the string literal 'zero'.
+index of this tuple is an empty string as opposed to being the string
+literal 'zero'.
 
 Note:
     It probably goes without saying, but the only real reason to use
-    `NATURAL_NUMBERS_LT_100` instead of `NATURAL_NUMBERS_LT_1000` is for
-    matters where efficiency is a *heavy* concern.
-    
+    :data:`.NATURAL_NUMBERS_LT_100` instead of
+    :data:`.NATURAL_NUMBERS_LT_1000` is for matters where efficiency is
+    a *heavy* concern.
+
 Examples:
     >>> from conwech.lexicon import NATURAL_NUMBERS_LT_100
     >>> NATURAL_NUMBERS_LT_100[7]
@@ -53,7 +54,7 @@ Examples:
     'ninety-nine'
     >>> INTEGERS_LT_100[0:3]
     ('', 'one', 'two')
-    
+
 """
 
 
@@ -65,8 +66,8 @@ NATURAL_NUMBERS_LT_1000 = tuple(
 """
 Tuple of 1000 strings where each member is the english word for its
 index with one exception. For functional purposes, the first (zeroth)
-index of lexicon's `INTEGERS_LT_1000` tuple is an empty string as
-opposed to being the string literal 'zero'.
+index of this tuple is an empty string as opposed to being the string
+literal 'zero'.
 
 Examples:
     >>> from conwech.lexicon import NATURAL_NUMBERS_LT_1000
@@ -78,7 +79,7 @@ Examples:
     'nine hundred ninety-nine'
     >>> NATURAL_NUMBERS_LT_1000[0:3]
     ('', 'one', 'two')
-    
+
 """
 
 
@@ -119,24 +120,24 @@ def _zillion_period_prefixes():
     Constructs prefixes for all zillion periods from subcomponents.
     """
     result = list(_UNIQUE_PERIOD_PREFIXES)
-    
+
     for period in range(10, 1000):
         # build prefix from components
         zillion = str(period).zfill(3)
         prefix = str(_UNIT_PREFIX_COMPONENTS[int(zillion[-1])]
                      + _TENS_PREFIX_COMPONENTS[int(zillion[-2])]
                      + _HUND_PREFIX_COMPONENTS[int(zillion[-3])])
-        
+
         # catch and correct exceptions
         if int(zillion[-1]) in (3, 6, 7, 9):
-            prefix = conwech.regexlib.PREFIX_EXCEPTION_X.sub('x', prefix)
-            prefix = conwech.regexlib.PREFIX_EXCEPTION_S.sub('s', prefix)
-            prefix = conwech.regexlib.PREFIX_EXCEPTION_M.sub('m', prefix)
-            prefix = conwech.regexlib.PREFIX_EXCEPTION_N.sub('n', prefix)
-            
+            prefix = conwech._regexlib.PREFIX_EXCEPTION_X.sub('x', prefix)
+            prefix = conwech._regexlib.PREFIX_EXCEPTION_S.sub('s', prefix)
+            prefix = conwech._regexlib.PREFIX_EXCEPTION_M.sub('m', prefix)
+            prefix = conwech._regexlib.PREFIX_EXCEPTION_N.sub('n', prefix)
+
         # prefix shouldn't end in "a" or "i"
         result.append(prefix.rstrip('ai'))
-        
+
     return tuple(result)
 
 
@@ -170,5 +171,5 @@ Examples:
     'sexcent'
     >>> ZILLION_PERIOD_PREFIXES[600]
     'sescent'
-    
+
 """

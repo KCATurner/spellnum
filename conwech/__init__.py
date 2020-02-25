@@ -1,13 +1,27 @@
 """
-The ConWech package is comprised of two primary submodules: `lexicon`,
-and `functions`. All of the members in `functions` along with a few
-select members of `lexicon` are imported into the top level of the
-package for easy access. Flat > nested, but organization = imperative.
+The ConWech package is comprised of two primary submodules:
+:mod:`.lexicon`, and :mod:`.functions`. All of the members in
+:mod:`.functions` along with a few select members of :mod:`.lexicon`
+are imported into the top level of the package for easy access.
+Flat > nested, but organization = imperative.
 
-Two additional submodules `exceptions` and `regexlib` are essentially
-repositories for... well, exactly what it sounds like. Both submodules
-are considered pseudo-internal, but feel free to muck around till your
-heart's content.
+.. autosummary::
+    :toctree:
+
+    conwech.functions
+    conwech.lexicon
+
+Two additional submodules :mod:`._exceptions` and :mod:`._regexlib` are
+essentially repositories for... well, exactly what it sounds like. Both
+submodules are considered pseudo-internal, but feel free to muck around
+till your heart's content.
+
+.. autosummary::
+    :toctree:
+
+    conwech._regexlib
+    conwech._exceptions
+
 """
 
 # bring core elements to top of package

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>conwech.exceptions &mdash; ConWech 1.0.0 documentation</title>
+  <title>conwech._exceptions &mdash; ConWech 0.0.0 documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -33,6 +33,7 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -57,6 +58,10 @@
           
             
             
+              <div class="version">
+                0.0.0
+              </div>
+            
           
 
           
@@ -79,10 +84,12 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../conwech.exceptions.html">conwech.exceptions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../conwech.functions.html">conwech.functions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../conwech.lexicon.html">conwech.lexicon module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../conwech.regexlib.html">conwech.regexlib module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../conwech.functions.html">conwech.functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../conwech.lexicon.html">conwech.lexicon</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../conwech._regexlib.html">conwech._regexlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../conwech._exceptions.html">conwech._exceptions</a></li>
 </ul>
 
             
@@ -130,7 +137,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>conwech.exceptions</li>
+      <li>conwech._exceptions</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -145,14 +152,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for conwech.exceptions</h1><div class="highlight"><pre>
+  <h1>Source code for conwech._exceptions</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Separate home for custom exceptions raised by ConWech functions.</span>
 
 <span class="sd">What&#39;s that you ask? Why on earth would you subclass ValueError for so</span>
 <span class="sd">many specific cases when you can just raise one from the function call?</span>
 <span class="sd">What an insightful question! I&#39;m so glad you asked...</span>
-<span class="sd">    </span>
+
 <span class="sd">    1)  The main reason is that when a function is designed to take</span>
 <span class="sd">        input as a string that must conform to a particular format, it</span>
 <span class="sd">        helps to have very informative exceptions to say not just, &quot;Hey</span>
@@ -160,7 +167,7 @@
 <span class="sd">        that string to be in and having different types of exceptions</span>
 <span class="sd">        for different violations of that format can help, especially if</span>
 <span class="sd">        said format is both multifaceted and highly specific.</span>
-<span class="sd">        </span>
+
 <span class="sd">    2)  In order to be more explicit about what exactly went wrong,</span>
 <span class="sd">        some of these exceptions warrant fairly long/detailed messages,</span>
 <span class="sd">        especially if the user doesn&#39;t know what a zillion value is for</span>
@@ -174,7 +181,7 @@
 <span class="sd">        that sense, Exceptions are anything from a developer&#39;s subtle</span>
 <span class="sd">        clearing of the throat to the kindest god-smack to the user&#39;s</span>
 <span class="sd">        face for passing up the aforementioned handshake.</span>
-<span class="sd">        </span>
+
 <span class="sd">    3)  The exception type is the very first thing a user sees. That</span>
 <span class="sd">        being the case, the more experienced a developer gets, the more</span>
 <span class="sd">        information they tend to glean directly from the name of the</span>
@@ -182,7 +189,7 @@
 <span class="sd">        &quot;no such thing as too much information&quot; theme, you might notice</span>
 <span class="sd">        that most of these exceptions have very verbose names. This is</span>
 <span class="sd">        by design. Now, let&#39;s shift paradigms.</span>
-<span class="sd">        </span>
+
 <span class="sd">    4)  Readability... Not necessarily the exceptions per se (although</span>
 <span class="sd">        there&#39;s a good case there too), but the functions tasked with</span>
 <span class="sd">        calling them. Usually, when raising exceptions, the programmer</span>
@@ -202,7 +209,7 @@
 <span class="sd">        just read that from a python docstring is not lost on me). See</span>
 <span class="sd">        my second point (above). The function should tell you how it</span>
 <span class="sd">        works, not how it doesn&#39;t. Leave that to the exception.</span>
-<span class="sd">        </span>
+
 <span class="sd">    5)  In a similar vein of thought, intelligent use of custom</span>
 <span class="sd">        exceptions can help with QA. Simple exceptions look more like</span>
 <span class="sd">        half-a$$ed built-in exceptions which could already be hit or</span>
@@ -213,20 +220,20 @@
 <span class="sd">        force your code into raising the ones you&#39;ve written; something</span>
 <span class="sd">        that you can not only use to spot-check code as you write it,</span>
 <span class="sd">        but that makes for some slick and easy unit testing.</span>
-<span class="sd">        </span>
+
 <span class="sd">    6)  I was bored...</span>
-<span class="sd">    </span>
+
 <span class="sd">Sorry, I&#39;m off my soapbox now. You probably didn&#39;t need half of that</span>
 <span class="sd">explanation and you might still disagree, but there it is anyway. Thank</span>
 <span class="sd">you for coming to my TED talk.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="InvalidNumericString"><a class="viewcode-back" href="../../conwech.exceptions.html#conwech.exceptions.InvalidNumericString">[docs]</a><span class="k">class</span> <span class="nc">InvalidNumericString</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<div class="viewcode-block" id="InvalidNumericString"><a class="viewcode-back" href="../../conwech._exceptions.html#conwech._exceptions.InvalidNumericString">[docs]</a><span class="k">class</span> <span class="nc">InvalidNumericString</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Custom exception for number2text function.</span>
+<span class="sd">    Custom exception for :func:`.number2text`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -238,13 +245,13 @@
             <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">Did not understand &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">),</span>
             <span class="o">*</span><span class="n">args</span>
         <span class="p">)</span></div>
-        
-        
-<div class="viewcode-block" id="InvalidNumeralString"><a class="viewcode-back" href="../../conwech.exceptions.html#conwech.exceptions.InvalidNumeralString">[docs]</a><span class="k">class</span> <span class="nc">InvalidNumeralString</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="InvalidNumeralString"><a class="viewcode-back" href="../../conwech._exceptions.html#conwech._exceptions.InvalidNumeralString">[docs]</a><span class="k">class</span> <span class="nc">InvalidNumeralString</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Custom exception for text2number function.</span>
+<span class="sd">    Custom exception for :func:`.text2number`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -257,13 +264,13 @@
             <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">See module documentation for more details.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">),</span>
             <span class="o">*</span><span class="n">args</span>
         <span class="p">)</span></div>
-        
-        
-<div class="viewcode-block" id="InvalidPeriodValueText"><a class="viewcode-back" href="../../conwech.exceptions.html#conwech.exceptions.InvalidPeriodValueText">[docs]</a><span class="k">class</span> <span class="nc">InvalidPeriodValueText</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="InvalidPeriodValueText"><a class="viewcode-back" href="../../conwech._exceptions.html#conwech._exceptions.InvalidPeriodValueText">[docs]</a><span class="k">class</span> <span class="nc">InvalidPeriodValueText</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Custom exception for text2number function.</span>
+<span class="sd">    Custom exception for :func:`.text2number`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -276,13 +283,13 @@
             <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">Did not understand &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">period</span> <span class="ow">or</span> <span class="s1">&#39;unit&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">),</span>
             <span class="o">*</span><span class="n">args</span>
         <span class="p">)</span></div>
-        
-        
-<div class="viewcode-block" id="InvalidPeriodNameText"><a class="viewcode-back" href="../../conwech.exceptions.html#conwech.exceptions.InvalidPeriodNameText">[docs]</a><span class="k">class</span> <span class="nc">InvalidPeriodNameText</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="InvalidPeriodNameText"><a class="viewcode-back" href="../../conwech._exceptions.html#conwech._exceptions.InvalidPeriodNameText">[docs]</a><span class="k">class</span> <span class="nc">InvalidPeriodNameText</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Custom exception for readperiod function.</span>
+<span class="sd">    Custom exception for :func:`.readperiod`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -307,7 +314,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Kevin Turner
+        &copy; Copyright 2020, Kevin Turner
+      <span class="lastupdated">
+        Last updated on Feb 25, 2020.
+      </span>
 
     </p>
   </div>
