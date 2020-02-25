@@ -7,11 +7,11 @@ import setuptools
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
-    
-    
+
+
 setuptools.setup(
     name='conwech',
-    version='1.0.0',
+    version='0.0.0',
     author='Kevin Turner',
     author_email='kct0004@auburn.edu',
     description='A module for reading & writing numbers using the Conway-Wechsler naming system',
