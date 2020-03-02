@@ -12,6 +12,5 @@ Command Line Interface
 Indices & Tables
 ================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+* :ref:`Modules <modindex>`
+* :ref:`Index <genindex>`
