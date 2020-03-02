@@ -5,11 +5,13 @@ The ConWech package is comprised of two primary submodules:
 are imported into the top level of the package for easy access.
 Flat > nested, but organization = imperative.
 
-.. autosummary::
-    :toctree:
+.. currentmodule:: conwech
 
-    conwech.functions
-    conwech.lexicon
+.. autosummary::
+    :toctree: _package
+
+    functions
+    lexicon
 
 Two additional submodules :mod:`._exceptions` and :mod:`._regexlib` are
 essentially repositories for... well, exactly what it sounds like. Both
@@ -17,10 +19,10 @@ submodules are considered pseudo-internal, but feel free to muck around
 till your heart's content.
 
 .. autosummary::
-    :toctree:
+    :toctree: _package
 
-    conwech._regexlib
-    conwech._exceptions
+    _regexlib
+    _exceptions
 
 """
 
