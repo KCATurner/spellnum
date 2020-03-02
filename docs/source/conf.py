@@ -134,17 +134,16 @@ html_sourcelink_suffix = '.rst'
 
 todo_include_todos = True
 autosummary_generate = True
+autosummary_generate_overwrite = True
 autoclass_content = 'both'
 autodoc_module_first = True
 autodoc_typehints = 'signature'
 autodoc_default_options = {
     'members': True,
     'member-order': 'bysource',
-    'show-inheritance': True,
-    'ignore-module-all': True,
 }
 
 
 def setup(app):
     # for wrapping long table cells.
-    app.add_stylesheet('custom.css')
+    app.add_css_file('custom.css')
