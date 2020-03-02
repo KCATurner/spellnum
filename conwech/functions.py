@@ -86,7 +86,7 @@ def readperiod(name: str) -> int:
         name (str): The period name of any number period.
 
     Returns:
-        The zillion value for the period with the given name.
+        int: The zillion value for the period with the given name.
 
     Raises:
         InvalidPeriodNameText: If any sub-component of **name** is not
@@ -236,13 +236,13 @@ def text2number(text: str) -> str:
         text (str): The spelling of a number as a string.
 
     Returns:
-        A numeric string representing the value of **text**.
+        str: A numeric string representing the value of **text**.
 
     Raises:
         InvalidNumeralString: If **text** does not match the required
             format (see :data:`.NUMERAL_STRING`).
-        InvalidPeriodValueText: If any period value in **text** is not
-            found in :data:`.NATURAL_NUMBERS_LT_1000`.
+        InvalidPeriodValueText: If a period value in **text** is not in
+            :data:`.NATURAL_NUMBERS_LT_1000`.
         InvalidPeriodNameText: If any period name in **text** is not
             derived from a valid combination of Conway-Wechsler period
             prefixes (see :func:`.readperiod`).
