@@ -17,25 +17,25 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="conwech._exceptions" href="conwech._exceptions.html" />
     <link rel="prev" title="conwech.lexicon" href="conwech.lexicon.html" /> 
 </head>
@@ -51,7 +51,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> ConWech
+            <a href="../index.html" class="icon icon-home"> ConWech
           
 
           
@@ -68,7 +68,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -106,7 +106,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">ConWech</a>
+          <a href="../index.html">ConWech</a>
         
       </nav>
 
@@ -135,7 +135,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
       <li>conwech._regexlib</li>
     
@@ -143,7 +143,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/conwech._regexlib.rst" rel="nofollow"> View page source</a>
+            <a href="../_sources/_package/conwech._regexlib.rst" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -183,7 +183,7 @@ four: <a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_X"
 <a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_M" title="conwech._regexlib.PREFIX_EXCEPTION_M"><code class="xref py py-data docutils literal notranslate"><span class="pre">PREFIX_EXCEPTION_M</span></code></a>, and <a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_N" title="conwech._regexlib.PREFIX_EXCEPTION_N"><code class="xref py py-data docutils literal notranslate"><span class="pre">PREFIX_EXCEPTION_N</span></code></a> are all
 used to catch and adjust invalid prefix combinations when
 <a class="reference internal" href="conwech.lexicon.html#conwech.lexicon.ZILLION_PERIOD_PREFIXES" title="conwech.lexicon.ZILLION_PERIOD_PREFIXES"><code class="xref py py-data docutils literal notranslate"><span class="pre">ZILLION_PERIOD_PREFIXES</span></code></a> is initialized.</p>
-<dl class="data">
+<dl class="py data">
 <dt id="conwech._regexlib.NUMERIC_STRING">
 <code class="sig-name descname">NUMERIC_STRING</code><em class="property"> = re.compile('^\\s*(?# match, but exclude any leading whitespace)(?P&lt;bsign&gt;[-+])?(?# capture base sign if it exists)(?!\\s*\\.\\s*(?:[eE]|$))(?# whole or fraction must match)0*(?# match, but exclude leading zeros )</em><a class="headerlink" href="#conwech._regexlib.NUMERIC_STRING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching number-like strings.</p>
@@ -233,7 +233,7 @@ group, excluding any leading zeros.</p>
 </div>
 </dd></dl>
 
-<dl class="data">
+<dl class="py data">
 <dt id="conwech._regexlib.NUMERAL_STRING">
 <code class="sig-name descname">NUMERAL_STRING</code><em class="property"> = re.compile(&quot;^(?!\\s*$)(?# assert string not empty or only whitespace)\\s*(?# match but do not capture leading whitespace)(?P&lt;sign&gt;negative\\s|positive\\s)?(?# capture sign)(?P&lt;whole&gt;.+\\w)?(?# capture whole numb)</em><a class="headerlink" href="#conwech._regexlib.NUMERAL_STRING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching strings of number text.</p>
@@ -280,7 +280,7 @@ allowed to match an empty or whitespace-only string.</p>
 </div>
 </dd></dl>
 
-<dl class="data">
+<dl class="py data">
 <dt id="conwech._regexlib.PERIOD_STRING">
 <code class="sig-name descname">PERIOD_STRING</code><em class="property"> = re.compile('(?:^|\\s+)(?# period must follow whitespace or start of string)\\b(?P&lt;value&gt;.+?)(?# capture period value and leave the name)(?:\\s+(?# whitespace must separate period value and name)(?P&lt;name&gt;\\w+illi)</em><a class="headerlink" href="#conwech._regexlib.PERIOD_STRING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching individual period substrings in number text.</p>
@@ -308,7 +308,7 @@ ends with the “illion” suffix.</p>
 </div>
 </dd></dl>
 
-<dl class="data">
+<dl class="py data">
 <dt id="conwech._regexlib.PREFIX_EXCEPTION_X">
 <code class="sig-name descname">PREFIX_EXCEPTION_X</code><em class="property"> = re.compile(&quot;(?&lt;=^se)(?# exception must start with 'se'...)(?=[co])(?# ...and be followed by 'c' or 'o')&quot;)</em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_X" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching invalid combinations of period name prefix
@@ -325,7 +325,7 @@ correct the exception.</p>
 </div>
 </dd></dl>
 
-<dl class="data">
+<dl class="py data">
 <dt id="conwech._regexlib.PREFIX_EXCEPTION_S">
 <code class="sig-name descname">PREFIX_EXCEPTION_S</code><em class="property"> = re.compile(&quot;(?&lt;=^se)(?# exception must start with 'se'...)(?=[qtv])(?# ...and be followed by 'q', 't', or 'v')|(?# or)(?&lt;=^tre)(?# exception must start with 'tre'...)(?=[coqtv])(?# ...and be followed by 'c', 'o')</em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_S" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching invalid combinations of period name prefix
@@ -343,7 +343,7 @@ correct the exception.</p>
 </div>
 </dd></dl>
 
-<dl class="data">
+<dl class="py data">
 <dt id="conwech._regexlib.PREFIX_EXCEPTION_M">
 <code class="sig-name descname">PREFIX_EXCEPTION_M</code><em class="property"> = re.compile(&quot;(?&lt;=^septe)(?# exception must start with 'septe'...)(?=[ov])(?# ...and be followed by 'o' or 'v')|(?# or)(?&lt;=^nove)(?# exception must start with 'nove'...)(?=[ov])(?# ...and be followed by 'o' or 'v')</em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_M" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching invalid combinations of period name prefix
@@ -360,7 +360,7 @@ be inserted to correct the exception.</p>
 </div>
 </dd></dl>
 
-<dl class="data">
+<dl class="py data">
 <dt id="conwech._regexlib.PREFIX_EXCEPTION_N">
 <code class="sig-name descname">PREFIX_EXCEPTION_N</code><em class="property"> = re.compile(&quot;(?&lt;=^septe)(?# exception must start with 'septe'...)(?=[cdqst])(?# ...and be followed by 'c', 'd', 'q', 's', or 't')|(?# or )(?&lt;=^nove)(?# exception must start with 'nove'...)(?=[cdqst])(?# ...and be)</em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_N" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching invalid combinations of period name prefix
@@ -402,7 +402,7 @@ where “n” needs to be inserted to correct the exception.</p>
     <p>
         &copy; Copyright 2020, Kevin Turner
       <span class="lastupdated">
-        Last updated on Feb 25, 2020.
+        Last updated on Mar 02, 2020.
       </span>
 
     </p>

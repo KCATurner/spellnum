@@ -84,12 +84,12 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../conwech.functions.html">conwech.functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../conwech.lexicon.html">conwech.lexicon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_package/conwech.functions.html">conwech.functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_package/conwech.lexicon.html">conwech.lexicon</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../conwech._regexlib.html">conwech._regexlib</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../conwech._exceptions.html">conwech._exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_package/conwech._regexlib.html">conwech._regexlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_package/conwech._exceptions.html">conwech._exceptions</a></li>
 </ul>
 
             
@@ -170,7 +170,7 @@
 <span class="kn">import</span> <span class="nn">conwech._exceptions</span>
 
 
-<div class="viewcode-block" id="nameperiod"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.nameperiod">[docs]</a><span class="k">def</span> <span class="nf">nameperiod</span><span class="p">(</span><span class="n">zillion</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="nameperiod"><a class="viewcode-back" href="../../_package/conwech.functions.html#conwech.functions.nameperiod">[docs]</a><span class="k">def</span> <span class="nf">nameperiod</span><span class="p">(</span><span class="n">zillion</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Names the period for the given **zillion** value.</span>
 
@@ -225,7 +225,7 @@
     <span class="k">return</span> <span class="s1">&#39;illi&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;illion&#39;</span></div>
 
 
-<div class="viewcode-block" id="readperiod"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.readperiod">[docs]</a><span class="k">def</span> <span class="nf">readperiod</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="readperiod"><a class="viewcode-back" href="../../_package/conwech.functions.html#conwech.functions.readperiod">[docs]</a><span class="k">def</span> <span class="nf">readperiod</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert **name** to its corresponding zillion value.</span>
 
@@ -241,7 +241,7 @@
 <span class="sd">        name (str): The period name of any number period.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        The zillion value for the period with the given name.</span>
+<span class="sd">        int: The zillion value for the period with the given name.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        InvalidPeriodNameText: If any sub-component of **name** is not</span>
@@ -284,7 +284,7 @@
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">zillion</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="number2text"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.number2text">[docs]</a><span class="k">def</span> <span class="nf">number2text</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="number2text"><a class="viewcode-back" href="../../_package/conwech.functions.html#conwech.functions.number2text">[docs]</a><span class="k">def</span> <span class="nf">number2text</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct the English short-scale spelling of **number**.</span>
 
@@ -371,7 +371,7 @@
     <span class="k">return</span> <span class="n">bsign</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39; and &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">t</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;zero&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="text2number"><a class="viewcode-back" href="../../conwech.functions.html#conwech.functions.text2number">[docs]</a><span class="k">def</span> <span class="nf">text2number</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="text2number"><a class="viewcode-back" href="../../_package/conwech.functions.html#conwech.functions.text2number">[docs]</a><span class="k">def</span> <span class="nf">text2number</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert an English short-scale **text** to it&#39;s numerical value.</span>
 
@@ -391,13 +391,13 @@
 <span class="sd">        text (str): The spelling of a number as a string.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A numeric string representing the value of **text**.</span>
+<span class="sd">        str: A numeric string representing the value of **text**.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        InvalidNumeralString: If **text** does not match the required</span>
 <span class="sd">            format (see :data:`.NUMERAL_STRING`).</span>
-<span class="sd">        InvalidPeriodValueText: If any period value in **text** is not</span>
-<span class="sd">            found in :data:`.NATURAL_NUMBERS_LT_1000`.</span>
+<span class="sd">        InvalidPeriodValueText: If a period value in **text** is not in</span>
+<span class="sd">            :data:`.NATURAL_NUMBERS_LT_1000`.</span>
 <span class="sd">        InvalidPeriodNameText: If any period name in **text** is not</span>
 <span class="sd">            derived from a valid combination of Conway-Wechsler period</span>
 <span class="sd">            prefixes (see :func:`.readperiod`).</span>
@@ -475,7 +475,7 @@
     <p>
         &copy; Copyright 2020, Kevin Turner
       <span class="lastupdated">
-        Last updated on Feb 25, 2020.
+        Last updated on Mar 02, 2020.
       </span>
 
     </p>
