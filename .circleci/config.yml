@@ -12,7 +12,10 @@ jobs:
     steps:
     - checkout
     - run: python -V
-    - run: pip3 install . sphinx sphinx-rtd-theme
+    - run: pip3 install .
+    - run: pip3 install sphinx
+    - run: pip3 install sphinx-rtd-theme
+    - run: pip3 install sphinxcontrib-autoprogram
     - run: sphinx-build -aETb html docs/source docs/build/html
 
 workflows:
