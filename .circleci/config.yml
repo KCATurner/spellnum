@@ -13,6 +13,8 @@ jobs:
     - run: pip3 install sphinx-rtd-theme
     - run: pip3 install sphinxcontrib-autoprogram
     - run: sphinx-build -aETb html docs/source docs/build/html
+    - store_artifacts:
+      path: docs/build/html
 
 workflows:
   version: 2
