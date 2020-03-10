@@ -43,7 +43,6 @@ workflows:
   deploy:
     triggers:
       branches:
-        only:
-          - stable
+        only: stable
     jobs:
       - pages
