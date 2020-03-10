@@ -8,7 +8,7 @@ Flat > nested, but organization = imperative.
 .. currentmodule:: conwech
 
 .. autosummary::
-    :toctree: _package
+    :toctree: package
 
     functions
     lexicon
@@ -19,7 +19,7 @@ submodules are considered pseudo-internal, but feel free to muck around
 till your heart's content.
 
 .. autosummary::
-    :toctree: _package
+    :toctree: package
 
     _regexlib
     _exceptions
