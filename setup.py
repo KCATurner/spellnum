@@ -5,13 +5,15 @@ Setup script for ConWech package.
 import setuptools
 
 
-with open('README.md', 'r') as fh:
-    long_description = fh.read()
+with open('README.md', 'r') as readme:
+    long_description = readme.read()
 
+with open('VERSION', 'r') as version:
+    version = str(version.read()).strip()
 
 setuptools.setup(
     name='conwech',
-    version='0.0.0',
+    version=version or 'unknown',
     author='Kevin Turner',
     author_email='kct0004@auburn.edu',
     description='A module for reading & writing numbers using the Conway-Wechsler naming system',
