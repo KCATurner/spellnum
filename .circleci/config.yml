@@ -3,9 +3,6 @@ version: 2.1
 jobs:
 
   pages:
-    branches:
-      only:
-        - stable
     docker:
       - image: python:latest
     steps:
@@ -45,6 +42,6 @@ workflows:
   deploy:
     jobs:
       - pages:
-#          filters:
-#            branches:
-#              only: stable
+          filters:
+            branches:
+              only: stable
