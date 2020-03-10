@@ -22,9 +22,7 @@ jobs:
     - run: git config --global user.name "$GH_NAME"
     - run: git add --all
     - run: git commit -m "Publishing updated documentation."
-    - run: git status
-    - run: git branch
-    - run: git push origin stable:gh-pages
+    - run: git push origin $(git rev-parse --abbrev-ref HEAD):gh-pages
 
 #  tests:
 #    docker:
