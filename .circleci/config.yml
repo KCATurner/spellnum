@@ -3,26 +3,24 @@ version: 2.1
 jobs:
 
   pages:
+    branches:
+      only:
+        - stable
     docker:
-    - image: python:latest
+      - image: python:latest
     steps:
-    - add_ssh_keys:
-        fingerprints:
-          - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
-    - checkout
-    - run: python3 -V
-    - run: pip3 install .
-    - run: pip3 install sphinx
-    - run: pip3 install sphinx-rtd-theme
-    - run: pip3 install sphinxcontrib-autoprogram
-    - run: sphinx-build -aETb html docs/source docs/build/html
-    - run: sphinx-build -aETb html docs/source docs/stable
-    - run: sphinx-build -aETb html docs/source docs/$(date +%Y.%m)
-    - run: git config --global user.email "$GH_EMAIL"
-    - run: git config --global user.name "$GH_NAME"
-    - run: git add --all
-    - run: git commit -m "Publishing updated documentation."
-    - run: git push -f origin $(git rev-parse --abbrev-ref HEAD):gh-pages
+      - add_ssh_keys:
+          fingerprints:
+            - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
+      - checkout
+      - run: date +%Y.%m > VERSION # auto-version by date
+      - run: pip3 install . sphinx sphinx-rtd-theme sphinxcontrib-autoprogram
+      - run: sphinx-build -aETb html docs/source docs/stable
+      - run: sphinx-build -aETb html docs/source docs/$(date +%Y.%m)
+      - run: git config --global user.email "$GH_EMAIL"
+      - run: git config --global user.name "$GH_NAME"
+      - run: git commit -am "Publishing updated documentation."
+      - run: git push -f origin $(git rev-parse --abbrev-ref HEAD):gh-pages
 
 #  tests:
 #    docker:
@@ -47,6 +45,6 @@ workflows:
   deploy:
     jobs:
       - pages:
-          filters:
-            branches:
-              only: stable
+#          filters:
+#            branches:
+#              only: stable
