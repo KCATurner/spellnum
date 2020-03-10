@@ -12,9 +12,10 @@ jobs:
     - run: pip3 install sphinx
     - run: pip3 install sphinx-rtd-theme
     - run: pip3 install sphinxcontrib-autoprogram
-    - run: sphinx-build -aETb html docs/source docs/$(date +'%Y.%m')
-    - run: cp docs/build/html docs/build/html
-    - run: cp docs/build/html docs/stable
+    - run: version=date +'%Y.%m'
+    - run: sphinx-build -aETb html docs/source docs/$version
+    - run: cp docs/$version docs/build/html
+    - run: cp docs/$version docs/stable
     - run: git add --all
     - run: git commit -m "Publishing updated documentation."
     # git credentials?
