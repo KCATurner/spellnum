@@ -41,8 +41,8 @@ workflows:
 #      - tests
 
   deploy:
-    triggers:
-      branches:
-        only: stable
     jobs:
       - pages
+          filters:
+            branches:
+              only: stable
