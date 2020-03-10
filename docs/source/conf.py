@@ -12,6 +12,7 @@
 
 import os
 import sys
+import datetime
 sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0, os.path.abspath('../../conwech'))
 
@@ -21,12 +22,13 @@ sys.path.insert(0, os.path.abspath('../../conwech'))
 project = 'ConWech'
 copyright = '2020, Kevin Turner'
 author = 'Kevin Turner'
+now = datetime.datetime.now()
 
 # The short X.Y version
-version = '0.0.0'
+version = now.strftime('%Y.%m')
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.0'
+release = now.strftime('%Y.%m')
 
 
 # -- General configuration ---------------------------------------------------
