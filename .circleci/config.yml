@@ -6,6 +6,9 @@ jobs:
     docker:
     - image: python:latest
     steps:
+    - add_ssh_keys:
+        fingerprints:
+          - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
     - checkout
     - run: python3 -V
     - run: pip3 install .
@@ -15,11 +18,8 @@ jobs:
     - run: sphinx-build -aETb html docs/source docs/build/html
     - run: sphinx-build -aETb html docs/source docs/stable
     - run: sphinx-build -aETb html docs/source docs/$(date +%Y.%m)
-#    - run: cp -r docs/$(date +%Y.%m) docs/build/html
-#    - run: cp -r docs/$(date +%Y.%m) docs/stable
     - run: git add --all
     - run: git commit -m "Publishing updated documentation."
-    # git credentials?
     - run: git push origin gh-pages
 
 #  tests:
