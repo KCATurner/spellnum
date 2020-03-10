@@ -3,17 +3,23 @@ Setup script for ConWech package.
 """
 
 import setuptools
+import datetime
+import os
 
+long_description = None
+if os.path.exists('README.md'):
+    with open('README.md', 'r') as readme:
+        long_description = readme.read()
 
-with open('README.md', 'r') as readme:
-    long_description = readme.read()
+version = None
+if os.path.exists('VERSION'):
+    with open('VERSION', 'r') as version:
+        version = str(version.read()).strip()
 
-with open('VERSION', 'r') as version:
-    version = str(version.read()).strip()
-
+d = datetime.date.today()
 setuptools.setup(
     name='conwech',
-    version=version or 'unknown',
+    version=version or datetime.datetime.now().strftime('%Y.%m'),
     author='Kevin Turner',
     author_email='kct0004@auburn.edu',
     description='A module for reading & writing numbers using the Conway-Wechsler naming system',
