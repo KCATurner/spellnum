@@ -10,9 +10,9 @@ jobs:
           fingerprints:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
-      - run: date +%Y.%m > VERSION # auto-version by date
+      - run: date +%Y.%m > VERSION
       - run: pip3 install .
-      - run: pip3 install sphinx
+      - run: pip3 install git+https://github.com/sphinx-doc/sphinx
       - run: pip3 install sphinx-rtd-theme
       - run: pip3 install sphinxcontrib-autoprogram
       - run: sphinx-build -aETb html docs/source docs/stable
