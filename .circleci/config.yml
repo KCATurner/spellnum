@@ -18,6 +18,8 @@ jobs:
     - run: sphinx-build -aETb html docs/source docs/build/html
     - run: sphinx-build -aETb html docs/source docs/stable
     - run: sphinx-build -aETb html docs/source docs/$(date +%Y.%m)
+    - run: git config --global user.email "$GH_EMAIL"
+    - run: git config --global user.name "$GH_NAME"
     - run: git add --all
     - run: git commit -m "Publishing updated documentation."
     - run: git push origin gh-pages
