@@ -42,7 +42,7 @@ workflows:
 
   deploy:
     jobs:
-      - pages
+      - pages:
           filters:
             branches:
               only: stable
