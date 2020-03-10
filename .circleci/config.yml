@@ -7,23 +7,43 @@ jobs:
     - image: python:latest
     steps:
     - checkout
-    - run: python -V
+    - run: python3 -V
     - run: pip3 install .
     - run: pip3 install sphinx
     - run: pip3 install sphinx-rtd-theme
     - run: pip3 install sphinxcontrib-autoprogram
-    - run: sphinx-build -aETb html docs/source docs/build/html
-    - store_artifacts:
-        path: docs/build/html
+    - run: sphinx-build -aETb html docs/source docs/$(date +'%Y.%m')
+    - run: cp docs/build/html docs/build/html
+    - run: cp docs/build/html docs/stable
+    - run: git add --all
+    - run: git commit -m "Publishing updated documentation."
+    # git credentials?
+    - run: git push origin gh-pages
+
+#  tests:
+#    docker:
+#    - image: python:latest
+#    steps:
+#    - checkout
+#    - run: python -V
 
 workflows:
   version: 2
 
-  # Todo: put testing jobs here
-  # testing:
-  #   jobs:
+#  testing:
+#    triggers:
+#      branches:
+#        ignore:
+#          - master
+#          - stable
+#          - gh-pages
+#    jobs:
+#      - tests
 
-  # All deployment
   deploy:
+    triggers:
+      branches:
+        only:
+          - stable
     jobs:
       - pages
