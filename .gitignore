@@ -101,3 +101,14 @@ venv.bak/
 
 # PyCharm
 /.idea
+
+# CI
+#/.circleci
+
+# docs
+.nojekyll
+index.html
+#/docs
+#!/docs/source
+#!/docs/make.bat
+#!/docs/Makefile
