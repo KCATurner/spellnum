@@ -2,7 +2,31 @@ version: 2.1
 
 jobs:
 
-  pages:
+#  unit-testing:
+#    docker:
+#    - image: python:latest
+#    steps:
+#    - checkout
+#    - run: python -V
+
+#  auto-release:
+#    docker:
+#      - image: python:latest
+#    steps:
+#      - add_ssh_keys:
+#          fingerprints:
+#            - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
+#      - checkout
+#      - run: version=$(date +%Y.%m)
+#      - run: $version > VERSION
+#      - run: git config --global user.email "$GH_EMAIL"
+#      - run: git config --global user.name "$GH_NAME"
+#      - run: git add --all
+#      - run: git tag v$version
+#      - run: git commit -m "[skip ci] version update."
+#      - run: git push -f origin master
+
+  publish-docs:
     docker:
       - image: python:latest
     steps:
@@ -10,42 +34,46 @@ jobs:
           fingerprints:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
-      - run: date +%Y.%m > VERSION
+      - run: version=$(cat VERSION)
       - run: pip3 install .
       - run: pip3 install git+https://github.com/sphinx-doc/sphinx
       - run: pip3 install sphinx-rtd-theme
       - run: pip3 install sphinxcontrib-autoprogram
       - run: sphinx-build -aETb html docs/source docs/stable
-      - run: sphinx-build -aETb html docs/source docs/$(date +%Y.%m)
+      - run: sphinx-build -aETb html docs/source docs/$version
       - run: git config --global user.email "$GH_EMAIL"
       - run: git config --global user.name "$GH_NAME"
       - run: git add --all
-      - run: git commit -m "Publishing updated documentation."
+      - run: git commit -m "[skip ci] documentation build."
       - run: git push -f origin $(git rev-parse --abbrev-ref HEAD):gh-pages
-
-#  tests:
-#    docker:
-#    - image: python:latest
-#    steps:
-#    - checkout
-#    - run: python -V
 
 workflows:
   version: 2
 
 #  testing:
-#    triggers:
-#      branches:
-#        ignore:
-#          - master
-#          - stable
-#          - gh-pages
 #    jobs:
-#      - tests
+#      - unit-testing:
+#          filters:
+#            branches:
+#              ignore:
+#                - gh-pages
 
-  deploy:
+  release:
     jobs:
-      - pages:
+#      - unit-testing:
+#          filters:
+#            branches:
+#              ignore:
+#                - gh-pages
+#      - auto-release:
+#          requires:
+#            - unit-testing
+#          filters:
+#            branches:
+#              only: master
+      - publish-docs:
+#          requires:
+#            - auto-release
           filters:
             branches:
-              only: stable
+              only: master
