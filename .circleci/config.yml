@@ -54,16 +54,14 @@ jobs:
             sphinx-build -aETb html docs/source docs/stable
             sphinx-build -aETb html docs/source docs/$(cat VERSION)
       - run:
-          name: "Commit New Docs"
-          command: |
-            git add -f docs
-            git commit -m "[skip ci] documentation build."
-      - run:
           name: "Push to GitHub"
           command: |
-            git checkout -b old origin/gh-pages
-            git merge new
-
+            git add -f docs
+            git stash
+            git branch old origin/gh-pages
+            git pull old
+            git checkout stash -- .
+            git commit -m "[skip ci] documentation build."
             git push -f origin new:gh-pages
 
 workflows:
