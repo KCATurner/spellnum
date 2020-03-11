@@ -30,7 +30,7 @@ jobs:
           name: "Push to GitHub"
           command: |
             git add -f VERSION
-            git commit -m "[skip ci] version update."
+            git commit -m "[skip ci] version update." --allow-empty
             git tag -f v$(cat VERSION)
             git push -f origin master --tags
 
