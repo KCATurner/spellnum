@@ -59,7 +59,7 @@ jobs:
       - run:
           name: "Generate Docs"
           command: |
-            sphinx-build -aETb html docs/source docs/stable
+            sphinx-build -aETb html docs/source docs/latest
             sphinx-build -aETb html docs/source docs/$(cat VERSION)
       - run:
           name: "Push to GitHub"

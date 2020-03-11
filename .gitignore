@@ -109,4 +109,4 @@ venv.bak/
 !/docs/source
 
 # version file
-#/VERSION
+/VERSION
