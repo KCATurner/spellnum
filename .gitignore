@@ -101,3 +101,12 @@ venv.bak/
 
 # PyCharm
 /.idea
+
+# Documentation
+/index.html
+/.nojekyll
+/docs
+!/docs/source
+
+# version file
+#/VERSION
