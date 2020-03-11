@@ -9,22 +9,31 @@ jobs:
 #    - checkout
 #    - run: python -V
 
-#  auto-release:
-#    docker:
-#      - image: python:latest
-#    steps:
-#      - add_ssh_keys:
-#          fingerprints:
-#            - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
-#      - checkout
-#      - run: version=$(date +%Y.%m)
-#      - run: $version > VERSION
-#      - run: git config --global user.email "$GH_EMAIL"
-#      - run: git config --global user.name "$GH_NAME"
-#      - run: git add --all
-#      - run: git tag v$version
-#      - run: git commit -m "[skip ci] version update."
-#      - run: git push -f origin master
+  auto-release:
+    docker:
+      - image: python:latest
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
+      - checkout
+      - run:
+          name: "Update Version File"
+          command: |
+            version=$(date +%Y.%m)
+            $version > VERSION
+      - run:
+          name: "Set Git Variables"
+          command: |
+            git config --global user.email "$GH_EMAIL"
+            git config --global user.name "$GH_NAME"
+      - run:
+          name: "Push to GitHub"
+          command: |
+            git add -f VERSION
+            git commit -m "[skip ci] version update."
+            git tag -f v$version
+            git push -f origin master
 
   publish-docs:
     docker:
@@ -81,15 +90,15 @@ workflows:
 #            branches:
 #              ignore:
 #                - gh-pages
-#      - auto-release:
+      - auto-release:
 #          requires:
 #            - unit-testing
-#          filters:
-#            branches:
-#              only: master
+          filters:
+            branches:
+              only: master
       - publish-docs:
-#          requires:
-#            - auto-release
+          requires:
+            - auto-release
           filters:
             branches:
               only: master
