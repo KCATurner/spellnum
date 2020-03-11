@@ -58,11 +58,10 @@ jobs:
           command: |
             git add -f docs
             git stash
-            git branch old origin/gh-pages
-            git merge old --no-commit
+            git pull origin gh-pages --no-commit
             git checkout stash -- .
             git commit -m "[skip ci] documentation build."
-            git push -f origin new:gh-pages
+            git push -f origin $(git rev-parse --abbrev-ref HEAD):gh-pages
 
 workflows:
   version: 2
