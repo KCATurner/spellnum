@@ -34,13 +34,12 @@ jobs:
           fingerprints:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
-      - run: version=$(cat VERSION)
       - run: pip3 install .
       - run: pip3 install git+https://github.com/sphinx-doc/sphinx
       - run: pip3 install sphinx-rtd-theme
       - run: pip3 install sphinxcontrib-autoprogram
       - run: sphinx-build -aETb html docs/source docs/stable
-      - run: sphinx-build -aETb html docs/source docs/$version
+      - run: sphinx-build -aETb html docs/source docs/$(cat VERSION)
       - run: git config --global user.email "$GH_EMAIL"
       - run: git config --global user.name "$GH_NAME"
       - run: git add --all
