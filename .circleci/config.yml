@@ -38,14 +38,13 @@ jobs:
       - run: pip3 install git+https://github.com/sphinx-doc/sphinx
       - run: pip3 install sphinx-rtd-theme
       - run: pip3 install sphinxcontrib-autoprogram
-      - run: sphinx-build -aETb html docs/source docs/stable
-      - run: sphinx-build -aETb html docs/source docs/$(cat VERSION)
       - run: git config --global user.email "$GH_EMAIL"
       - run: git config --global user.name "$GH_NAME"
+      - run: git checkout -b build origin/gh-pages
+      - run: git pull origin master
+      - run: sphinx-build -aETb html docs/source docs/stable
+      - run: sphinx-build -aETb html docs/source docs/$(cat VERSION)
       - run: git add -f docs
-      - run: git stash
-      - run: git pull origin gh-pages
-      - run: git checkout stash -- .
       - run: git commit -m "[skip ci] documentation build."
       - run: git push -f origin $(git rev-parse --abbrev-ref HEAD):gh-pages
 
