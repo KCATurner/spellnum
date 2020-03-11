@@ -42,7 +42,8 @@ jobs:
       - run: sphinx-build -aETb html docs/source docs/$(cat VERSION)
       - run: git config --global user.email "$GH_EMAIL"
       - run: git config --global user.name "$GH_NAME"
-      - run: git add --all
+      - run: git add -f docs/stable
+      - run: git add -f docs/$(cat VERSION)
       - run: git commit -m "[skip ci] documentation build."
       - run: git push -f origin $(git rev-parse --abbrev-ref HEAD):gh-pages
 
