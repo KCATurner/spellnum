@@ -34,8 +34,6 @@ jobs:
           fingerprints:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
-      - run: git --version
-      - run: git fetch --all
       - run: pip3 install .
       - run: pip3 install git+https://github.com/sphinx-doc/sphinx
       - run: pip3 install sphinx-rtd-theme
@@ -43,6 +41,7 @@ jobs:
       - run: git config --global user.email "$GH_EMAIL"
       - run: git config --global user.name "$GH_NAME"
       - run: git checkout -b build origin/gh-pages
+      - run: git commit -m "[skip ci] documentation build."
       - run: git pull origin master
       - run: sphinx-build -aETb html docs/source docs/stable
       - run: sphinx-build -aETb html docs/source docs/$(cat VERSION)
