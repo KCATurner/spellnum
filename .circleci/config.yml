@@ -34,20 +34,37 @@ jobs:
           fingerprints:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
-      - run: pip3 install .
-      - run: pip3 install git+https://github.com/sphinx-doc/sphinx
-      - run: pip3 install sphinx-rtd-theme
-      - run: pip3 install sphinxcontrib-autoprogram
-      - run: git config --global user.email "$GH_EMAIL"
-      - run: git config --global user.name "$GH_NAME"
-      - run: git checkout -b build origin/gh-pages
-      - run: git commit -m "[skip ci] documentation build."
-      - run: git pull origin master
-      - run: sphinx-build -aETb html docs/source docs/stable
-      - run: sphinx-build -aETb html docs/source docs/$(cat VERSION)
-      - run: git add -f docs
-      - run: git commit -m "[skip ci] documentation build."
-      - run: git push -f origin $(git rev-parse --abbrev-ref HEAD):gh-pages
+      - run:
+          name: "Install Package"
+          command: pip3 install .
+      - run:
+          name: "Install Sphinx"
+          command: |
+            pip3 install git+https://github.com/sphinx-doc/sphinx
+            pip3 install sphinxcontrib-autoprogram
+            pip3 install sphinx-rtd-theme
+      - run:
+          name: "Set Git Variables"
+          command: |
+            git config --global user.email "$GH_EMAIL"
+            git config --global user.name "$GH_NAME"
+      - run:
+          name: "Generate Docs"
+          command: |
+            sphinx-build -aETb html docs/source docs/stable
+            sphinx-build -aETb html docs/source docs/$(cat VERSION)
+      - run:
+          name: "Commit New Docs"
+          command: |
+            git add -f docs
+            git commit -m "[skip ci] documentation build."
+      - run:
+          name: "Push to GitHub"
+          command: |
+            git checkout -b old origin/gh-pages
+            git merge new
+
+            git push -f origin new:gh-pages
 
 workflows:
   version: 2
