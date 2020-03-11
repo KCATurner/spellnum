@@ -18,21 +18,20 @@ jobs:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
       - run:
-          name: "Update Version File"
-          command: |
-            version=$(date +%Y.%m)
-            $version > VERSION
-      - run:
           name: "Set Git Variables"
           command: |
             git config --global user.email "$GH_EMAIL"
             git config --global user.name "$GH_NAME"
       - run:
+          name: "Update Version File"
+          command: |
+            date +%Y.%m > VERSION
+      - run:
           name: "Push to GitHub"
           command: |
             git add -f VERSION
             git commit -m "[skip ci] version update."
-            git tag -f v$version
+            git tag -f v$(cat VERSION)
             git push -f origin master
 
   publish-docs:
