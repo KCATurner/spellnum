@@ -2,12 +2,21 @@ version: 2.1
 
 jobs:
 
-#  unit-testing:
-#    docker:
-#    - image: python:latest
-#    steps:
-#    - checkout
-#    - run: python -V
+  unit-testing:
+    docker:
+    - image: python:latest
+    steps:
+    - checkout
+    - run:
+        name: "Setup"
+        command: |
+          python3 -V
+          pip3 install .
+          pip3 install pytest
+          pip3 install pytest-circleci
+    - run:
+        name: "Test"
+        command: pytest tests
 
   auto-release:
     docker:
@@ -74,24 +83,24 @@ jobs:
 workflows:
   version: 2
 
-#  testing:
-#    jobs:
-#      - unit-testing:
-#          filters:
-#            branches:
-#              ignore:
-#                - gh-pages
+  testing:
+    jobs:
+      - unit-testing:
+          filters:
+            branches:
+              ignore:
+                - master
+                - gh-pages
 
   release:
     jobs:
-#      - unit-testing:
-#          filters:
-#            branches:
-#              ignore:
-#                - gh-pages
+      - unit-testing:
+          filters:
+            branches:
+              only: master
       - auto-release:
-#          requires:
-#            - unit-testing
+          requires:
+            - unit-testing
           filters:
             branches:
               only: master
