@@ -103,7 +103,9 @@ venv.bak/
 /.idea
 
 # Testing
+/.pytest_cache
 /tests/.pytest_cache
+/tests/reports
 
 # Documentation
 /index.html
