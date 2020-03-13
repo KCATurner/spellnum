@@ -102,6 +102,9 @@ venv.bak/
 # PyCharm
 /.idea
 
+# Testing
+/tests/.pytest_cache
+
 # Documentation
 /index.html
 /.nojekyll
