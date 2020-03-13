@@ -27,7 +27,7 @@ jobs:
 #    - run:
 #        name: "conwech.functions"
 #        command: pytest tests/test_functions.py --junitxml="tests/reports/functions.xml"
-    - store_test_results
+    - store_test_results:
         path: tests/reports
 
   auto-release:
