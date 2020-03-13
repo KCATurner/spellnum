@@ -108,7 +108,7 @@ Prefix components for the tens digit of a zillion period.
 
 
 _HUND_PREFIX_COMPONENTS = (
-    '', 'centi', 'ducenti', 'trecenti', 'quadringenti', 'quingenti',
+    '', 'centi', 'duocenti', 'trecenti', 'quadringenti', 'quingenti',
     'sescenti', 'septingenti', 'octingenti', 'nongenti')
 """
 Prefix components for the hundreds digit of a zillion period.
