@@ -8,15 +8,27 @@ jobs:
     steps:
     - checkout
     - run:
-        name: "Setup"
+        name: "Setup Tests"
         command: |
           python3 -V
           pip3 install .
           pip3 install pytest
+          pip3 install pytest-cov
           pip3 install pytest-circleci
     - run:
-        name: "Test"
-        command: pytest tests
+        name: "Run Tests"
+        command: pytest tests --junitxml="tests/reports/conwech/results.xml"
+#    - run:
+#        name: "conwech._regexlib"
+#        command: pytest tests/test_regexlib.py --junitxml="tests/reports/regexlib.xml"
+#    - run:
+#        name: "conwech.lexicon"
+#        command: pytest tests/test_lexicon.py --junitxml="tests/reports/lexicon.xml"
+#    - run:
+#        name: "conwech.functions"
+#        command: pytest tests/test_functions.py --junitxml="tests/reports/functions.xml"
+    - store_test_results
+        path: tests/reports
 
   auto-release:
     docker:
