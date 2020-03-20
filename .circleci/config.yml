@@ -17,16 +17,7 @@ jobs:
           pip3 install pytest-circleci
     - run:
         name: "Run Tests"
-        command: pytest tests --junitxml="tests/reports/conwech/results.xml"
-#    - run:
-#        name: "conwech._regexlib"
-#        command: pytest tests/test_regexlib.py --junitxml="tests/reports/regexlib.xml"
-#    - run:
-#        name: "conwech.lexicon"
-#        command: pytest tests/test_lexicon.py --junitxml="tests/reports/lexicon.xml"
-#    - run:
-#        name: "conwech.functions"
-#        command: pytest tests/test_functions.py --junitxml="tests/reports/functions.xml"
+        command: pytest tests --junitxml="tests/reports/results.xml"
     - store_test_results:
         path: tests/reports
 
