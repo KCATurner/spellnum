@@ -45,6 +45,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+/tests/reports/
 
 # Translations
 *.mo
@@ -101,11 +102,6 @@ venv.bak/
 
 # PyCharm
 /.idea
-
-# Testing
-/.pytest_cache
-/tests/.pytest_cache
-/tests/reports
 
 # Documentation
 /index.html
