@@ -13,22 +13,31 @@ class BasePatternTests(abc.ABC):
 
     pattern = NotImplemented
     groups = NotImplemented
+    default = NotImplemented
 
     @classmethod
     def __init_subclass__(cls, **kwargs):
         super(BasePatternTests, cls).__init_subclass__(**kwargs)
-        if cls.pattern is NotImplemented and not inspect.isabstract(cls):
-            raise NotImplementedError(
-                str(cls) + " missing 'pattern' class attribute!")
-        if cls.groups is NotImplemented and not inspect.isabstract(cls):
-            raise NotImplementedError(
-                str(cls) + " missing 'groups' class attribute!")
+        for member, value in inspect.getmembers(cls, lambda _: _ == NotImplemented):
+            if not inspect.isabstract(cls):
+                raise NotImplementedError(
+                    "{} missing '{}' class attribute!".format(cls.__qualname__, member))
 
     def test_group_names(self):
         """
         Test expected capture group names.
         """
-        assert self.groups == tuple(self.pattern.groupindex.keys())
+        assert tuple(self.pattern.groupindex.keys()) == self.groups
+
+    def test_whitespace(self):
+        """
+        Strings with leading or trailing whitespace can match, but the
+        extra whitespace should be ignored.
+        """
+        match = self.pattern.match('   {}   '.format(self.default))
+        assert match is not None
+        expected = self.pattern.match(self.default)
+        assert match.groupdict() == expected.groupdict()
 
     @pytest.mark.parametrize(argnames='string', argvalues=(' ', '\r', '\n', '\t'))
     def test_empty_string(self, string):
@@ -45,19 +54,7 @@ class TestNumericString(BasePatternTests):
 
     pattern = conwech._regexlib.NUMERIC_STRING
     groups = ('bsign', 'bwhole', 'bfraction', 'esign', 'evalue')
-
-    @pytest.mark.parametrize(
-        argnames='string',
-        argvalues=('   0.0e0', '0.0e0   ', '   0.0e0   '))
-    def test_whitespace(self, string):
-        """
-        Strings with leading or trailing whitespace can match, but
-        the whitespace should be ignored.
-        """
-        match = self.pattern.match(string)
-        assert match is not None
-        expected = dict.fromkeys(self.groups)
-        assert expected == match.groupdict()
+    default = '0.0e0'
 
     @pytest.mark.parametrize(
         argnames=str('string'),
@@ -89,7 +86,7 @@ class TestNumericString(BasePatternTests):
         expected['bwhole'] = string.lstrip('-+0') or None
         match = self.pattern.match(string)
         assert match is not None
-        assert expected == match.groupdict()
+        assert match.groupdict() == expected
 
     @pytest.mark.parametrize(
         argnames='string',
@@ -106,7 +103,7 @@ class TestNumericString(BasePatternTests):
         expected['bfraction'] = string.split('.')[-1].rstrip('0') or None
         match = self.pattern.match(string)
         assert match is not None
-        assert expected == match.groupdict()
+        assert match.groupdict() == expected
 
     @pytest.mark.parametrize(
         argnames='string',
@@ -123,7 +120,7 @@ class TestNumericString(BasePatternTests):
         expected['evalue'] = string.lstrip('-+0.eE0') or None
         match = self.pattern.match(string)
         assert match is not None
-        assert expected == match.groupdict()
+        assert match.groupdict() == expected
 
 
 class TestNumeralString(BasePatternTests):
@@ -133,6 +130,7 @@ class TestNumeralString(BasePatternTests):
 
     pattern = conwech._regexlib.NUMERAL_STRING
     groups = ('sign', 'whole', 'numerator', 'denominator')
+    default = 'negative three and two tenths'
 
     @pytest.mark.skip(reason='unfinished test')
     def test_todo(self):
@@ -149,6 +147,7 @@ class TestPeriodString(BasePatternTests):
 
     pattern = conwech._regexlib.PERIOD_STRING
     groups = ('value', 'name')
+    default = 'one hundred twenty-three thousand'
 
     @pytest.mark.skip(reason='unfinished test')
     def test_todo(self):
