@@ -25,7 +25,7 @@ setuptools.setup(
     description='A module for reading & writing numbers using the Conway-Wechsler naming system',
     long_description=long_description or 'Unable to access README.md during setup!',
     long_description_content_type='text/markdown',
-    url='https://github.com/KCATurner/conwech',
+    url='https://github.com/KCATurner/conwech.git',
     packages=setuptools.find_packages(exclude=['tests*', ]),
     install_requires=[
         'colorama',
@@ -36,7 +36,7 @@ setuptools.setup(
             'conwech = conwech.__main__:main'
         ]
     },
-    python_requires='>=3.5',
+    python_requires='>=3.4',
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
