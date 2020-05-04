@@ -18,7 +18,7 @@ if os.path.exists('README.md'):
 #     capture_output=False, text=True, check=True)
 result = subprocess.run(
     ['git', 'describe', '--tags', '--abbrev=0'],
-    capture_output=False, text=True, check=True)
+    capture_output=True, text=True, check=True)
 version = re.match(
     r'v?(?P<tag>\w+(?:\.\w+)*)+',
     str(result.stdout)).groupdict()['tag']
