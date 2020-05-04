@@ -13,18 +13,18 @@ if os.path.exists('README.md'):
     with open('README.md', 'r') as readme:
         long_description = readme.read()
 
-subprocess.run(
-    ['cd', 'conwech'],
-    capture_output=False, text=True, check=True)
+# subprocess.run(
+#     ['cd', 'conwech'],
+#     capture_output=False, text=True, check=True)
 result = subprocess.run(
     ['git', 'describe', '--tags', '--abbrev=0'],
     capture_output=False, text=True, check=True)
 version = re.match(
     r'v?(?P<tag>\w+(?:\.\w+)*)+',
     str(result.stdout)).groupdict()['tag']
-subprocess.run(
-    ['cd', '..'],
-    capture_output=False, text=True, check=True)
+# subprocess.run(
+#     ['cd', '..'],
+#     capture_output=False, text=True, check=True)
 
 setuptools.setup(
     name='conwech',
