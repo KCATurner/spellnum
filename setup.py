@@ -3,27 +3,36 @@ Setup script for the conwech package.
 """
 
 import setuptools
-import datetime
+import subprocess
 import os
+import re
 
 
-long_description = None
+long_description = 'Unable to access README.md during setup!'
 if os.path.exists('README.md'):
     with open('README.md', 'r') as readme:
         long_description = readme.read()
 
-version = None
-if os.path.exists('VERSION'):
-    with open('VERSION', 'r') as version:
-        version = str(version.read()).strip()
+subprocess.run(
+    ['cd', 'conwech'],
+    capture_output=False, text=True, check=True)
+result = subprocess.run(
+    ['git', 'describe', '--tags', '--abbrev=0'],
+    capture_output=False, text=True, check=True)
+version = re.match(
+    r'v?(?P<tag>\w+(?:\.\w+)*)+',
+    str(result.stdout)).groupdict()['tag']
+subprocess.run(
+    ['cd', '..'],
+    capture_output=False, text=True, check=True)
 
 setuptools.setup(
     name='conwech',
-    version=version or datetime.datetime.now().strftime('%Y.%m'),
+    version=version,
     author='Kevin Turner',
     author_email='kct0004@auburn.edu',
     description='A module for reading & writing numbers using the Conway-Wechsler naming system',
-    long_description=long_description or 'Unable to access README.md during setup!',
+    long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/KCATurner/conwech.git',
     packages=setuptools.find_packages(

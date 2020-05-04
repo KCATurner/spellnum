@@ -11,7 +11,7 @@ jobs:
         name: "Setup Tests"
         command: |
           python3 -V
-          pip3 install .
+          pip3 install . -v
           pip3 install pytest
           pip3 install pytest-cov
           pip3 install pytest-circleci
