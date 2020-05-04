@@ -13,12 +13,19 @@ if os.path.exists('README.md'):
     with open('README.md', 'r') as readme:
         long_description = readme.read()
 
+# use branch name as version if not master...
 result = subprocess.run(
-    ['git', 'describe', '--tags', '--abbrev=0'],
+    ['git', 'rev-parse', '--abbrev-ref', 'HEAD'],
     capture_output=True, text=True, check=True)
-version = re.match(
-    r'v?(?P<tag>\w+(?:\.\w+)*)+',
-    str(result.stdout)).groupdict()['tag']
+version = result.stdout.strip()
+# ... otherwise, use latest version tag
+if result.stdout == 'master':
+    result = subprocess.run(
+        ['git', 'describe', '--tags', '--abbrev=0'],
+        capture_output=True, text=True, check=True)
+    version = re.match(
+        r'v?(?P<tag>\w+(?:\.\w+)*)+',
+        str(result.stdout)).groupdict()['tag']
 
 setuptools.setup(
     name='conwech',
