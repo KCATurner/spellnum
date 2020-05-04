@@ -35,16 +35,14 @@ jobs:
             git config --global user.email "$GH_EMAIL"
             git config --global user.name "$GH_NAME"
       - run:
-          name: "Update Version File"
+          name: "Create Version Tag"
           command: |
-            date +%Y.%m > VERSION
+            version=v$(date +%Y.%m)
+            git tag -f $version
       - run:
-          name: "Push to GitHub"
+          name: "Push Tag to GitHub"
           command: |
-            git add -f VERSION
-            git commit -m "[skip ci] version update." --allow-empty
-            git tag -f v$(cat VERSION)
-            git push -f origin master --tags
+            git push -f origin %version
 
   publish-docs:
     docker:
