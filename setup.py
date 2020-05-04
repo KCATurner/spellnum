@@ -1,10 +1,11 @@
 """
-Setup script for ConWech package.
+Setup script for the conwech package.
 """
 
 import setuptools
 import datetime
 import os
+
 
 long_description = None
 if os.path.exists('README.md'):
@@ -16,7 +17,6 @@ if os.path.exists('VERSION'):
     with open('VERSION', 'r') as version:
         version = str(version.read()).strip()
 
-d = datetime.date.today()
 setuptools.setup(
     name='conwech',
     version=version or datetime.datetime.now().strftime('%Y.%m'),
@@ -26,15 +26,17 @@ setuptools.setup(
     long_description=long_description or 'Unable to access README.md during setup!',
     long_description_content_type='text/markdown',
     url='https://github.com/KCATurner/conwech.git',
-    packages=setuptools.find_packages(exclude=['tests*', ]),
+    packages=setuptools.find_packages(
+        exclude=['tests*', ],
+    ),
     install_requires=[
         'colorama',
-        'pyperclip'
+        'pyperclip',
     ],
     entry_points={
         'console_scripts': [
-            'conwech = conwech.__main__:main'
-        ]
+            'conwech = conwech.__main__:main',
+        ],
     },
     python_requires='>=3.4',
     classifiers=[
