@@ -44,6 +44,34 @@ jobs:
           command: |
             git push -f origin $version
 
+  auto-publish:
+    docker:
+      - image: python:latest
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
+      - checkout
+      - run:
+          name: "Init .pypirc"
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+          name: "Update Twine"
+          command: |
+            pip3 install twine
+      - run:
+          name: "Build Package"
+          command: |
+            python3 setup.py sdist
+            python3 setup.py bdist_wheel
+      - run:
+          name: "Upload Package"
+          command: |
+            twine upload dist/*
+
   publish-docs:
     docker:
       - image: python:latest
@@ -105,8 +133,16 @@ workflows:
           filters:
             branches:
               only: master
+      - auto-publish:
+          requires:
+            - unit-testing
+            - auto-release
+          filters:
+            branches:
+              only: master
       - publish-docs:
           requires:
+            - unit-testing
             - auto-release
           filters:
             branches:
