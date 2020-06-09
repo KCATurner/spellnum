@@ -108,6 +108,3 @@ venv.bak/
 /.nojekyll
 /docs
 !/docs/source
-
-# version file
-/VERSION
