@@ -1,0 +1,8 @@
+/* Wrap text in large table cells */
+.wy-table-responsive table td {
+    white-space: normal;
+}
+/* Edit here to increase default max width from 800px */
+.wy-nav-content {
+    max-width: 800px !important;
+}
