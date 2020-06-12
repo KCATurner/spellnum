@@ -141,7 +141,11 @@ workflows:
 
   develop:
     jobs:
-      - check-python
+      - check-python:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
       - unit-testing:
           filters:
             branches:
