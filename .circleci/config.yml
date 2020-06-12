@@ -46,11 +46,11 @@ jobs:
           name: "Deduce next appropriate version tag"
           command: |
             set -x
-            month=$(date +%Y.%m)
-            latest=$(git describe --tags --abbrev=0)
-            branch=$(git rev-parse --abbrev-ref HEAD)
-            type=$(if [[ $branch == master ]]; then echo rc; else echo .dev; fi)
-            next=$(expr $(echo $latest | grep -oP "(?<=^v${month}${type})\d+$") + 1)
+            echo 'export month=$(date +%Y.%m)' >> $BASH_ENV
+            echo 'export latest=$(git describe --tags --abbrev=0)' >> $BASH_ENV
+            echo 'export branch=$(git rev-parse --abbrev-ref HEAD)' >> $BASH_ENV
+            echo 'export type=$(if [[ $branch == master ]]; then echo rc; else echo .dev; fi)' >> $BASH_ENV
+            echo 'export next=$(expr $(echo $latest | grep -oP "(?<=^v${month}${type})\d+$") + 1)' >> $BASH_ENV
             echo 'export version="v${month}${type}${next}"' >> $BASH_ENV
       - run:
           name: "Create new tag and push to GitHub"
