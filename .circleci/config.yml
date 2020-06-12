@@ -40,33 +40,19 @@ jobs:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
       - run:
-          name: "Set Git Variables"
+          name: "Push Dev Tag"
           command: |
+            set -x
             git config --global user.email "$GH_EMAIL"
             git config --global user.name "$GH_NAME"
-      - run:
-          name: "Get Relevant Variables"
-          command: |
             month=$(date +%Y.%m)
             latest=$(git describe --tags --abbrev=0)
-            git rev-parse --abbrev-ref HEAD
-            branch=$CIRCLE_BRANCH
-            echo "month:  $month"; echo "latest: $latest"; echo "branch: $branch"
-      - run:
-          name: "Determine Tag Suffix"
-          command: |
+            branch=$(git rev-parse --abbrev-ref HEAD)
             type=$(if [[ $branch == master ]]; then echo rc; else echo .dev; fi)
             next=$(expr $(echo $latest | grep -oP "(?<=^v${month}${type})\d+$") + 1)
-            echo "type:   $type"; echo "next:   $next"
-      - run:
-          name: "Create Version Tag"
-          command: |
-            version="v${month}${type}${next}"
+            version=v"$month""$type""$next"
             echo "Tag: $version"
-      - run:
-          name: "Push Tag to GitHub"
-          command: |
-            git tag --force $version
+            git tag $version
             git push origin $version
 
   publish-docs:
