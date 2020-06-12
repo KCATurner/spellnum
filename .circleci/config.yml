@@ -49,12 +49,15 @@ jobs:
           command: |
             month=$(date +%Y.%m)
             latest=$(git describe --tags --abbrev=0)
-            branch=$(git rev-parse --abbrev-ref HEAD)
+            git rev-parse --abbrev-ref HEAD
+            branch=$CIRCLE_BRANCH
+            echo "month:  $month"; echo "latest: $latest"; echo "branch: $branch"
       - run:
           name: "Determine Tag Suffix"
           command: |
             type=$(if [[ $branch == master ]]; then echo rc; else echo .dev; fi)
             next=$(expr $(echo $latest | grep -oP "(?<=^v${month}${type})\d+$") + 1)
+            echo "type:   $type"; echo "next:   $next"
       - run:
           name: "Create Version Tag"
           command: |
@@ -64,7 +67,7 @@ jobs:
           name: "Push Tag to GitHub"
           command: |
             git tag --force $version
-            git push --force origin $version
+            git push origin $version
 
   publish-docs:
     docker:
