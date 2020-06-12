@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The ConWech Package &mdash; ConWech v documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="conwech.functions" href="package/conwech.functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> ConWech
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="package/conwech.functions.html">conwech.functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package/conwech.lexicon.html">conwech.lexicon</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="package/conwech._regexlib.html">conwech._regexlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package/conwech._exceptions.html">conwech._exceptions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ConWech</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>The ConWech Package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="package/conwech.functions.html" class="btn btn-neutral float-right" title="conwech.functions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-conwech">
+<span id="the-conwech-package"></span><h1>The ConWech Package<a class="headerlink" href="#module-conwech" title="Permalink to this headline">¶</a></h1>
+<p>The ConWech package is comprised of two primary submodules:
+<a class="reference internal" href="package/conwech.lexicon.html#module-conwech.lexicon" title="conwech.lexicon"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lexicon</span></code></a>, and <a class="reference internal" href="package/conwech.functions.html#module-conwech.functions" title="conwech.functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functions</span></code></a>. All of the members in
+<a class="reference internal" href="package/conwech.functions.html#module-conwech.functions" title="conwech.functions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functions</span></code></a> along with a few select members of <a class="reference internal" href="package/conwech.lexicon.html#module-conwech.lexicon" title="conwech.lexicon"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lexicon</span></code></a>
+are imported into the top level of the package for easy access.
+Flat &gt; nested, but organization = imperative.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="package/conwech.functions.html#module-conwech.functions" title="conwech.functions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">functions</span></code></a></p></td>
+<td><p>Home to all of the fun stuff, which consists of two main function pairs, <a class="reference internal" href="package/conwech.functions.html#conwech.functions.nameperiod" title="conwech.functions.nameperiod"><code class="xref py py-func docutils literal notranslate"><span class="pre">nameperiod()</span></code></a> / <a class="reference internal" href="package/conwech.functions.html#conwech.functions.readperiod" title="conwech.functions.readperiod"><code class="xref py py-func docutils literal notranslate"><span class="pre">readperiod()</span></code></a> and <a class="reference internal" href="package/conwech.functions.html#conwech.functions.number2text" title="conwech.functions.number2text"><code class="xref py py-func docutils literal notranslate"><span class="pre">number2text()</span></code></a> / <a class="reference internal" href="package/conwech.functions.html#conwech.functions.text2number" title="conwech.functions.text2number"><code class="xref py py-func docutils literal notranslate"><span class="pre">text2number()</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="package/conwech.lexicon.html#module-conwech.lexicon" title="conwech.lexicon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lexicon</span></code></a></p></td>
+<td><p>Home to a set of tuples containing number name and period suffix component strings.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Two additional submodules <a class="reference internal" href="package/conwech._exceptions.html#module-conwech._exceptions" title="conwech._exceptions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_exceptions</span></code></a> and <a class="reference internal" href="package/conwech._regexlib.html#module-conwech._regexlib" title="conwech._regexlib"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_regexlib</span></code></a> are
+essentially repositories for… well, exactly what it sounds like. Both
+submodules are considered pseudo-internal, but feel free to muck around
+till your heart’s content.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="package/conwech._regexlib.html#module-conwech._regexlib" title="conwech._regexlib"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_regexlib</span></code></a></p></td>
+<td><p>Separate home for useful, pre-compiled regular expressions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="package/conwech._exceptions.html#module-conwech._exceptions" title="conwech._exceptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_exceptions</span></code></a></p></td>
+<td><p>Separate home for custom exceptions raised by ConWech functions.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="command-line-interface">
+<h1>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="conwech">
+<h2>conwech<a class="headerlink" href="#conwech" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: conwech</span>
+<span class="go">       [-h]</span>
+<span class="go">       SUBCOMMAND</span>
+<span class="go">       ...</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt id="cmdoption-conwech-h">
+<span id="cmdoption-conwech-help"></span><code class="sig-name descname">-h</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--help</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-conwech-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<div class="section" id="conwech-read">
+<h3>conwech read<a class="headerlink" href="#conwech-read" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: conwech read</span>
+<span class="go">       [-h]</span>
+<span class="go">       [-c]</span>
+<span class="go">       text</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt id="cmdoption-conwech-read-arg-text">
+<code class="sig-name descname">text</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-conwech-read-arg-text" title="Permalink to this definition">¶</a></dt>
+<dd><p>text of a number to read</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-conwech-read-h">
+<span id="cmdoption-conwech-read-help"></span><code class="sig-name descname">-h</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--help</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-conwech-read-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-conwech-read-c">
+<span id="cmdoption-conwech-read-copy"></span><code class="sig-name descname">-c</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--copy</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-conwech-read-c" title="Permalink to this definition">¶</a></dt>
+<dd><p>copy output to clipboard</p>
+</dd></dl>
+
+</div>
+<div class="section" id="conwech-spell">
+<h3>conwech spell<a class="headerlink" href="#conwech-spell" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: conwech spell</span>
+<span class="go">       [-h]</span>
+<span class="go">       [-c]</span>
+<span class="go">       [-r]</span>
+<span class="go">       number</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt id="cmdoption-conwech-spell-arg-number">
+<code class="sig-name descname">number</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-conwech-spell-arg-number" title="Permalink to this definition">¶</a></dt>
+<dd><p>a number to be spelled</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-conwech-spell-h">
+<span id="cmdoption-conwech-spell-help"></span><code class="sig-name descname">-h</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--help</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-conwech-spell-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-conwech-spell-c">
+<span id="cmdoption-conwech-spell-copy"></span><code class="sig-name descname">-c</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--copy</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-conwech-spell-c" title="Permalink to this definition">¶</a></dt>
+<dd><p>copy output to clipboard</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-conwech-spell-r">
+<span id="cmdoption-conwech-spell-recursive"></span><code class="sig-name descname">-r</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--recursive</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-conwech-spell-r" title="Permalink to this definition">¶</a></dt>
+<dd><p>spell recursively to ‘four’</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="indices-tables">
+<h1>Indices &amp; Tables<a class="headerlink" href="#indices-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Modules</span></a></p></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="package/conwech.functions.html" class="btn btn-neutral float-right" title="conwech.functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kevin Turner
+      <span class="lastupdated">
+        Last updated on Jun 12, 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
