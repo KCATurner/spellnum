@@ -25,10 +25,10 @@ author = 'Kevin Turner'
 now = datetime.datetime.now()
 
 # The short X.Y version
-version = now.strftime('%Y.%m')
+version = "local"
 
 # The full version, including alpha/beta/rc tags
-release = now.strftime('%Y.%m')
+release = "local"
 
 
 # -- General configuration ---------------------------------------------------
