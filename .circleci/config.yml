@@ -152,26 +152,14 @@ jobs:
 workflows:
   version: 2
 
-  testing:
+  develop:
     jobs:
       - check-python
       - unit-testing:
           filters:
             branches:
               ignore:
-                - master
-                - develop
                 - gh-pages
-
-  autotag:
-    jobs:
-      - check-python
-      - unit-testing:
-          filters:
-            branches:
-              only:
-                - develop
-                - master
       - push-dev-tag:
           requires:
             - unit-testing
