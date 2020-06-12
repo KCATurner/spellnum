@@ -7,10 +7,10 @@ jobs:
       - image: python:latest
     steps:
       - run:
-          name: "Check Python and Pip versions"
+          name: "Check Pip and Python versions"
           command: |
-            python3 --version
             pip3 --version
+            python3 --version
 
   unit-testing:
     docker:
@@ -18,12 +18,18 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Install packages and run unit tests"
+          name: "Update pytest packages"
           command: |
             pip3 install pytest
             pip3 install pytest-cov
             pip3 install pytest-circleci
+      - run:
+          name: "Install conwech package"
+          command: |
             pip3 install . --verbose
+      - run:
+          name: "Run conwech unit tests"
+          command: |
             pytest tests --junitxml="tests/reports/results.xml"
       - store_test_results:
           path: tests/reports
@@ -37,17 +43,21 @@ jobs:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
       - run:
-          name: "Create new tag and push to GitHub"
+          name: "Deduce next appropriate version tag"
           command: |
             set -x
-            git config --global user.email "$GH_EMAIL"
-            git config --global user.name "$GH_NAME"
             month=$(date +%Y.%m)
             latest=$(git describe --tags --abbrev=0)
             branch=$(git rev-parse --abbrev-ref HEAD)
             type=$(if [[ $branch == master ]]; then echo rc; else echo .dev; fi)
             next=$(expr $(echo $latest | grep -oP "(?<=^v${month}${type})\d+$") + 1)
-            version="v${month}${type}${next}"
+            echo 'export version="v${month}${type}${next}"' >> $ BASH_ENV
+      - run:
+          name: "Create new tag and push to GitHub"
+          command: |
+            set -x
+            git config --global user.email "$GH_EMAIL"
+            git config --global user.name "$GH_NAME"
             git tag $version
             git push origin $version
 
@@ -60,25 +70,38 @@ jobs:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
       - run:
-          name: "Build HTML docs and push to GitHub"
+          name: "Install sphinx packages"
           command: |
-            set -x
-            pip3 install . --verbose
             pip3 install sphinx>=3
             pip3 install sphinxcontrib-autoprogram
             pip3 install sphinx-rtd-theme
-            git config --global user.email "$GH_EMAIL"
-            git config --global user.name "$GH_NAME"
-            latest=$(git describe --tags --abbrev=0)
-            version=$(echo $latest | grep -oP "^v\d+\.\d+")
+      - run:
+          name: "Install conwech package"
+          command: |
+            pip3 install . --verbose
+      - run:
+          name: "Export custom environment variables"
+          command: |
+            echo 'export latest=$(git describe --tags --abbrev=0)' >> $BASH_ENV
+            echo 'export branch=$(git rev-parse --abbrev-ref HEAD)' >> $BASH_ENV
+            echo 'export version=$(echo $latest | grep -oP "^v\d+\.\d+")' >> $BASH_ENV
+      - run:
+          name: "Build static HTML documentation"
+          command: |
+            set -x
             sphinx-build -aETb html docs/source docs/latest -D version=latest -D release=latest
             sphinx-build -aETb html docs/source docs/$version -D version=$version -D release=$latest
+      - run:
+          name: "Push documentation to gh-pages"
+          command: |
+            git config --global user.email "$GH_EMAIL"
+            git config --global user.name "$GH_NAME"
             git add -f docs
             git stash
             git pull origin gh-pages --no-commit
             git checkout stash -- .
             git commit -m "[skip ci] documentation build."
-            git push -f origin $(git rev-parse --abbrev-ref HEAD):gh-pages
+            git push -f origin $branch:gh-pages
 
   build-deploy:
     docker:
@@ -89,22 +112,29 @@ jobs:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
       - run:
+          name: "Install twine package"
+          command: |
+            pip3 install twine
+      - run:
+          name: "Export custom environment variables"
+          command: |
+            echo 'export version=$(date +%Y.%m -d "$(date +%Y-%m-01)-1 day")' >> $BASH_ENV
+            echo 'export latest=$(git describe --tags --abbrev=0)' >> $BASH_ENV
+            echo 'export match=$(echo $latest | grep -oP "(?<=^v)\d+\.\d+(?=rc\d+$)")' >> $BASH_ENV
+      - run:
           name: "Build release and upload to PyPI"
           command: |
-            - set -x
-            - pip3 install twine
-            - version=$(date +%Y.%m -d "$(date +%Y-%m-01)-1 day")
-            - latest=$(git describe --tags --abbrev=0)
-            - if [[ $(echo $latest | grep -oP "(?<=^v)\d+\.\d+(?=rc\d+$)") == $version ]];
-            - then
-            - git tag --force $version;
-            - git push --force origin $version;
-            - python3 setup.py sdist;
-            - python3 setup.py bdist_wheel;
-#            twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
-            - else
-            - echo "No new release candidate to deploy.";
-            - fi
+            set -x
+            if [[ $match == $version ]];
+            then
+              git tag $version;
+              git push origin $version;
+              python3 setup.py sdist;
+              python3 setup.py bdist_wheel;
+              twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD;
+            else
+              echo "No new release candidate to deploy.";
+            fi
 
 workflows:
   version: 2
