@@ -51,7 +51,7 @@ jobs:
             branch=$(git rev-parse --abbrev-ref HEAD)
             type=$(if [[ $branch == master ]]; then echo rc; else echo .dev; fi)
             next=$(expr $(echo $latest | grep -oP "(?<=^v${month}${type})\d+$") + 1)
-            echo 'export version="v${month}${type}${next}"' >> $ BASH_ENV
+            echo 'export version="v${month}${type}${next}"' >> $BASH_ENV
       - run:
           name: "Create new tag and push to GitHub"
           command: |
