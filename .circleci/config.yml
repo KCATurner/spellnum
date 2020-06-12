@@ -54,7 +54,7 @@ jobs:
           name: "Determine Tag Suffix"
           command: |
             type=$(if [[ $branch == master ]]; then echo rc; else echo .dev; fi)
-            next=$(expr $(grep -oP "(?<=^v${month}${type})\d+$" <<< $latest) + 1)
+            next=$(expr $(echo $latest | grep -oP "(?<=^v${month}${type})\d+$") + 1)
       - run:
           name: "Create Version Tag"
           command: |
@@ -93,7 +93,7 @@ jobs:
           name: "Get Version String"
           command: |
             latest=$(git describe --tags --abbrev=0)
-            version=$(grep -oP "^v\d+\.\d+" <<< $latest)
+            version=$(echo $latest | grep -oP "^v\d+\.\d+")
       - run:
           name: "Generate Docs"
           command: |
@@ -129,7 +129,7 @@ jobs:
       - run:
           name: "If Last Tag is Valid RC..."
           command: |
-            if [[ $(grep -oP "(?<=^v)\d+\.\d+(?=rc\d+$)" <<< $latest) == $version ]]
+            if [[ $(echo $latest | grep -oP "(?<=^v)\d+\.\d+(?=rc\d+$)") == $version ]]
             then
       - run:
           name: "Push New Release Tag"
