@@ -56,8 +56,8 @@ jobs:
           name: "Create new tag and push to GitHub"
           command: |
             set -x
-            git config --global user.email "$GH_EMAIL"
-            git config --global user.name "$GH_NAME"
+            git config --global user.email $GH_EMAIL
+            git config --global user.name $GH_NAME
             git tag $version
             git push origin $version
 
@@ -73,8 +73,8 @@ jobs:
           name: "Install sphinx packages"
           command: |
             pip3 install sphinx>=3
-            pip3 install sphinxcontrib-autoprogram
             pip3 install sphinx-rtd-theme
+            pip3 install sphinxcontrib-autoprogram
       - run:
           name: "Install conwech package"
           command: |
@@ -94,14 +94,14 @@ jobs:
       - run:
           name: "Push documentation to gh-pages"
           command: |
-            git config --global user.email "$GH_EMAIL"
-            git config --global user.name "$GH_NAME"
-            git add -f docs
+            git config --global user.email $GH_EMAIL
+            git config --global user.name $GH_NAME
+            git add --force docs
             git stash
             git pull origin gh-pages --no-commit
             git checkout stash -- .
-            git commit -m "[skip ci] documentation build."
-            git push -f origin $branch:gh-pages
+            git commit --message="[skip ci] documentation build."
+            git push --force origin $branch:gh-pages
 
   build-deploy:
     docker:

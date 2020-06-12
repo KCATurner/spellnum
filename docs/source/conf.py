@@ -19,10 +19,10 @@ sys.path.insert(0, os.path.abspath('../../conwech'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'ConWech'
-copyright = '2020, Kevin Turner'
-author = 'Kevin Turner'
 now = datetime.datetime.now()
+project = 'ConWech'
+author = 'Kevin Turner'
+copyright = f'{now.year}, Kevin Turner'
 
 # The short X.Y version
 version = "local"
