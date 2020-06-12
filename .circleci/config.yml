@@ -82,8 +82,8 @@ jobs:
       - run:
           name: "Export custom environment variables"
           command: |
-            echo 'export latest=$(git describe --tags --abbrev=0)' >> $BASH_ENV
             echo 'export branch=$(git rev-parse --abbrev-ref HEAD)' >> $BASH_ENV
+            echo 'export latest=$(git tag -l --sort=-v:refname | grep -P "^v\d+\.\d+" -m 1)' >> $BASH_ENV
             echo 'export version=$(echo $latest | grep -oP "^v\d+\.\d+")' >> $BASH_ENV
       - run:
           name: "Build static HTML documentation"
@@ -118,9 +118,9 @@ jobs:
       - run:
           name: "Export custom environment variables"
           command: |
-            echo 'export version=$(date +%Y.%m -d "$(date +%Y-%m-01)-1 day")' >> $BASH_ENV
-            echo 'export latest=$(git describe --tags --abbrev=0)' >> $BASH_ENV
-            echo 'export match=$(echo $latest | grep -oP "(?<=^v)\d+\.\d+(?=rc\d+$)")' >> $BASH_ENV
+            echo 'export version=v$(date +%Y.%m -d "$(date +%Y-%m-01)-1 day")' >> $BASH_ENV
+            echo 'export latest=$(git tag -l --sort=-v:refname | grep -oP "^${version}rc\d+$" -m 1)' >> $BASH_ENV
+            echo 'export match=$(echo $latest | grep -oP "^v\d+\.\d+(?=rc\d+$)")' >> $BASH_ENV
       - run:
           name: "Build release and upload to PyPI"
           command: |
