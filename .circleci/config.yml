@@ -7,7 +7,7 @@ jobs:
       - image: python:latest
     steps:
       - run:
-          name: "Check Python"
+          name: "Check Python and Pip versions"
           command: |
             python3 --version
             pip3 --version
@@ -18,15 +18,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Setup Tests"
+          name: "Install packages and run unit tests"
           command: |
             pip3 install pytest
             pip3 install pytest-cov
             pip3 install pytest-circleci
             pip3 install . --verbose
-      - run:
-          name: "Run Tests"
-          command:
             pytest tests --junitxml="tests/reports/results.xml"
       - store_test_results:
           path: tests/reports
@@ -63,33 +60,19 @@ jobs:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
       - run:
-          name: "Install Package"
+          name: "Build HTML docs and push to GitHub"
           command: |
+            set -x
             pip3 install . --verbose
-      - run:
-          name: "Install Sphinx"
-          command: |
             pip3 install sphinx>=3
             pip3 install sphinxcontrib-autoprogram
             pip3 install sphinx-rtd-theme
-      - run:
-          name: "Set Git Variables"
-          command: |
             git config --global user.email "$GH_EMAIL"
             git config --global user.name "$GH_NAME"
-      - run:
-          name: "Get Version String"
-          command: |
             latest=$(git describe --tags --abbrev=0)
             version=$(echo $latest | grep -oP "^v\d+\.\d+")
-      - run:
-          name: "Generate Docs"
-          command: |
             sphinx-build -aETb html docs/source docs/latest -D version=latest -D release=latest
             sphinx-build -aETb html docs/source docs/$version -D version=$version -D release=$latest
-      - run:
-          name: "Push to GitHub"
-          command: |
             git add -f docs
             git stash
             git pull origin gh-pages --no-commit
@@ -106,33 +89,18 @@ jobs:
             - "4a:30:b4:68:a8:21:16:35:b1:81:90:5f:39:56:32:1b"
       - checkout
       - run:
-          name: "Update Twine"
+          name: "Build release and upload to PyPI"
           command: |
             pip3 install twine
-      - run:
-          name: "Get Release Info"
-          command:
             version=$(date +%Y.%m -d "$(date +%Y-%m-01)-1 day")
             latest=$(git describe --tags --abbrev=0)
-      - run:
-          name: "If Last Tag is Valid RC..."
-          command: |
             if [[ $(echo $latest | grep -oP "(?<=^v)\d+\.\d+(?=rc\d+$)") == $version ]]
             then
-      - run:
-          name: "Push New Release Tag"
-          command: |
             git tag --force $version
             git push --force origin $version
-      - run:
-          name: "Build & Deploy Package"
-          command: |
             python3 setup.py sdist
             python3 setup.py bdist_wheel
 #            twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
-      - run:
-          name: "...Otherwise, Print Message"
-          command: |
             else
             echo "No new release candidate to deploy."
             fi
