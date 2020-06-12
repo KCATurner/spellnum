@@ -91,18 +91,19 @@ jobs:
       - run:
           name: "Build release and upload to PyPI"
           command: |
+            set -x
             pip3 install twine
             version=$(date +%Y.%m -d "$(date +%Y-%m-01)-1 day")
             latest=$(git describe --tags --abbrev=0)
-            if [[ $(echo $latest | grep -oP "(?<=^v)\d+\.\d+(?=rc\d+$)") == $version ]]
+            if [[ $(echo $latest | grep -oP "(?<=^v)\d+\.\d+(?=rc\d+$)") == $version ]];
             then
-            git tag --force $version
-            git push --force origin $version
-            python3 setup.py sdist
-            python3 setup.py bdist_wheel
+                git tag --force $version;
+                git push --force origin $version;
+                python3 setup.py sdist;
+                python3 setup.py bdist_wheel;
 #            twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
             else
-            echo "No new release candidate to deploy."
+                echo "No new release candidate to deploy.";
             fi
 
 workflows:
