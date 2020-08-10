@@ -47,18 +47,6 @@ class TestNamePeriod:
                     for p in '{:,}'.format(zillion).split(','))
         assert conwech.functions.nameperiod(zillion) == 'illi'.join(prefixes) + 'illion'
 
-    @pytest.mark.skip(reason='unfinished test')
-    @pytest.mark.monkey
-    @pytest.mark.symmetry
-    @pytest.mark.parametrize(
-        argnames='period',
-        argvalues=())  # TODO: generate random test cases.
-    def test_zillion_cycle(self, period):
-        """
-        `nameperiod` should invert `readperiod`.
-        """
-        assert conwech.functions.nameperiod(conwech.functions.readperiod(period)) == period
-
 
 class TestReadPeriod:
     """
@@ -98,18 +86,6 @@ class TestReadPeriod:
                     for p in '{:,}'.format(zillion).split(','))
         assert conwech.functions.readperiod('illi'.join(prefixes) + 'illion') == zillion
 
-    @pytest.mark.monkey
-    @pytest.mark.symmetry
-    @pytest.mark.parametrize(
-        argnames='zillion',
-        argvalues=(s ** random.randrange(1, 100)
-                   for s in random.sample(range(1, sys.maxsize), 100)))
-    def test_zillion_cycle(self, zillion):
-        """
-        `readperiod` should invert `nameperiod`.
-        """
-        assert conwech.functions.readperiod(conwech.functions.nameperiod(zillion)) == zillion
-
 
 class TestNumber2Text:
     """
@@ -145,16 +121,19 @@ class TestNumber2Text:
         expected = conwech.lexicon.NATURAL_NUMBERS_LT_1000[number]
         assert conwech.functions.number2text(number) == expected
 
+    @pytest.mark.legacy
     def test_string_dxxx(self):
         expected = 'one hundred twenty-three thousandths'
         assert conwech.functions.number2text('.123') == expected
         assert conwech.functions.number2text('-.123') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_string_ndxxx(self):
         expected = 'one hundred twenty-three thousandths'
         assert conwech.functions.number2text('.123') == expected
         assert conwech.functions.number2text('-.123') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_valid_format_dxex(self):
         expected = 'one hundred million'
         assert conwech.functions.number2text(.1e9) == expected
@@ -162,6 +141,7 @@ class TestNumber2Text:
         assert conwech.functions.number2text(-.1e9) == 'negative ' + expected
         assert conwech.functions.number2text('-.1e9') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_valid_format_xdxEx(self):
         expected = 'one billion two hundred million'
         assert conwech.functions.number2text(1.2E9) == expected
@@ -169,6 +149,7 @@ class TestNumber2Text:
         assert conwech.functions.number2text(-1.2E9) == 'negative ' + expected
         assert conwech.functions.number2text('-1.2E9') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_valid_format_xdxex(self):
         expected = 'one billion two hundred million'
         assert conwech.functions.number2text(1.2e9) == expected
@@ -176,6 +157,7 @@ class TestNumber2Text:
         assert conwech.functions.number2text(-1.2e9) == 'negative ' + expected
         assert conwech.functions.number2text('-1.2e9') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_valid_format_xdxenx(self):
         expected = 'twelve ten-billionths'
         assert conwech.functions.number2text(1.2e-9) == expected
@@ -183,6 +165,7 @@ class TestNumber2Text:
         assert conwech.functions.number2text(-1.2e-9) == 'negative ' + expected
         assert conwech.functions.number2text('-1.2e-9') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_valid_format_0dxex(self):
         expected = 'one hundred million'
         assert conwech.functions.number2text(0.1e9) == expected
@@ -190,6 +173,7 @@ class TestNumber2Text:
         assert conwech.functions.number2text(-0.1e9) == 'negative ' + expected
         assert conwech.functions.number2text('-0.1e9') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_valid_format_xd0ex(self):
         expected = 'one billion'
         assert conwech.functions.number2text(1.0e9) == expected
@@ -197,6 +181,7 @@ class TestNumber2Text:
         assert conwech.functions.number2text(-1.0e9) == 'negative ' + expected
         assert conwech.functions.number2text('-1.0e9') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_valid_format_xxxdxxxexxx(self):
         expected = ('one hundred twenty-three quadragintillion'
                     ' four hundred fifty-six noventrigintillion')
@@ -205,6 +190,7 @@ class TestNumber2Text:
         assert conwech.functions.number2text(-123.456e123) == 'negative ' + expected
         assert conwech.functions.number2text('-123.456e123') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_valid_format_0xxdxx0e0xx(self):
         expected = 'twelve trillion three hundred forty billion'
         assert conwech.functions.number2text(012.340e012) == expected
@@ -212,6 +198,7 @@ class TestNumber2Text:
         assert conwech.functions.number2text(-012.340e012) == 'negative ' + expected
         assert conwech.functions.number2text('-012.340e012') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_precision_retention(self):
         expected = ('one quadragintillion'
                     ' two hundred thirty-four noventrigintillion'
@@ -223,139 +210,151 @@ class TestNumber2Text:
         assert conwech.functions.number2text('1.2345678987654321e123') == expected
         assert conwech.functions.number2text('-1.2345678987654321e123') == 'negative ' + expected
 
+    @pytest.mark.legacy
     def test_float_xxdxxe3(self):
         assert conwech.functions.number2text(12.34e3) == conwech.functions.number2text(12340)
 
+    @pytest.mark.legacy
     def test_float_xxdxxe2(self):
         assert conwech.functions.number2text(12.34e2) == conwech.functions.number2text(1234)
 
+    @pytest.mark.legacy
     def test_float_xxdxxe1(self):
         assert conwech.functions.number2text(12.34e1) == conwech.functions.number2text(123.4)
 
+    @pytest.mark.legacy
     def test_float_xxdxxe0(self):
         assert conwech.functions.number2text(12.34e0) == conwech.functions.number2text(12.34)
 
+    @pytest.mark.legacy
     def test_float_xxdxxen0(self):
         assert conwech.functions.number2text(12.34e-0) == conwech.functions.number2text(12.34)
 
+    @pytest.mark.legacy
     def test_float_xxdxxen1(self):
         assert conwech.functions.number2text(12.34e-1) == conwech.functions.number2text(1.234)
 
+    @pytest.mark.legacy
     def test_float_xxdxxen2(self):
         assert conwech.functions.number2text(12.34e-2) == conwech.functions.number2text(.1234)
 
+    @pytest.mark.legacy
     def test_float_xxdxxen3(self):
         assert conwech.functions.number2text(12.34e-3) == conwech.functions.number2text(.01234)
 
+    @pytest.mark.legacy
     def test_string_xxdxxe3(self):
         assert conwech.functions.number2text('12.34e3') == conwech.functions.number2text(12340)
 
+    @pytest.mark.legacy
     def test_string_xxdxxe2(self):
         assert conwech.functions.number2text('12.34e2') == conwech.functions.number2text(1234)
 
+    @pytest.mark.legacy
     def test_string_xxdxxe1(self):
         assert conwech.functions.number2text('12.34e1') == conwech.functions.number2text(123.4)
 
+    @pytest.mark.legacy
     def test_string_xxdxxe0(self):
         assert conwech.functions.number2text('12.34e0') == conwech.functions.number2text(12.34)
 
+    @pytest.mark.legacy
     def test_string_xxdxxen0(self):
         assert conwech.functions.number2text('12.34e-0') == conwech.functions.number2text(12.34)
 
+    @pytest.mark.legacy
     def test_string_xxdxxen1(self):
         assert conwech.functions.number2text('12.34e-1') == conwech.functions.number2text(1.234)
 
+    @pytest.mark.legacy
     def test_string_xxdxxen2(self):
         assert conwech.functions.number2text('12.34e-2') == conwech.functions.number2text(.1234)
 
+    @pytest.mark.legacy
     def test_string_xxdxxen3(self):
         assert conwech.functions.number2text('12.34e-3') == conwech.functions.number2text(.01234)
 
+    @pytest.mark.legacy
     def test_float_0d1exx(self):
         assert conwech.functions.number2text(0.1e64) == 'one vigintillion'
 
+    @pytest.mark.legacy
     def test_float_1d0exx(self):
         assert conwech.functions.number2text(1.0e63) == 'one vigintillion'
 
+    @pytest.mark.legacy
     def test_float_0d1enxx(self):
         assert conwech.functions.number2text(0.1e-62) == 'one vigintillionth'
 
+    @pytest.mark.legacy
     def test_float_1d0enxx(self):
         assert conwech.functions.number2text(1.0e-63) == 'one vigintillionth'
 
+    @pytest.mark.legacy
     def test_string_0d1exx(self):
         assert conwech.functions.number2text('0.1e64') == 'one vigintillion'
 
+    @pytest.mark.legacy
     def test_string_1d0exx(self):
         assert conwech.functions.number2text('1.0e63') == 'one vigintillion'
 
+    @pytest.mark.legacy
     def test_string_0d1enxx(self):
         assert conwech.functions.number2text('0.1e-62') == 'one vigintillionth'
 
+    @pytest.mark.legacy
     def test_string_1d0enxx(self):
         assert conwech.functions.number2text('1.0e-63') == 'one vigintillionth'
 
+    @pytest.mark.legacy
     def test_float_x00xdx(self):
         expected = 'one thousand two and three tenths'
         assert conwech.functions.number2text(1002.3) == expected
 
+    @pytest.mark.legacy
     def test_float_x0xdxx(self):
         expected = 'one hundred two and thirty-four hundredths'
         assert conwech.functions.number2text(102.34) == expected
 
+    @pytest.mark.legacy
     def test_float_xxdx0x(self):
         expected = 'twelve and three hundred four thousandths'
         assert conwech.functions.number2text(12.304) == expected
 
+    @pytest.mark.legacy
     def test_float_xdx00x(self):
         expected = 'two and three thousand four ten-thousandths'
         assert conwech.functions.number2text(2.3004) == expected
 
+    @pytest.mark.legacy
     def test_float_dx000x(self):
         expected = 'thirty thousand four hundred-thousandths'
         assert conwech.functions.number2text(.30004) == expected
 
+    @pytest.mark.legacy
     def test_string_x00xdx(self):
         expected = 'one thousand two and three tenths'
         assert conwech.functions.number2text('1002.3') == expected
 
+    @pytest.mark.legacy
     def test_string_x0xdxx(self):
         expected = 'one hundred two and thirty-four hundredths'
         assert conwech.functions.number2text('102.34') == expected
 
+    @pytest.mark.legacy
     def test_string_xxdx0x(self):
         expected = 'twelve and three hundred four thousandths'
         assert conwech.functions.number2text('12.304') == expected
 
+    @pytest.mark.legacy
     def test_string_xdx00x(self):
         expected = 'two and three thousand four ten-thousandths'
         assert conwech.functions.number2text('2.3004') == expected
 
+    @pytest.mark.legacy
     def test_string_dx000x(self):
         expected = 'thirty thousand four hundred-thousandths'
         assert conwech.functions.number2text('.30004') == expected
-
-    @pytest.mark.skip(reason='unfinished test')
-    @pytest.mark.monkey
-    @pytest.mark.parametrize(argnames='number', argvalues=())
-    def test_good_monkey(self, number):
-        """
-        TODO: write monkey tests.
-        """
-        pass
-
-    @pytest.mark.skip(reason='unfinished test')
-    @pytest.mark.monkey
-    @pytest.mark.symmetry
-    @pytest.mark.parametrize(
-        argnames='numeral',
-        argvalues=())  # TODO: generate random test cases.
-    def test_numeral_cycle(self, numeral):
-        """
-        `number2text` should invert `text2number`.
-        """
-        # numeral = ?
-        assert conwech.functions.number2text(conwech.functions.text2number(numeral)) == numeral
 
 
 class TestText2Number:
@@ -392,14 +391,20 @@ class TestText2Number:
         expected = conwech.lexicon.NATURAL_NUMBERS_LT_1000.index(numeral)
         assert int(float(conwech.functions.text2number(numeral))) == expected
 
-    @pytest.mark.skip(reason='unfinished test')
+
+class TestSymmetry:
+
     @pytest.mark.monkey
-    @pytest.mark.parametrize(argnames='numeral', argvalues=())
-    def test_good_monkey(self, numeral):
+    @pytest.mark.symmetry
+    @pytest.mark.parametrize(
+        argnames='zillion',
+        argvalues=(s ** random.randrange(1, 100)
+                   for s in random.sample(range(1, sys.maxsize), 100)))
+    def test_zillion_cycle(self, zillion):
         """
-        TODO: write monkey tests.
+        `readperiod` should invert `nameperiod`.
         """
-        pass
+        assert conwech.functions.readperiod(conwech.functions.nameperiod(zillion)) == zillion
 
     @pytest.mark.monkey
     @pytest.mark.symmetry
