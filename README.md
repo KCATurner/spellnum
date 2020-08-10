@@ -6,7 +6,7 @@ Read more about the package contents and structure [here](https://kcaturner.gith
 ### Command-line Interface
 ConWech also comes with an excruciatingly simple CLI. Run the help command after installing with pip for more insight.  
 ```
-$ pip install git+https://github.com/KCATurner/conwech
+$ pip install conwech
 $ conwech --help
 ```
 
