@@ -52,32 +52,33 @@ def four(number):
         print(paint('There are {} letters in {}'.format(number, spelling)))
 
 
+parser = argparse.ArgumentParser()
+commands = parser.add_subparsers(metavar='SUBCOMMAND')
+
+read_command = commands.add_parser(
+    'read',
+    help='convert text to number')
+read_command.add_argument(
+    'text', type=str,
+    help='text of a number to read')
+read_command.set_defaults(
+    func=lambda text: print(conwech.text2number(text)))
+
+spell_command = commands.add_parser(
+    'spell',
+    help='convert number to text')
+spell_command.add_argument(
+    'number', type=str,
+    help='a number to be spelled')
+spell_command.add_argument(
+    '-r', '--recursive', action='store_const', const=four, dest='func',
+    help="spell recursively to 'four'")
+spell_command.set_defaults(
+    func=lambda number: print(paint(conwech.number2text(number))))
+
+
 def main():
     """ For internal use only! """
-    parser = argparse.ArgumentParser()
-    commands = parser.add_subparsers(metavar='SUBCOMMAND')
-
-    read_command = commands.add_parser(
-        'read',
-        help='convert text to number')
-    read_command.add_argument(
-        'text', type=str,
-        help='text of a number to read')
-    read_command.set_defaults(
-        func=lambda text: print(conwech.text2number(text)))
-
-    spell_command = commands.add_parser(
-        'spell',
-        help='convert number to text')
-    spell_command.add_argument(
-        'number', type=str,
-        help='a number to be spelled')
-    spell_command.add_argument(
-        '-r', '--recursive', action='store_const', const=four, dest='func',
-        help="spell recursively to 'four'")
-    spell_command.set_defaults(
-        func=lambda number: print(paint(conwech.number2text(number))))
-
     # call func with parsed args
     inputs = vars(parser.parse_args())
     inputs.pop('func', parser.print_help)(**inputs) # noqa
