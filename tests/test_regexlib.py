@@ -132,12 +132,18 @@ class TestNumeralString(BasePatternTests):
     groups = ('sign', 'whole', 'numerator', 'denominator')
     default = 'negative three and two tenths'
 
-    @pytest.mark.skip(reason='unfinished test')
-    def test_todo(self):
+    def test_default(self):
         """
-        TODO: finish unit testing...
+        Nominal test case.
         """
-        pass
+        expected = dict.fromkeys(self.groups)
+        expected['sign'] = 'negative'
+        expected['whole'] = 'three'
+        expected['numerator'] = 'two'
+        expected['denominator'] = 'ten'
+        match = self.pattern.match(self.default)
+        assert match is not None
+        assert match.groupdict() == expected
 
 
 class TestPeriodString(BasePatternTests):
@@ -149,9 +155,13 @@ class TestPeriodString(BasePatternTests):
     groups = ('value', 'name')
     default = 'one hundred twenty-three thousand'
 
-    @pytest.mark.skip(reason='unfinished test')
-    def test_todo(self):
+    def test_defaut(self):
         """
-        TODO: finish unit testing...
+        Nominal test case.
         """
-        pass
+        expected = dict.fromkeys(self.groups)
+        expected['value'] = 'one hundred twenty-three'
+        expected['name'] = 'thousand'
+        match = self.pattern.match(self.default)
+        assert match is not None
+        assert match.groupdict() == expected
