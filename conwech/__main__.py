@@ -7,7 +7,6 @@ from __future__ import print_function
 
 # built-in modules
 import re
-import sys
 import enum
 import pyperclip
 import colorama
@@ -18,8 +17,7 @@ import conwech
 
 
 # because Windows is just the wrong kind of special
-if sys.platform == 'win32':
-    colorama.init()
+colorama.init()
 
 
 class Colors(enum.Enum):
