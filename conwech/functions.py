@@ -280,7 +280,7 @@ def text2number(text: str) -> str:
 
     # get period information for each portion of input text
     sign, whole, numerator, denominator = match.groups(default='')
-    sign = sign.replace('positive ', '').replace('negative ', '-').replace('--', '')
+    sign = sign.replace('positive', '').replace('negative', '-').replace('--', '')
     # correct numerator exponents (this line assumes denominator is a multiple of ten)
     denominator = ('one ' + denominator.replace('-', ' ')).replace('one ten', 'ten')
     whole, numerator, denominator = [list(iterperiods(t)) for t in (whole, numerator, denominator)]

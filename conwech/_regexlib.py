@@ -91,7 +91,7 @@ Examples:
 NUMERAL_STRING = re.compile(
     r"^(?!\s*$)(?# assert string not empty or only whitespace)"
     r"\s*(?# match but do not capture leading whitespace)"
-    r"(?P<sign>negative\s|positive\s)?(?# capture sign)"
+    r"(?:(?P<sign>negative|positive)\s)?(?# capture sign)"
     r"(?P<whole>.+\w)?(?# capture whole number text)"
     r"(?<!th)(?<!ths)(?# whole portion cannot end in th/ths)"
     r"(?(whole)(?# if any whole portion is captured...)"
