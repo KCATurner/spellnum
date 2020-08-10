@@ -26,13 +26,15 @@ jobs:
       - run:
           name: "Install conwech package"
           command: |
-            pip3 install . --verbose
+            pip3 install -e . --verbose
       - run:
           name: "Run conwech unit tests"
           command: |
-            pytest tests --junitxml="tests/reports/results.xml"
+            pytest --junitxml="tests/reports/results.xml" --cov="conwech" --cov-report="html"
       - store_test_results:
           path: tests/reports
+      - store_artifacts:
+          path: htmlcov
 
   push-dev-tag:
     docker:
