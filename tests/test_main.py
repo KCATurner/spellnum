@@ -15,7 +15,7 @@ class TestRead:
         argvalues=['negative twelve thousand and three tenths', ])
     def test_nominal(self, numeral):
         output = subprocess.run(
-            f'python -m conwech read "{numeral}"',
+            ['python', str(conwech.__main__.__file__), 'read', numeral],
             capture_output=True, text=True, check=True).stdout
         for color in conwech.__main__.Colors:
             output = output.replace(color.value, '')
@@ -27,9 +27,9 @@ class TestSpell:
     @pytest.mark.parametrize(
         argnames='number',
         argvalues=['-12000.3'])
-    def test_copy_flag(self, number):
+    def test_nominal(self, number):
         output = subprocess.run(
-            f'python -m conwech spell "{number}"',
+            ['python', str(conwech.__main__.__file__), 'spell', str(number)],
             capture_output=True, text=True, check=True).stdout
         for color in conwech.__main__.Colors:
             output = output.replace(color.value, '')
@@ -37,7 +37,7 @@ class TestSpell:
 
     def test_recursive_flag(self):
         output = subprocess.run(
-            f'python -m conwech spell --recursive "323"',
+            ['python', str(conwech.__main__.__file__), 'spell', '-r', '323'],
             capture_output=True, text=True, check=True).stdout
         for color in conwech.__main__.Colors:
             output = output.replace(color.value, '')
