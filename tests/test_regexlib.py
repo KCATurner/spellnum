@@ -1,5 +1,5 @@
 """
-Unit tests for the conwech._regexlib submodule.
+Unit tests for the conwech._regexlib.
 """
 
 import abc

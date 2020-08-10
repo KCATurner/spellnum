@@ -1,5 +1,5 @@
 """
-Unit tests for the conwech.lexicon submodule.
+Unit tests for the conwech.lexicon.
 """
 
 import pytest

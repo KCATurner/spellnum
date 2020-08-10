@@ -449,6 +449,16 @@ class TestText2Number:
 
     @pytest.mark.parametrize(
         argnames='numeral',
+        argvalues=('one millinillinillion and one millinillinillionth',
+                   'one millinillinillion one and one millinillinillionth'))
+    def test_summation_output(self, numeral):
+        """
+        Test the sum-like output for numbers with excessive zero counts.
+        """
+        assert '+' in conwech.functions.text2number(numeral)
+
+    @pytest.mark.parametrize(
+        argnames='numeral',
         argvalues=conwech.lexicon.NATURAL_NUMBERS_LT_1000[1:])
     def test_units_period(self, numeral):
         """
