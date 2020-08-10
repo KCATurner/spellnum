@@ -35,7 +35,6 @@ setuptools.setup(
     ),
     install_requires=[
         'colorama',
-        'pyperclip',
     ],
     entry_points={
         'console_scripts': [
