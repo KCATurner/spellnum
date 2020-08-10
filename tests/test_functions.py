@@ -18,7 +18,7 @@ class TestNamePeriod:
     @pytest.mark.parametrize(
         argnames='invalid',
         argvalues=(None, 1.23, '1.23', {123, }, [123, ], (123, )))
-    def test_invalid_input(self, invalid):
+    def test_invalid_input_type(self, invalid):
         """
         Function should raise `TypeError` when input is not an int.
         """
@@ -53,12 +53,22 @@ class TestReadPeriod:
     Unit tests for conwech's `readperiod` function.
     """
 
-    @pytest.mark.parametrize(argnames='invalid', argvalues=(' ', 'not-a-illion'))
-    def test_invalid_input(self, invalid):
+    @pytest.mark.parametrize(
+        argnames='invalid',
+        argvalues=(None, 123, 1.23, {123, }, [123, ], (123,)))
+    def test_invalid_input_type(self, invalid):
         """
-        The `readperiod` function should raise conwech's custom
-        `InvalidPeriodNameText` when the input is an unrecognized
-        period name.
+        Function should raise `TypeError` when input is not a str.
+        """
+        with pytest.raises(TypeError):
+            conwech.functions.readperiod(invalid)
+
+    @pytest.mark.parametrize(argnames='invalid', argvalues=(' ', 'not-a-illion'))
+    def test_invalid_input_format(self, invalid):
+        """
+        `readperiod` should raise `InvalidPeriodNameText` when passed a
+        name with any sub-component (prefix) not found in
+        :data:`.ZILLION_PERIOD_PREFIXES`.
         """
         with pytest.raises(conwech._exceptions.InvalidPeriodNameText):
             conwech.functions.readperiod(invalid)
@@ -102,6 +112,18 @@ class TestNumber2Text:
         Test correct exception is raised when given invalid input.
         """
         with pytest.raises(TypeError):
+            conwech.functions.number2text(invalid)
+
+    @pytest.mark.parametrize(
+        argnames='invalid',
+        argvalues=('', ))
+    def test_invalid_input_format(self, invalid):
+        """
+        `number2text` should raise `InvalidNumericString` when passed a
+        string that doesn't match Python's float format (see
+        :data:`.NUMERIC_STRING`).
+        """
+        with pytest.raises(conwech._exceptions.InvalidNumericString):
             conwech.functions.number2text(invalid)
 
     @pytest.mark.parametrize(
@@ -370,6 +392,50 @@ class TestText2Number:
         Test correct exception is raised when given invalid input.
         """
         with pytest.raises(TypeError):
+            conwech.functions.text2number(invalid)
+
+    @pytest.mark.parametrize(
+        argnames='invalid',
+        argvalues=('onebilliontwomillionthreethousandandfourtenths', ))
+    def test_invalid_input_format(self, invalid):
+        """
+        `text2number` should raise InvalidNumeralString when passed a
+        string of text that doesn't match the required format (see
+        :data:`.NUMERAL_STRING`).
+        """
+        with pytest.raises(conwech._exceptions.InvalidNumeralString):
+            conwech.functions.text2number(invalid)
+
+    @pytest.mark.parametrize(
+        argnames='invalid',
+        argvalues=('one billion invalid million thre thousand', ))
+    def test_invalid_period_value(self, invalid):
+        """
+        `text2number` should raise `InvalidPeriodValueText` upon
+        encountering a period value numeral sub-string not found in
+        :data:`.NATURAL_NUMBERS_LT_1000` contained in a string of text
+        meeting the required numeral string format.
+
+        The the message from the raised exception should identify the
+        first offending period value.
+        """
+        with pytest.raises(conwech._exceptions.InvalidPeriodValueText):
+            conwech.functions.text2number(invalid)
+
+    @pytest.mark.parametrize(
+        argnames='invalid',
+        argvalues=('one billion two invalidillion thre thousand', ))
+    def test_invalid_period_name(self, invalid):
+        """
+        `text2number` should raise `InvalidPeriodNameText` upon
+        encountering a period name with any prefix not found in
+        :data:`.ZILLION_PERIOD_PREFIXES` contained in a string of text
+        meeting the required numeral string format.
+
+        The the message from the raised exception should identify the
+        first offending period name.
+        """
+        with pytest.raises(conwech._exceptions.InvalidPeriodNameText):
             conwech.functions.text2number(invalid)
 
     @pytest.mark.parametrize(
