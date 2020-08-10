@@ -106,5 +106,5 @@ venv.bak/
 # Documentation
 /index.html
 /.nojekyll
-/docs
-!/docs/source
+/docs/build
+/docs/source/package
