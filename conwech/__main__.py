@@ -8,7 +8,6 @@ from __future__ import print_function
 # built-in modules
 import re
 import enum
-import pyperclip
 import colorama
 import argparse
 
@@ -44,61 +43,31 @@ def paint(numeral):
     return ' '.join(result)
 
 
-def read(text, copy=False):
+def four(number):
     """ For internal use only! """
-    result = conwech.text2number(text=text)
-
-    if copy:
-        pyperclip.copy(result)
-
-    print(result)
-
-
-def spell(number, copy=False):
-    """ For internal use only! """
-    result = conwech.number2text(number=number)
-
-    if copy:
-        pyperclip.copy(result)
-
-    print(paint(result))
-
-
-def four(number, copy=False):
-    """ For internal use only! """
-    result = []
     spelling = ''
-
     while spelling != 'four':
         spelling = conwech.number2text(number)
         number = len(spelling.replace('-', '').replace(' ', ''))
-        result.append('There are {} letters in {}'.format(number, spelling))
-        print(paint(result[-1]))
-
-    if copy:
-        pyperclip.copy('\n'.join(result))
+        print(paint('There are {} letters in {}'.format(number, spelling)))
 
 
 def main():
     """ For internal use only! """
-    copy_option = argparse.ArgumentParser(add_help=False)
-    copy_option.add_argument(
-        '-c', '--copy', action='store_true',
-        help='copy output to clipboard')
-
     parser = argparse.ArgumentParser()
     commands = parser.add_subparsers(metavar='SUBCOMMAND')
 
     read_command = commands.add_parser(
-        'read', parents=[copy_option],
+        'read',
         help='convert text to number')
     read_command.add_argument(
         'text', type=str,
         help='text of a number to read')
-    read_command.set_defaults(func=read)
+    read_command.set_defaults(
+        func=lambda text: print(conwech.text2number(text)))
 
     spell_command = commands.add_parser(
-        'spell', parents=[copy_option],
+        'spell',
         help='convert number to text')
     spell_command.add_argument(
         'number', type=str,
@@ -106,7 +75,8 @@ def main():
     spell_command.add_argument(
         '-r', '--recursive', action='store_const', const=four, dest='func',
         help="spell recursively to 'four'")
-    spell_command.set_defaults(func=spell)
+    spell_command.set_defaults(
+        func=lambda number: print(paint(conwech.number2text(number))))
 
     # call func with parsed args
     inputs = vars(parser.parse_args())

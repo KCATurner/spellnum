@@ -4,7 +4,6 @@ Unit tests for the conwech.__main__.
 
 import re
 import pytest
-import pyperclip
 import subprocess
 import conwech.__main__
 
@@ -14,18 +13,13 @@ class TestRead:
     @pytest.mark.parametrize(
         argnames='numeral',
         argvalues=['negative twelve thousand and three tenths', ])
-    def test_copy_flag(self, numeral):
-        pyperclip.copy('test')
+    def test_nominal(self, numeral):
         output = subprocess.run(
             f'python -m conwech read "{numeral}"',
             capture_output=True, text=True, check=True).stdout
-        assert pyperclip.paste() == 'test' # clipboard should be unaffected
-        output = subprocess.run(
-            f'python -m conwech read --copy "{numeral}"',
-            capture_output=True, text=True, check=True).stdout
         for color in conwech.__main__.Colors:
             output = output.replace(color.value, '')
-        assert pyperclip.paste() == output.strip() # clipboard should hold output
+        assert output.strip() == conwech.functions.text2number(numeral)
 
 
 class TestSpell:
@@ -34,17 +28,12 @@ class TestSpell:
         argnames='number',
         argvalues=['-12000.3'])
     def test_copy_flag(self, number):
-        pyperclip.copy('test')
         output = subprocess.run(
             f'python -m conwech spell "{number}"',
             capture_output=True, text=True, check=True).stdout
-        assert pyperclip.paste() == 'test' # clipboard should be unaffected
-        output = subprocess.run(
-            f'python -m conwech spell --copy "{number}"',
-            capture_output=True, text=True, check=True).stdout
         for color in conwech.__main__.Colors:
             output = output.replace(color.value, '')
-        assert pyperclip.paste() == output.strip() # clipboard should hold output
+        assert output.strip() == conwech.functions.number2text(number)
 
     def test_recursive_flag(self):
         output = subprocess.run(
