@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -221,8 +224,8 @@ used to catch and adjust invalid prefix combinations when
 </tbody>
 </table>
 <dl class="py data">
-<dt id="conwech._regexlib.NUMERIC_STRING">
-<code class="sig-name descname"><span class="pre">NUMERIC_STRING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">re.compile('^\\s*(?#</span> <span class="pre">match,</span> <span class="pre">but</span> <span class="pre">exclude</span> <span class="pre">any</span> <span class="pre">leading</span> <span class="pre">whitespace)(?P&lt;bsign&gt;[-+])?(?#</span> <span class="pre">capture</span> <span class="pre">base</span> <span class="pre">sign</span> <span class="pre">if</span> <span class="pre">it</span> <span class="pre">exists)(?!\\s*\\.\\s*(?:[eE]|$))(?#</span> <span class="pre">whole</span> <span class="pre">or</span> <span class="pre">fraction</span> <span class="pre">must</span> <span class="pre">match)0*(?#</span> <span class="pre">match,</span> <span class="pre">but</span> <span class="pre">exclude</span> <span class="pre">leading</span> <span class="pre">zeros</span> <span class="pre">)</span></em><a class="headerlink" href="#conwech._regexlib.NUMERIC_STRING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech._regexlib.NUMERIC_STRING">
+<span class="sig-name descname"><span class="pre">NUMERIC_STRING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">re.compile('^\\s*(?#</span> <span class="pre">match,</span> <span class="pre">but</span> <span class="pre">exclude</span> <span class="pre">any</span> <span class="pre">leading</span> <span class="pre">whitespace)(?P&lt;bsign&gt;[-+])?(?#</span> <span class="pre">capture</span> <span class="pre">base</span> <span class="pre">sign</span> <span class="pre">if</span> <span class="pre">it</span> <span class="pre">exists)(?!\\s*\\.\\s*(?:[eE]|$))(?#</span> <span class="pre">whole</span> <span class="pre">or</span> <span class="pre">fraction</span> <span class="pre">must</span> <span class="pre">match)0*(?#</span> <span class="pre">match,</span> <span class="pre">but</span> <span class="pre">exclude</span> <span class="pre">leading</span> <span class="pre">zeros</span> <span class="pre">)</span></em><a class="headerlink" href="#conwech._regexlib.NUMERIC_STRING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching number-like strings.</p>
 <p>This compiled regular expression captures the numerical elements of a
 number-like string (a string which could be cast to an int or float) in
@@ -271,8 +274,8 @@ group, excluding any leading zeros.</p>
 </dd></dl>
 
 <dl class="py data">
-<dt id="conwech._regexlib.NUMERAL_STRING">
-<code class="sig-name descname"><span class="pre">NUMERAL_STRING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;^(?!\\s*$)(?#</span> <span class="pre">assert</span> <span class="pre">string</span> <span class="pre">not</span> <span class="pre">empty</span> <span class="pre">or</span> <span class="pre">only</span> <span class="pre">whitespace)\\s*(?#</span> <span class="pre">match</span> <span class="pre">but</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">capture</span> <span class="pre">leading</span> <span class="pre">whitespace)(?:(?P&lt;sign&gt;negative|positive)\\s)?(?#</span> <span class="pre">capture</span> <span class="pre">sign)(?P&lt;whole&gt;.+\\w)?(?#</span> <span class="pre">capture</span> <span class="pre">whole</span> <span class="pre">num)</span></em><a class="headerlink" href="#conwech._regexlib.NUMERAL_STRING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech._regexlib.NUMERAL_STRING">
+<span class="sig-name descname"><span class="pre">NUMERAL_STRING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;^(?!\\s*$)(?#</span> <span class="pre">assert</span> <span class="pre">string</span> <span class="pre">not</span> <span class="pre">empty</span> <span class="pre">or</span> <span class="pre">only</span> <span class="pre">whitespace)\\s*(?#</span> <span class="pre">match</span> <span class="pre">but</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">capture</span> <span class="pre">leading</span> <span class="pre">whitespace)(?:(?P&lt;sign&gt;negative|positive)\\s)?(?#</span> <span class="pre">capture</span> <span class="pre">sign)(?P&lt;whole&gt;.+\\w)?(?#</span> <span class="pre">capture</span> <span class="pre">whole</span> <span class="pre">num)</span></em><a class="headerlink" href="#conwech._regexlib.NUMERAL_STRING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching strings of number text.</p>
 <p>This compiled regular expression captures the lexical elements
 corresponding to the components of the number that the text represents
@@ -318,8 +321,8 @@ allowed to match an empty or whitespace-only string.</p>
 </dd></dl>
 
 <dl class="py data">
-<dt id="conwech._regexlib.PERIOD_STRING">
-<code class="sig-name descname"><span class="pre">PERIOD_STRING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">re.compile('(?:^|\\s+)(?#</span> <span class="pre">period</span> <span class="pre">must</span> <span class="pre">follow</span> <span class="pre">whitespace</span> <span class="pre">or</span> <span class="pre">start</span> <span class="pre">of</span> <span class="pre">string)\\b(?P&lt;value&gt;.+?)(?#</span> <span class="pre">capture</span> <span class="pre">period</span> <span class="pre">value</span> <span class="pre">and</span> <span class="pre">leave</span> <span class="pre">the</span> <span class="pre">name)(?:\\s+(?#</span> <span class="pre">whitespace</span> <span class="pre">must</span> <span class="pre">separate</span> <span class="pre">period</span> <span class="pre">value</span> <span class="pre">and</span> <span class="pre">name)(?P&lt;name&gt;\\w+illi)</span></em><a class="headerlink" href="#conwech._regexlib.PERIOD_STRING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech._regexlib.PERIOD_STRING">
+<span class="sig-name descname"><span class="pre">PERIOD_STRING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">re.compile('(?:^|\\s+)(?#</span> <span class="pre">period</span> <span class="pre">must</span> <span class="pre">follow</span> <span class="pre">whitespace</span> <span class="pre">or</span> <span class="pre">start</span> <span class="pre">of</span> <span class="pre">string)\\b(?P&lt;value&gt;.+?)(?#</span> <span class="pre">capture</span> <span class="pre">period</span> <span class="pre">value</span> <span class="pre">and</span> <span class="pre">leave</span> <span class="pre">the</span> <span class="pre">name)(?:\\s+(?#</span> <span class="pre">whitespace</span> <span class="pre">must</span> <span class="pre">separate</span> <span class="pre">period</span> <span class="pre">value</span> <span class="pre">and</span> <span class="pre">name)(?P&lt;name&gt;\\w+illi)</span></em><a class="headerlink" href="#conwech._regexlib.PERIOD_STRING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching individual period substrings in number text.</p>
 <p>This compiled regular expression captures the lexical elements
 corresponding to the components of a period in a string of number text
@@ -346,8 +349,8 @@ ends with the “illion” suffix.</p>
 </dd></dl>
 
 <dl class="py data">
-<dt id="conwech._regexlib.PREFIX_EXCEPTION_X">
-<code class="sig-name descname"><span class="pre">PREFIX_EXCEPTION_X</span></code><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;(?&lt;=^se)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'se'...)(?=[co])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'c'</span> <span class="pre">or</span> <span class="pre">'o')&quot;)</span></em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_X" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech._regexlib.PREFIX_EXCEPTION_X">
+<span class="sig-name descname"><span class="pre">PREFIX_EXCEPTION_X</span></span><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;(?&lt;=^se)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'se'...)(?=[co])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'c'</span> <span class="pre">or</span> <span class="pre">'o')&quot;)</span></em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_X" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching invalid combinations of period name prefix
 components resulting from zillion periods: 86, 106, 806. The expression
 will match the position in the string where “x” needs to be inserted to
@@ -363,8 +366,8 @@ correct the exception.</p>
 </dd></dl>
 
 <dl class="py data">
-<dt id="conwech._regexlib.PREFIX_EXCEPTION_S">
-<code class="sig-name descname"><span class="pre">PREFIX_EXCEPTION_S</span></code><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;(?&lt;=^se)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'se'...)(?=[qtv])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'q',</span> <span class="pre">'t',</span> <span class="pre">or</span> <span class="pre">'v')|(?#</span> <span class="pre">or)(?&lt;=^tre)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'tre'...)(?=[coqtv])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'c',</span> <span class="pre">'o')</span></em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_S" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech._regexlib.PREFIX_EXCEPTION_S">
+<span class="sig-name descname"><span class="pre">PREFIX_EXCEPTION_S</span></span><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;(?&lt;=^se)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'se'...)(?=[qtv])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'q',</span> <span class="pre">'t',</span> <span class="pre">or</span> <span class="pre">'v')|(?#</span> <span class="pre">or)(?&lt;=^tre)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'tre'...)(?=[coqtv])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'c',</span> <span class="pre">'o')</span></em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_S" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching invalid combinations of period name prefix
 components resulting from zillion periods: 23, 26, 33, 36, 43, 46, 54,
 56, 83, 103, 303, 306, 403, 406, 503, 506, 803. The expression will
@@ -381,8 +384,8 @@ correct the exception.</p>
 </dd></dl>
 
 <dl class="py data">
-<dt id="conwech._regexlib.PREFIX_EXCEPTION_M">
-<code class="sig-name descname"><span class="pre">PREFIX_EXCEPTION_M</span></code><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;(?&lt;=^septe)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'septe'...)(?=[ov])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'o'</span> <span class="pre">or</span> <span class="pre">'v')|(?#</span> <span class="pre">or)(?&lt;=^nove)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'nove'...)(?=[ov])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'o'</span> <span class="pre">or</span> <span class="pre">'v')</span></em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_M" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech._regexlib.PREFIX_EXCEPTION_M">
+<span class="sig-name descname"><span class="pre">PREFIX_EXCEPTION_M</span></span><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;(?&lt;=^septe)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'septe'...)(?=[ov])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'o'</span> <span class="pre">or</span> <span class="pre">'v')|(?#</span> <span class="pre">or)(?&lt;=^nove)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'nove'...)(?=[ov])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'o'</span> <span class="pre">or</span> <span class="pre">'v')</span></em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_M" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching invalid combinations of period name prefix
 components resulting from zillion periods: 27, 29, 87, 89, 807, 809.
 The expression will match the position in the string where “m” needs to
@@ -398,8 +401,8 @@ be inserted to correct the exception.</p>
 </dd></dl>
 
 <dl class="py data">
-<dt id="conwech._regexlib.PREFIX_EXCEPTION_N">
-<code class="sig-name descname"><span class="pre">PREFIX_EXCEPTION_N</span></code><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;(?&lt;=^septe)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'septe'...)(?=[cdqst])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'c',</span> <span class="pre">'d',</span> <span class="pre">'q',</span> <span class="pre">'s',</span> <span class="pre">or</span> <span class="pre">'t')|(?#</span> <span class="pre">or</span> <span class="pre">)(?&lt;=^nove)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'nove'...)(?=[cdqst])(?#</span> <span class="pre">...and</span> <span class="pre">be)</span></em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_N" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech._regexlib.PREFIX_EXCEPTION_N">
+<span class="sig-name descname"><span class="pre">PREFIX_EXCEPTION_N</span></span><em class="property"> <span class="pre">=</span> <span class="pre">re.compile(&quot;(?&lt;=^septe)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'septe'...)(?=[cdqst])(?#</span> <span class="pre">...and</span> <span class="pre">be</span> <span class="pre">followed</span> <span class="pre">by</span> <span class="pre">'c',</span> <span class="pre">'d',</span> <span class="pre">'q',</span> <span class="pre">'s',</span> <span class="pre">or</span> <span class="pre">'t')|(?#</span> <span class="pre">or</span> <span class="pre">)(?&lt;=^nove)(?#</span> <span class="pre">exception</span> <span class="pre">must</span> <span class="pre">start</span> <span class="pre">with</span> <span class="pre">'nove'...)(?=[cdqst])(?#</span> <span class="pre">...and</span> <span class="pre">be)</span></em><a class="headerlink" href="#conwech._regexlib.PREFIX_EXCEPTION_N" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pattern for matching invalid combinations of period name prefix
 components resulting from zillion periods: 17, 19, 37, 39, 47, 49, 57,
 59, 67, 69, 77, 79, 107, 109, 207, 209, 307, 309, 407, 409, 507, 509,
@@ -433,7 +436,7 @@ where “n” needs to be inserted to correct the exception.</p>
     <p>
         &#169; Copyright 2021, Kevin Turner.
       <span class="lastupdated">
-        Last updated on May 01, 2021.
+        Last updated on Jun 01, 2021.
       </span>
 
     </p>

@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -203,8 +206,8 @@ equivalent, which could be used the same way in the other direction.</p>
 </tbody>
 </table>
 <dl class="py function">
-<dt id="conwech.functions.nameperiod">
-<code class="sig-name descname"><span class="pre">nameperiod</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zillion</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/conwech/functions.html#nameperiod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conwech.functions.nameperiod" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech.functions.nameperiod">
+<span class="sig-name descname"><span class="pre">nameperiod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zillion</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/conwech/functions.html#nameperiod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conwech.functions.nameperiod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Names the period for the given <strong>zillion</strong> value.</p>
 <p>The function returns the Conway-Wechsler name for a number with the
 given <strong>zillion</strong> value. The zillion property of a number in the
@@ -247,8 +250,8 @@ can be obtained by the function Z(n):</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="conwech.functions.readperiod">
-<code class="sig-name descname"><span class="pre">readperiod</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="../_modules/conwech/functions.html#readperiod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conwech.functions.readperiod" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech.functions.readperiod">
+<span class="sig-name descname"><span class="pre">readperiod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="../_modules/conwech/functions.html#readperiod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conwech.functions.readperiod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert <strong>name</strong> to its corresponding zillion value.</p>
 <p>The inverse function of <a class="reference internal" href="#conwech.functions.nameperiod" title="conwech.functions.nameperiod"><code class="xref py py-func docutils literal notranslate"><span class="pre">nameperiod()</span></code></a>, this function parses
 the given period name by indexing a tuple of valid Conway-Wechsler
@@ -288,8 +291,8 @@ units period (first period).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="conwech.functions.number2text">
-<code class="sig-name descname"><span class="pre">number2text</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/conwech/functions.html#number2text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conwech.functions.number2text" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech.functions.number2text">
+<span class="sig-name descname"><span class="pre">number2text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/conwech/functions.html#number2text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conwech.functions.number2text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the English short-scale spelling of <strong>number</strong>.</p>
 <p>The function returns the english short-scale spelling for <strong>number</strong>
 which can be any positive or negative number passed as an integer,
@@ -337,8 +340,8 @@ in place, but should be implemented soon…ish… Bite me.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="conwech.functions.text2number">
-<code class="sig-name descname"><span class="pre">text2number</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/conwech/functions.html#text2number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conwech.functions.text2number" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="conwech.functions.text2number">
+<span class="sig-name descname"><span class="pre">text2number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../_modules/conwech/functions.html#text2number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#conwech.functions.text2number" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert an English short-scale <strong>text</strong> to it’s numerical value.</p>
 <p>The function attempts to parse <strong>text</strong> and return a numeric string
 containing the corresponding value. The number(s) in the string will
@@ -399,7 +402,7 @@ decimal digits.</p>
     <p>
         &#169; Copyright 2021, Kevin Turner.
       <span class="lastupdated">
-        Last updated on May 01, 2021.
+        Last updated on Jun 01, 2021.
       </span>
 
     </p>
