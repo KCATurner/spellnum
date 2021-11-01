@@ -95,36 +95,6 @@ four: <a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_X"
 <a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_M" title="conwech._regexlib.PREFIX_EXCEPTION_M"><code class="xref py py-data docutils literal notranslate"><span class="pre">PREFIX_EXCEPTION_M</span></code></a>, and <a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_N" title="conwech._regexlib.PREFIX_EXCEPTION_N"><code class="xref py py-data docutils literal notranslate"><span class="pre">PREFIX_EXCEPTION_N</span></code></a> are all
 used to catch and adjust invalid prefix combinations when
 <a class="reference internal" href="conwech.lexicon.html#conwech.lexicon.ZILLION_PERIOD_PREFIXES" title="conwech.lexicon.ZILLION_PERIOD_PREFIXES"><code class="xref py py-data docutils literal notranslate"><span class="pre">ZILLION_PERIOD_PREFIXES</span></code></a> is initialized.</p>
-<p class="rubric">Module Attributes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#conwech._regexlib.NUMERIC_STRING" title="conwech._regexlib.NUMERIC_STRING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NUMERIC_STRING</span></code></a></p></td>
-<td><p>Pattern for matching number-like strings.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#conwech._regexlib.NUMERAL_STRING" title="conwech._regexlib.NUMERAL_STRING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NUMERAL_STRING</span></code></a></p></td>
-<td><p>Pattern for matching strings of number text.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#conwech._regexlib.PERIOD_STRING" title="conwech._regexlib.PERIOD_STRING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PERIOD_STRING</span></code></a></p></td>
-<td><p>Pattern for matching individual period substrings in number text.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_X" title="conwech._regexlib.PREFIX_EXCEPTION_X"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PREFIX_EXCEPTION_X</span></code></a></p></td>
-<td><p>Pattern for matching invalid combinations of period name prefix components resulting from zillion periods: 86, 106, 806.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_S" title="conwech._regexlib.PREFIX_EXCEPTION_S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PREFIX_EXCEPTION_S</span></code></a></p></td>
-<td><p>Pattern for matching invalid combinations of period name prefix components resulting from zillion periods: 23, 26, 33, 36, 43, 46, 54, 56, 83, 103, 303, 306, 403, 406, 503, 506, 803.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_M" title="conwech._regexlib.PREFIX_EXCEPTION_M"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PREFIX_EXCEPTION_M</span></code></a></p></td>
-<td><p>Pattern for matching invalid combinations of period name prefix components resulting from zillion periods: 27, 29, 87, 89, 807, 809.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#conwech._regexlib.PREFIX_EXCEPTION_N" title="conwech._regexlib.PREFIX_EXCEPTION_N"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PREFIX_EXCEPTION_N</span></code></a></p></td>
-<td><p>Pattern for matching invalid combinations of period name prefix components resulting from zillion periods: 17, 19, 37, 39, 47, 49, 57, 59, 67, 69, 77, 79, 107, 109, 207, 209, 307, 309, 407, 409, 507, 509, 607, 609, 707, 709.</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="py data">
 <dt class="sig sig-object py" id="conwech._regexlib.NUMERIC_STRING">
 <span class="sig-name descname"><span class="pre">NUMERIC_STRING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">re.compile('^\\s*(?#</span> <span class="pre">match,</span> <span class="pre">but</span> <span class="pre">exclude</span> <span class="pre">any</span> <span class="pre">leading</span> <span class="pre">whitespace)(?P&lt;bsign&gt;[-+])?(?#</span> <span class="pre">capture</span> <span class="pre">base</span> <span class="pre">sign</span> <span class="pre">if</span> <span class="pre">it</span> <span class="pre">exists)(?!\\s*\\.\\s*(?:[eE]|$))(?#</span> <span class="pre">whole</span> <span class="pre">or</span> <span class="pre">fraction</span> <span class="pre">must</span> <span class="pre">match)0*(?#</span> <span class="pre">match,</span> <span class="pre">but</span> <span class="pre">exclude</span> <span class="pre">leading</span> <span class="pre">zeros</span> <span class="pre">)</span></em><a class="headerlink" href="#conwech._regexlib.NUMERIC_STRING" title="Permalink to this definition"></a></dt>
@@ -334,7 +304,7 @@ where “n” needs to be inserted to correct the exception.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2021, Kevin Turner.
-      <span class="lastupdated">Last updated on Oct 01, 2021.
+      <span class="lastupdated">Last updated on Nov 01, 2021.
       </span></p>
   </div>
 
