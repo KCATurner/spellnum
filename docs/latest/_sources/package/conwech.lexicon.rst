@@ -1,9 +1,8 @@
-conwech.lexicon
+﻿conwech.lexicon
 ===============
 
 .. automodule:: conwech.lexicon
 
-   
    
    .. rubric:: Module Attributes
 
@@ -15,19 +14,3 @@ conwech.lexicon
       NATURAL_NUMBERS_LT_1000
       ZILLION_PERIOD_PREFIXES
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-

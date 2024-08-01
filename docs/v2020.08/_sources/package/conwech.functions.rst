@@ -1,13 +1,8 @@
-conwech.functions
+﻿conwech.functions
 =================
 
 .. automodule:: conwech.functions
 
-   
-   
-   
-
-   
    
    .. rubric:: Functions
 
@@ -18,15 +13,3 @@ conwech.functions
       readperiod
       text2number
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-

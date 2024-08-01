@@ -1,21 +1,8 @@
-conwech.\_exceptions
+﻿conwech.\_exceptions
 ====================
 
 .. automodule:: conwech._exceptions
 
-   
-   
-   
-
-   
-   
-   
-
-   
-   
-   
-
-   
    
    .. rubric:: Exceptions
 
@@ -26,7 +13,3 @@ conwech.\_exceptions
       InvalidPeriodNameText
       InvalidPeriodValueText
    
-   
-
-
-

@@ -1,9 +1,8 @@
-conwech.\_regexlib
+﻿conwech.\_regexlib
 ==================
 
 .. automodule:: conwech._regexlib
 
-   
    
    .. rubric:: Module Attributes
 
@@ -17,19 +16,3 @@ conwech.\_regexlib
       PREFIX_EXCEPTION_M
       PREFIX_EXCEPTION_N
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-
